@@ -15,16 +15,22 @@ import java.awt.event.WindowEvent;
  * @author jomaa
  */
 @SuppressWarnings("serial")
-public class Socios extends javax.swing.JFrame {
+public class Informe extends javax.swing.JFrame {
     private int xMouse, yMouse;
     /**
      * Creates new form Socios
      */
-    public Socios() {
+    public Informe() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-        
+    
+    @SuppressWarnings("unused")
+	private void headerMousePressed(java.awt.event.MouseEvent evt){
+        xMouse = evt.getX();
+        yMouse = evt.getY();
+    }
+    
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/logo_small.png"));
         return retValue;
@@ -48,64 +54,30 @@ public class Socios extends javax.swing.JFrame {
         ExitTxt = new javax.swing.JLabel();
         MenuToolBar = new javax.swing.JToolBar();
         InicioMenuBtn = new javax.swing.JButton();
+        SociosMenuBtn = new javax.swing.JButton();
         IngresosMenuBtn = new javax.swing.JButton();
         PagosMenuBtn = new javax.swing.JButton();
-        InformeMenuBtn = new javax.swing.JButton();
         ListaEsperaMenuBtn = new javax.swing.JButton();
         toolBarFiller1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         DataPanel = new javax.swing.JPanel();
         LeftPanel = new javax.swing.JPanel();
-        NumeroSocioTxt = new javax.swing.JLabel();
-        NumeroSocioPanel = new javax.swing.JScrollPane();
-        NumeroSocioField = new javax.swing.JTextPane();
-        NombreTxt = new javax.swing.JLabel();
-        NombrePanel = new javax.swing.JScrollPane();
-        NombreField = new javax.swing.JTextPane();
-        ApellidosTxt = new javax.swing.JLabel();
-        ApellidosPanel = new javax.swing.JScrollPane();
-        ApellidosField = new javax.swing.JTextPane();
-        DNITxt = new javax.swing.JLabel();
-        DNIPanel = new javax.swing.JScrollPane();
-        DNIField = new javax.swing.JTextPane();
-        DireccionTxt = new javax.swing.JLabel();
-        DireccionPanel = new javax.swing.JScrollPane();
-        DireccionField = new javax.swing.JTextPane();
-        TelefonoTxt = new javax.swing.JLabel();
-        TelefonoPanel = new javax.swing.JScrollPane();
-        TelefonoField = new javax.swing.JTextPane();
-        CorreoTxt = new javax.swing.JLabel();
-        CorreoPanel = new javax.swing.JScrollPane();
-        CorreoField = new javax.swing.JTextPane();
-        NumeroHuertoTxt = new javax.swing.JLabel();
-        NumeroHuertoPanel = new javax.swing.JScrollPane();
-        NumeroHuertoField = new javax.swing.JTextPane();
-        FechaAltaTxt = new javax.swing.JLabel();
-        FechaAltaPanel = new javax.swing.JScrollPane();
-        FechaAltaField = new javax.swing.JTextPane();
-        FechaBajaTxt = new javax.swing.JLabel();
-        FechaBajaPanel = new javax.swing.JScrollPane();
-        FechaBajaField = new javax.swing.JTextPane();
-        EstadoTxt = new javax.swing.JLabel();
-        EstadoPanel = new javax.swing.JScrollPane();
-        EstadoField = new javax.swing.JTextPane();
-        TipoTxt = new javax.swing.JLabel();
-        TipoPanel = new javax.swing.JScrollPane();
-        TipoField = new javax.swing.JTextPane();
+        SIBancoTxt = new javax.swing.JLabel();
+        SIBancoPanel = new javax.swing.JScrollPane();
+        SIBancoField = new javax.swing.JTextPane();
+        SICajaTxt = new javax.swing.JLabel();
+        SICajaPanel = new javax.swing.JScrollPane();
+        SICajaField = new javax.swing.JTextPane();
         MiddlePanel = new javax.swing.JPanel();
-        ListaIngresosPanel = new javax.swing.JScrollPane();
-        ListaIngresosField = new javax.swing.JTextArea();
+        InformePanel = new javax.swing.JScrollPane();
+        InformeField = new javax.swing.JTextArea();
         RightPanel = new javax.swing.JPanel();
-        AgregarBtn = new javax.swing.JButton();
-        BuscarBtn = new javax.swing.JButton();
-        ModificarBtn = new javax.swing.JButton();
-        EliminarBtn = new javax.swing.JButton();
+        CalcularBtn = new javax.swing.JButton();
         jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(900, 600));
-        setIconImage(getIconImage());
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setIconImage(getIconImage());
 
         ToolBar.setBackground(new java.awt.Color(255, 255, 255));
         ToolBar.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.SystemColor.windowBorder));
@@ -119,12 +91,12 @@ public class Socios extends javax.swing.JFrame {
 
         jLabelLogo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo_small.png"))); // NOI18N
-        jLabelLogo.setText("Contasoc - Socios");
+        jLabelLogo.setText("Contasoc - Informe");
         jLabelLogo.setIconTextGap(6);
         jLabelLogo.setMaximumSize(new java.awt.Dimension(86, 32));
         jLabelLogo.setMinimumSize(new java.awt.Dimension(86, 32));
         jLabelLogo.setName(""); // NOI18N
-        jLabelLogo.setPreferredSize(new java.awt.Dimension(150, 32));
+        jLabelLogo.setPreferredSize(new java.awt.Dimension(170, 32));
         ToolBar.add(jLabelLogo);
 
         toolBarFiller.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -219,17 +191,41 @@ public class Socios extends javax.swing.JFrame {
         });
         MenuToolBar.add(InicioMenuBtn);
 
+        SociosMenuBtn.setText("Socios");
+        SociosMenuBtn.setContentAreaFilled(false);
+        SociosMenuBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SociosMenuBtn.setFocusable(false);
+        SociosMenuBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        SociosMenuBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        SociosMenuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SociosMenuBtnActionPerformed(evt);
+            }
+        });
+        SociosMenuBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            	SociosMenuBtnMouseClicked(evt);
+            }
+        });
+        MenuToolBar.add(SociosMenuBtn);
+
         IngresosMenuBtn.setText("Ingresos");
         IngresosMenuBtn.setContentAreaFilled(false);
         IngresosMenuBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         IngresosMenuBtn.setFocusable(false);
         IngresosMenuBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         IngresosMenuBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        IngresosMenuBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	IngresosMenuBtnActionPerformed(evt);
+            }
+        });
         IngresosMenuBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
             	IngresosMenuBtnMouseClicked(evt);
             }
         });
+        
         MenuToolBar.add(IngresosMenuBtn);
 
         PagosMenuBtn.setText("Pagos");
@@ -244,19 +240,6 @@ public class Socios extends javax.swing.JFrame {
             }
         });
         MenuToolBar.add(PagosMenuBtn);
-
-        InformeMenuBtn.setText("Informe");
-        InformeMenuBtn.setContentAreaFilled(false);
-        InformeMenuBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        InformeMenuBtn.setFocusable(false);
-        InformeMenuBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        InformeMenuBtn.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        InformeMenuBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-            	InformeMenuBtnMouseClicked(evt);
-            }
-        });
-        MenuToolBar.add(InformeMenuBtn);
 
         ListaEsperaMenuBtn.setText("Lista de Espera");
         ListaEsperaMenuBtn.setContentAreaFilled(false);
@@ -282,168 +265,51 @@ public class Socios extends javax.swing.JFrame {
         LeftPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         LeftPanel.setPreferredSize(new java.awt.Dimension(410, 470));
 
-        NumeroSocioTxt.setText("Número de socio:");
+        SIBancoTxt.setText("Saldo inicial banco:");
 
-        NumeroSocioPanel.setViewportView(NumeroSocioField);
+        SIBancoPanel.setViewportView(SIBancoField);
 
-        NombreTxt.setText("Nombre:");
+        SICajaTxt.setText("Saldo inicial caja:");
 
-        NombrePanel.setViewportView(NombreField);
-
-        ApellidosTxt.setText("Apellidos:");
-
-        ApellidosPanel.setViewportView(ApellidosField);
-
-        DNITxt.setText("DNI:");
-
-        DNIPanel.setViewportView(DNIField);
-
-        DireccionTxt.setText("Dirección");
-
-        DireccionPanel.setViewportView(DireccionField);
-
-        TelefonoTxt.setText("Teléfono:");
-
-        TelefonoPanel.setViewportView(TelefonoField);
-
-        CorreoTxt.setText("Correo:");
-
-        CorreoPanel.setViewportView(CorreoField);
-
-        NumeroHuertoTxt.setText("Número de huerto:");
-
-        NumeroHuertoPanel.setViewportView(NumeroHuertoField);
-
-        FechaAltaTxt.setText("Fecha de alta:");
-
-        FechaAltaPanel.setViewportView(FechaAltaField);
-
-        FechaBajaTxt.setText("Fecha de baja:");
-
-        FechaBajaPanel.setViewportView(FechaBajaField);
-
-        EstadoTxt.setText("Estado:");
-
-        EstadoPanel.setViewportView(EstadoField);
-
-        TipoTxt.setText("Tipo:");
-
-        TipoPanel.setViewportView(TipoField);
+        SICajaPanel.setViewportView(SICajaField);
 
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
         LeftPanelLayout.setHorizontalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addComponent(NumeroSocioTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(NumeroSocioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addComponent(ApellidosTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(ApellidosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addComponent(DNITxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(DNIPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addComponent(DireccionTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(DireccionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addComponent(TelefonoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(TelefonoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addComponent(CorreoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(CorreoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addComponent(NumeroHuertoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(NumeroHuertoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addComponent(FechaAltaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(FechaAltaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addComponent(FechaBajaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(FechaBajaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addComponent(EstadoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(EstadoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addComponent(TipoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(TipoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addComponent(NombreTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(NombrePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addComponent(SICajaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18))
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addComponent(SIBancoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)))
+                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(SIBancoPanel)
+                    .addComponent(SICajaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
         );
         LeftPanelLayout.setVerticalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(NumeroSocioPanel)
-                    .addComponent(NumeroSocioTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(SIBancoPanel)
+                    .addComponent(SIBancoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(NombrePanel)
-                    .addComponent(NombreTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(ApellidosPanel)
-                    .addComponent(ApellidosTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(DNIPanel)
-                    .addComponent(DNITxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(DireccionPanel)
-                    .addComponent(DireccionTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TelefonoPanel)
-                    .addComponent(TelefonoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(CorreoPanel)
-                    .addComponent(CorreoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(NumeroHuertoPanel)
-                    .addComponent(NumeroHuertoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(FechaAltaPanel)
-                    .addComponent(FechaAltaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(FechaBajaPanel)
-                    .addComponent(FechaBajaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(EstadoPanel)
-                    .addComponent(EstadoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(TipoPanel)
-                    .addComponent(TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 100, Short.MAX_VALUE))
+                    .addComponent(SICajaPanel)
+                    .addComponent(SICajaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 380, Short.MAX_VALUE))
         );
 
         DataPanel.add(LeftPanel);
 
         MiddlePanel.setPreferredSize(new java.awt.Dimension(255, 470));
 
-        ListaIngresosField.setEditable(false);
-        ListaIngresosField.setColumns(20);
-        ListaIngresosField.setRows(5);
-        ListaIngresosPanel.setViewportView(ListaIngresosField);
+        InformeField.setEditable(false);
+        InformeField.setColumns(20);
+        InformeField.setRows(5);
+        InformePanel.setViewportView(InformeField);
 
         javax.swing.GroupLayout MiddlePanelLayout = new javax.swing.GroupLayout(MiddlePanel);
         MiddlePanel.setLayout(MiddlePanelLayout);
@@ -451,14 +317,14 @@ public class Socios extends javax.swing.JFrame {
             MiddlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MiddlePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ListaIngresosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(InformePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                 .addContainerGap())
         );
         MiddlePanelLayout.setVerticalGroup(
             MiddlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MiddlePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ListaIngresosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addComponent(InformePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -466,19 +332,13 @@ public class Socios extends javax.swing.JFrame {
 
         RightPanel.setPreferredSize(new java.awt.Dimension(155, 470));
 
-        AgregarBtn.setText("Agregar");
-        AgregarBtn.setToolTipText("");
-        AgregarBtn.addActionListener(new java.awt.event.ActionListener() {
+        CalcularBtn.setText("Calcular");
+        CalcularBtn.setToolTipText("");
+        CalcularBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AgregarBtnActionPerformed(evt);
+                CalcularBtnActionPerformed(evt);
             }
         });
-
-        BuscarBtn.setText("Buscar");
-
-        ModificarBtn.setText("Modificar");
-
-        EliminarBtn.setText("Eliminar");
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -486,25 +346,15 @@ public class Socios extends javax.swing.JFrame {
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(AgregarBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BuscarBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                    .addComponent(ModificarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                    .addComponent(EliminarBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
+                .addComponent(CalcularBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                 .addContainerGap())
         );
         RightPanelLayout.setVerticalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(AgregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BuscarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ModificarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(EliminarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addComponent(CalcularBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(421, Short.MAX_VALUE))
         );
 
         DataPanel.add(RightPanel);
@@ -573,6 +423,12 @@ public class Socios extends javax.swing.JFrame {
     	i.setVisible(true);
     }
     
+    private void SociosMenuBtnMouseClicked(java.awt.event.MouseEvent evt) {
+    	close();
+    	Socios s = new Socios();
+    	s.setVisible(true);
+    }
+    
     private void IngresosMenuBtnMouseClicked(java.awt.event.MouseEvent evt) {
     	close();
     	Ingresos i = new Ingresos();
@@ -585,28 +441,29 @@ public class Socios extends javax.swing.JFrame {
     	p.setVisible(true);
     }
     
-    private void InformeMenuBtnMouseClicked(java.awt.event.MouseEvent evt) {
-    	close();
-    	Informe i = new Informe();
-    	i.setVisible(true);
-    }
-    
     private void ListaEsperaMenuBtnMouseClicked(java.awt.event.MouseEvent evt) {
     	close();
     	ListaEspera l = new ListaEspera();
     	l.setVisible(true);
     }
 
-    private void AgregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
+    private void CalcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_AgregarBtnActionPerformed
+    }//GEN-LAST:event_CalcularBtnActionPerformed
+
+    private void IngresosMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresosMenuBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IngresosMenuBtnActionPerformed
+
+    private void SociosMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SociosMenuBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SociosMenuBtnActionPerformed
     
     private void close() {
     	WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
-    
-    
+
 
     /**
      * @param args the command line arguments
@@ -625,81 +482,55 @@ public class Socios extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Socios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Informe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Socios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Informe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Socios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Informe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Socios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Informe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Socios().setVisible(true);
+                new Informe().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AgregarBtn;
-    private javax.swing.JTextPane ApellidosField;
-    private javax.swing.JScrollPane ApellidosPanel;
-    private javax.swing.JLabel ApellidosTxt;
-    private javax.swing.JButton BuscarBtn;
-    private javax.swing.JTextPane CorreoField;
-    private javax.swing.JScrollPane CorreoPanel;
-    private javax.swing.JLabel CorreoTxt;
-    private javax.swing.JTextPane DNIField;
-    private javax.swing.JScrollPane DNIPanel;
-    private javax.swing.JLabel DNITxt;
+    private javax.swing.JButton CalcularBtn;
     private javax.swing.JPanel DataPanel;
-    private javax.swing.JTextPane DireccionField;
-    private javax.swing.JScrollPane DireccionPanel;
-    private javax.swing.JLabel DireccionTxt;
-    private javax.swing.JButton EliminarBtn;
-    private javax.swing.JTextPane EstadoField;
-    private javax.swing.JScrollPane EstadoPanel;
-    private javax.swing.JLabel EstadoTxt;
     private javax.swing.JPanel ExitBtn;
     private javax.swing.JLabel ExitTxt;
-    private javax.swing.JTextPane FechaAltaField;
-    private javax.swing.JScrollPane FechaAltaPanel;
-    private javax.swing.JLabel FechaAltaTxt;
-    private javax.swing.JTextPane FechaBajaField;
-    private javax.swing.JScrollPane FechaBajaPanel;
-    private javax.swing.JLabel FechaBajaTxt;
-    private javax.swing.JButton InformeMenuBtn;
+    private javax.swing.JTextArea InformeField;
+    private javax.swing.JScrollPane InformePanel;
     private javax.swing.JButton IngresosMenuBtn;
     private javax.swing.JButton InicioMenuBtn;
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JButton ListaEsperaMenuBtn;
-    private javax.swing.JTextArea ListaIngresosField;
-    private javax.swing.JScrollPane ListaIngresosPanel;
     private javax.swing.JToolBar MenuToolBar;
     private javax.swing.JPanel MiddlePanel;
     private javax.swing.JPanel MinimizeBtn;
     private javax.swing.JLabel MinimizeTxt;
-    private javax.swing.JButton ModificarBtn;
-    private javax.swing.JTextPane NombreField;
-    private javax.swing.JScrollPane NombrePanel;
-    private javax.swing.JLabel NombreTxt;
-    private javax.swing.JTextPane NumeroHuertoField;
-    private javax.swing.JScrollPane NumeroHuertoPanel;
-    private javax.swing.JLabel NumeroHuertoTxt;
-    private javax.swing.JTextPane NumeroSocioField;
-    private javax.swing.JScrollPane NumeroSocioPanel;
-    private javax.swing.JLabel NumeroSocioTxt;
     private javax.swing.JButton PagosMenuBtn;
     private javax.swing.JPanel RightPanel;
-    private javax.swing.JTextPane TelefonoField;
-    private javax.swing.JScrollPane TelefonoPanel;
-    private javax.swing.JLabel TelefonoTxt;
-    private javax.swing.JTextPane TipoField;
-    private javax.swing.JScrollPane TipoPanel;
-    private javax.swing.JLabel TipoTxt;
+    private javax.swing.JTextPane SIBancoField;
+    private javax.swing.JScrollPane SIBancoPanel;
+    private javax.swing.JLabel SIBancoTxt;
+    private javax.swing.JTextPane SICajaField;
+    private javax.swing.JScrollPane SICajaPanel;
+    private javax.swing.JLabel SICajaTxt;
+    private javax.swing.JButton SociosMenuBtn;
     private javax.swing.JToolBar ToolBar;
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelLogo;

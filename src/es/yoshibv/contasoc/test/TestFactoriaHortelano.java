@@ -8,10 +8,10 @@ import es.yoshibv.contasoc.Hortelanos;
 
 public class TestFactoriaHortelano {
 	public static void main(String[] args) {
-		/*Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/test.csv");
+		Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/test.csv");
 		for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
 			FactoriaHortelano.añadeHortelano(e.getValue().toString(), "./data/data.csv");
-		}*/
+		}
 		Hortelanos hortelanos2 = FactoriaHortelano.leeHortelano("./data/hortelanos.csv");
 		print(hortelanos2.getHortelanoPorNumero(143));
 	}
