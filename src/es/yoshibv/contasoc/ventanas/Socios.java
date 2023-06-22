@@ -9,6 +9,13 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.util.List;
+
+import javax.swing.JTextPane;
+
+import es.yoshibv.contasoc.ventanas.acciones.AñadirSocioBtnAction;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -599,6 +606,7 @@ public class Socios extends javax.swing.JFrame {
 
     private void AgregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
         // TODO add your handling code here:
+    	AñadirSocioBtnAction.añadirSocio(getTextFields());
     }//GEN-LAST:event_AgregarBtnActionPerformed
     
     private void close() {
@@ -606,7 +614,42 @@ public class Socios extends javax.swing.JFrame {
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
     
+    public List<JTextPane> getTextFields(){
+    	List<JTextPane> aux = new ArrayList<JTextPane>();
+    	aux.add(NombreField);
+    	aux.add(ApellidosField);
+    	aux.add(DNIField);
+    	aux.add(DireccionField);
+    	aux.add(TelefonoField);
+    	aux.add(NumeroSocioField);
+    	aux.add(NumeroHuertoField);
+    	aux.add(FechaAltaField);
+    	aux.add(FechaBajaField);
+    	aux.add(EstadoField);
+    	aux.add(TipoField);
+    	return aux;
+    }
     
+    public List<String> getData() {
+    	List<JTextPane> aux = new ArrayList<JTextPane>();
+    	List<String> res = new ArrayList<String>();
+    	for(JTextPane tp:aux) {
+    		res.add(tp.getText());
+    	}
+    	return res;
+    }
+    
+    public void setData(List<String> data) {
+    	List<JTextPane> aux = getTextFields();
+    	int i = 0;
+    	while(i < aux.size()) {
+    		for(String s:data) {
+        		aux.get(i).setText(s);
+        		i++;
+        	}
+    	}
+    	
+    }
 
     /**
      * @param args the command line arguments

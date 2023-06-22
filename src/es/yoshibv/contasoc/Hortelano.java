@@ -34,7 +34,7 @@ public class Hortelano implements Comparable<Hortelano> {
 		this.tipo = tipo;
 		this.ingresos = new ArrayList<Ingreso>();
 	}
-
+	
 	public Integer getSocio() {
 		return socio;
 	}
