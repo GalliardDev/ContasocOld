@@ -30,8 +30,23 @@ public class Fichero {
 		 * Lanza una IOException si hay algún error al escribir en el fichero. */
 		 try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(nombreFichero));
-			 writer.write(cadena);
-			 writer.close();
+			writer.flush();
+			writer.write(cadena);
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void limpiaFichero(String nombreFichero) {
+		/* Método que usa el método .flush() de BufferedFileWriter
+		 * para limpiar el fichero especificado por la string pro-
+		 * porcionada.*/
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(nombreFichero));
+			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

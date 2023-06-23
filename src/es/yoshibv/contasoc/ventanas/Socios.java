@@ -10,10 +10,15 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
+import javax.swing.UIManager;
 
-import es.yoshibv.contasoc.ventanas.acciones.AñadirSocioBtnAction;
+import es.yoshibv.contasoc.FactoriaHortelano;
+import es.yoshibv.contasoc.Hortelano;
+import es.yoshibv.contasoc.Hortelanos;
 
 import java.util.ArrayList;
 
@@ -474,7 +479,6 @@ public class Socios extends javax.swing.JFrame {
         RightPanel.setPreferredSize(new java.awt.Dimension(155, 470));
 
         AgregarBtn.setText("Agregar");
-        AgregarBtn.setToolTipText("");
         AgregarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarBtnActionPerformed(evt);
@@ -482,10 +486,25 @@ public class Socios extends javax.swing.JFrame {
         });
 
         BuscarBtn.setText("Buscar");
+        BuscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	BuscarBtnActionPerformed(evt);
+            }
+        });
 
         ModificarBtn.setText("Modificar");
+        ModificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	ModificarBtnActionPerformed(evt);
+            }
+        });
 
         EliminarBtn.setText("Eliminar");
+        EliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	EliminarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -606,21 +625,34 @@ public class Socios extends javax.swing.JFrame {
 
     private void AgregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
         // TODO add your handling code here:
-    	AñadirSocioBtnAction.añadirSocio(getTextFields());
+    	añadirSocio();
     }//GEN-LAST:event_AgregarBtnActionPerformed
+    
+    private void BuscarBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    	buscarSocio();
+    }
+    
+    private void ModificarBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    	modificarSocio();
+    }
+    
+    private void EliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {
+    	eliminarSocio();
+    }
     
     private void close() {
     	WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
     
-    public List<JTextPane> getTextFields(){
+    private List<JTextPane> getTextFields(){
     	List<JTextPane> aux = new ArrayList<JTextPane>();
     	aux.add(NombreField);
     	aux.add(ApellidosField);
     	aux.add(DNIField);
     	aux.add(DireccionField);
     	aux.add(TelefonoField);
+    	aux.add(CorreoField);
     	aux.add(NumeroSocioField);
     	aux.add(NumeroHuertoField);
     	aux.add(FechaAltaField);
@@ -629,26 +661,154 @@ public class Socios extends javax.swing.JFrame {
     	aux.add(TipoField);
     	return aux;
     }
+        
+    private void añadirSocio() {    	
+		List<JTextPane> lista = getTextFields();
+		String nombre = lista.get(0).getText();
+		String apellidos = lista.get(1).getText();
+		String dni = lista.get(2).getText();
+		String direccion = lista.get(3).getText();
+		String telefono = lista.get(4).getText();
+		String correo = lista.get(5).getText();
+		String socio = String.valueOf(FactoriaHortelano.leeHortelano("./data/hortelanos.csv").getHortelanos().lastKey()+1);
+		String huerto = lista.get(7).getText();
+		String alta = lista.get(8).getText();
+		String baja = "null";
+		String estado = "ACTIVO";
+		String tipo = lista.get(11).getText();
+		
+		String hortelano = String.join(";", List.of(nombre,apellidos,dni,direccion,telefono,
+				correo,socio,huerto,alta,baja,estado,tipo))+";[]";
+		if(nombre.equals("") ||
+				apellidos.equals("") ||
+				dni.equals("") ||
+				direccion.equals("") ||
+				(telefono.equals("") && correo.equals("")) ||
+				alta.equals("") ||
+				tipo.equals("")) {		
+			JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
+		               "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(huerto.equals("") && !(tipo.equals("LISTA_ESPERA"))) {
+			JOptionPane.showMessageDialog(getContentPane(), "Introducir número de huerto",
+		               "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(!(huerto.equals("")) && tipo.equals("")) {
+			JOptionPane.showMessageDialog(getContentPane(), "Introducir tipo de socio",
+		               "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(!(huerto.equals("")) && tipo.equals("LISTA_ESPERA")) {
+			JOptionPane.showMessageDialog(getContentPane(), "El tipo de socio no es el adecuado",
+		               "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		FactoriaHortelano.añadeHortelano(hortelano, "./data/hortelanos.csv");
+		
+		for(JTextPane tp:lista) {
+			tp.setText("");
+		}
+	}
     
-    public List<String> getData() {
-    	List<JTextPane> aux = new ArrayList<JTextPane>();
-    	List<String> res = new ArrayList<String>();
-    	for(JTextPane tp:aux) {
-    		res.add(tp.getText());
+    private void buscarSocio() {
+    	List<JTextPane> lista = getTextFields();
+    	Integer socio = Integer.valueOf(lista.get(6).getText());
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/hortelanos.csv");
+    	Hortelano hortelano = hortelanos.getHortelanoPorNumero(socio);
+    	List<String> aux = new ArrayList<String>();
+    	for(String s:hortelano.toString().split(";")) {
+    		aux.add(s);
     	}
-    	return res;
+    	NumeroSocioField.setText(aux.get(6));
+    	NombreField.setText(aux.get(0));
+    	ApellidosField.setText(aux.get(1));
+    	DNIField.setText(aux.get(2));
+    	DireccionField.setText(aux.get(3));
+    	TelefonoField.setText(aux.get(4));
+    	CorreoField.setText(aux.get(5));
+    	NumeroHuertoField.setText(aux.get(7));
+    	FechaAltaField.setText(aux.get(8));
+    	if(aux.get(9).equals("")) {
+    		FechaBajaField.setText(aux.get(9));
+    	}
+    	EstadoField.setText(aux.get(10));
+    	TipoField.setText(aux.get(11));
+    	
+    	String[] ingArr = aux.get(12).replace("[","").replace("]", "").replace(" ", "").split(",");
+    	ListaIngresosField.setText(String.join("\n", ingArr));
+    	
+    	
     }
     
-    public void setData(List<String> data) {
-    	List<JTextPane> aux = getTextFields();
-    	int i = 0;
-    	while(i < aux.size()) {
-    		for(String s:data) {
-        		aux.get(i).setText(s);
-        		i++;
-        	}
+    private void modificarSocio() {
+    	List<JTextPane> lista = getTextFields();
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/hortelanos.csv");
+    	String nombre = lista.get(0).getText();
+		String apellidos = lista.get(1).getText();
+		String dni = lista.get(2).getText();
+		String direccion = lista.get(3).getText();
+		String telefono = lista.get(4).getText();
+		String correo = lista.get(5).getText();
+		String socio = lista.get(6).getText();
+		String huerto = lista.get(7).getText();
+		String alta = lista.get(8).getText();
+		String baja = lista.get(9).getText();
+		String estado = lista.get(10).getText();
+		String tipo = lista.get(11).getText();
+		String h = String.join(";", List.of(nombre,apellidos,dni,direccion,telefono,
+				correo,socio,huerto,alta,baja,estado,tipo));
+		Hortelano hortelano = new Hortelano(h);
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.getPersona().setNombre(hortelano.getPersona().getNombre());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.getPersona().setApellidos(hortelano.getPersona().getApellidos());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.getPersona().setDni(hortelano.getPersona().getDni());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.getPersona().setDireccion(hortelano.getPersona().getDireccion());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.getPersona().setTelefono(hortelano.getPersona().getTelefono());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.getPersona().setCorreo(hortelano.getPersona().getCorreo());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.setSocio(hortelano.getSocio());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.setHuerto(hortelano.getHuerto());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.setAlta(hortelano.getAlta());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.setBaja(hortelano.getBaja());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.setEstado(hortelano.getEstado());
+		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+			.setTipo(hortelano.getTipo());
+		List<String> aux = new ArrayList<String>();
+    	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
+    		aux.add(e.getValue().toString().replace(" [", "["));
     	}
-    	
+    	FactoriaHortelano.escribeHortelano(aux.get(0), "./data/hortelanos.csv");
+    	for(String s:aux.subList(1, aux.size())) {
+    		FactoriaHortelano.añadeHortelano(s, "./data/hortelanos.csv");
+    	}
+			
+    }
+    
+    private void eliminarSocio() {
+    	List<JTextPane> lista = getTextFields();
+    	Integer socio = Integer.valueOf(lista.get(6).getText());
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/hortelanos.csv");
+    	Hortelano hortelano = hortelanos.getHortelanoPorNumero(socio);
+    	hortelanos.eliminarHortelano(hortelano.getSocio());
+    	List<String> aux = new ArrayList<String>();
+    	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
+    		aux.add(e.getValue().toString().replace(" [", "["));
+    	}
+    	FactoriaHortelano.escribeHortelano(aux.get(0), "./data/hortelanos.csv");
+    	for(String s:aux.subList(1, aux.size())) {
+    		FactoriaHortelano.añadeHortelano(s, "./data/hortelanos.csv");
+    	}
     }
 
     /**
@@ -661,12 +821,13 @@ public class Socios extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            /*for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
-            }
+            }*/
+        	javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(Socios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -675,7 +836,7 @@ public class Socios extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Socios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Socios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }    	
         //</editor-fold>
 
         /* Create and display the form */

@@ -9,10 +9,10 @@ public class Persona {
 	private String apellidos;
 	private String dni;
 	private String direccion;
-	private Integer telefono;
+	private String telefono;
 	private String correo;
 	
-	public Persona(String nombre, String apellidos, String dni, String direccion, Integer telefono, String correo) {
+	public Persona(String nombre, String apellidos, String dni, String direccion, String telefono, String correo) {
 		super();
 		Checkers.checkNoNull(nombre,apellidos,dni,direccion);	
 		this.nombre = nombre;
@@ -55,11 +55,11 @@ public class Persona {
 		this.direccion = direccion;
 	}
 
-	public Integer getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(Integer telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 

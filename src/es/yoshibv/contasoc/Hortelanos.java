@@ -1,7 +1,8 @@
 package es.yoshibv.contasoc;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.SortedMap;
+import java.util.stream.Collectors;
 
 public class Hortelanos {
 	private SortedMap<Integer,Hortelano> hortelanos;
@@ -19,22 +20,26 @@ public class Hortelanos {
 		return hortelanos.get(id);
 	}
 	
+	public Hortelano getHortelanoPorNumeroDeHuerto(Integer id) {
+		return hortelanos.entrySet().stream()
+				.filter(e->e.getValue().getHuerto().equals(id))
+				.map(x->x.getValue())
+				.collect(Collectors.collectingAndThen(
+						Collectors.toList(),
+						lista->List.copyOf(lista).get(0)));
+	}
+	
 	public Hortelano getHortelanoPorNombreCompleto(String nc) {
-		String[] aux = nc.split(" ");
-		String[] nomArr = Arrays.copyOfRange(aux, 0, aux.length-3);
-		String[] apeArr = Arrays.copyOfRange(aux, aux.length-2, aux.length-1);
-		String auxNombre = String.join(" ",nomArr);
-		String auxApellidos = String.join(" ",apeArr);
-
-		
-		String nombre = new String(auxNombre);
-		String apellidos = new String(auxApellidos);
-		System.out.println(nombre);
-		System.out.println(apellidos);
-		
-		return getHortelanos().entrySet().stream()
-				.filter(x->(x.getValue().getPersona().getNombre().equals(nombre) && x.getValue().getPersona().getApellidos().equals(apellidos)))
-				.findFirst().get().getValue();
-		}
-		
+		return hortelanos.entrySet().stream()
+				.filter(e->String.join(" ", List.of(e.getValue().getPersona().getNombre(),e.getValue().getPersona().getApellidos())).equals(nc))
+				.map(x->x.getValue())
+				.collect(Collectors.collectingAndThen(
+						Collectors.toList(),
+						lista->List.copyOf(lista).get(0)));
+	}
+	
+	public void eliminarHortelano(Integer id) {
+		hortelanos.remove(id);
+	}
+	
 }
