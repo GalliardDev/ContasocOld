@@ -22,6 +22,7 @@ import es.yoshibv.contasoc.Hortelanos;
 import es.yoshibv.contasoc.Main;
 import es.yoshibv.contasoc.common.Estado;
 import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
+import es.yoshibv.contasoc.util.Fichero;
 
 import java.util.ArrayList;
 
@@ -711,6 +712,7 @@ public class Socios extends javax.swing.JFrame {
 		}
 		
 		FactoriaHortelano.añadeHortelano(hortelano, Main.HORTELANOS);
+		Fichero.añadirAlFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
 		
 		for(JTextPane tp:lista) {
 			tp.setText("");

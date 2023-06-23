@@ -1,13 +1,10 @@
 package es.yoshibv.contasoc;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import es.yoshibv.contasoc.common.Estado;
 import es.yoshibv.contasoc.common.Tipo;
-import es.yoshibv.contasoc.ingreso.Ingreso;
 import es.yoshibv.contasoc.util.Checkers;
 import es.yoshibv.contasoc.util.Parsers;
 
@@ -19,7 +16,6 @@ public class Hortelano implements Comparable<Hortelano> {
 	private LocalDate baja;
 	private Estado estado;
 	private Tipo tipo;
-	private List<Ingreso> ingresos;
 	
 	public Hortelano(Persona persona, Integer socio, Integer huerto, LocalDate alta, LocalDate baja, 
 			Estado estado, Tipo tipo) {
@@ -32,7 +28,6 @@ public class Hortelano implements Comparable<Hortelano> {
 		this.baja = baja;
 		this.estado = estado;
 		this.tipo = tipo;
-		this.ingresos = new ArrayList<Ingreso>();
 	}
 	
 	public Hortelano(String s) {
@@ -121,18 +116,6 @@ public class Hortelano implements Comparable<Hortelano> {
 	public Persona getPersona() {
 		return persona;
 	}
-	
-	public List<Ingreso> getIngresos() {
-		return ingresos;
-	}
-	
-	public void añadirIngreso(Ingreso ingreso) {
-		this.ingresos.add(ingreso);
-	}
-	
-	public void eliminarIngreso(Ingreso ingreso) {
-		this.ingresos.remove(ingreso);
-	}
 
 	@Override
 	public int hashCode() {
@@ -162,7 +145,7 @@ public class Hortelano implements Comparable<Hortelano> {
 		return persona.getNombre()+";"+persona.getApellidos()+";"+persona.getDni()+";"+
 				persona.getDireccion()+";"+persona.getTelefono()+";"+persona.getCorreo()+";"+
 				socio+";"+huerto+";"+Parsers.dateParser(alta)+";"+Parsers.dateParser(baja)+";"+
-				estado+";"+tipo+";"+ingresos;
+				estado+";"+tipo;
 	}
 	
 }
