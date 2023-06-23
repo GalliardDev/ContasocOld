@@ -19,6 +19,7 @@ import javax.swing.UIManager;
 import es.yoshibv.contasoc.FactoriaHortelano;
 import es.yoshibv.contasoc.Hortelano;
 import es.yoshibv.contasoc.Hortelanos;
+import es.yoshibv.contasoc.Main;
 
 import java.util.ArrayList;
 
@@ -670,7 +671,7 @@ public class Socios extends javax.swing.JFrame {
 		String direccion = lista.get(3).getText();
 		String telefono = lista.get(4).getText();
 		String correo = lista.get(5).getText();
-		String socio = String.valueOf(FactoriaHortelano.leeHortelano("./data/hortelanos.csv").getHortelanos().lastKey()+1);
+		String socio = String.valueOf(FactoriaHortelano.leeHortelano(Main.HORTELANOS).getHortelanos().lastKey()+1);
 		String huerto = lista.get(7).getText();
 		String alta = lista.get(8).getText();
 		String baja = "null";
@@ -705,7 +706,7 @@ public class Socios extends javax.swing.JFrame {
 		               "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		FactoriaHortelano.añadeHortelano(hortelano, "./data/hortelanos.csv");
+		FactoriaHortelano.añadeHortelano(hortelano, Main.HORTELANOS);
 		
 		for(JTextPane tp:lista) {
 			tp.setText("");
@@ -715,7 +716,7 @@ public class Socios extends javax.swing.JFrame {
     private void buscarSocio() {
     	List<JTextPane> lista = getTextFields();
     	Integer socio = Integer.valueOf(lista.get(6).getText());
-    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/hortelanos.csv");
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
     	Hortelano hortelano = hortelanos.getHortelanoPorNumero(socio);
     	List<String> aux = new ArrayList<String>();
     	for(String s:hortelano.toString().split(";")) {
@@ -744,7 +745,7 @@ public class Socios extends javax.swing.JFrame {
     
     private void modificarSocio() {
     	List<JTextPane> lista = getTextFields();
-    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/hortelanos.csv");
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
     	String nombre = lista.get(0).getText();
 		String apellidos = lista.get(1).getText();
 		String dni = lista.get(2).getText();
@@ -788,27 +789,35 @@ public class Socios extends javax.swing.JFrame {
     	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
     		aux.add(e.getValue().toString().replace(" [", "["));
     	}
-    	FactoriaHortelano.escribeHortelano(aux.get(0), "./data/hortelanos.csv");
+    	FactoriaHortelano.escribeHortelano(aux.get(0), Main.HORTELANOS);
     	for(String s:aux.subList(1, aux.size())) {
-    		FactoriaHortelano.añadeHortelano(s, "./data/hortelanos.csv");
+    		FactoriaHortelano.añadeHortelano(s, Main.HORTELANOS);
     	}
+    	
+    	for(JTextPane tp:lista) {
+			tp.setText("");
+		}
 			
     }
     
     private void eliminarSocio() {
     	List<JTextPane> lista = getTextFields();
     	Integer socio = Integer.valueOf(lista.get(6).getText());
-    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano("./data/hortelanos.csv");
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
     	Hortelano hortelano = hortelanos.getHortelanoPorNumero(socio);
     	hortelanos.eliminarHortelano(hortelano.getSocio());
     	List<String> aux = new ArrayList<String>();
     	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
     		aux.add(e.getValue().toString().replace(" [", "["));
     	}
-    	FactoriaHortelano.escribeHortelano(aux.get(0), "./data/hortelanos.csv");
+    	FactoriaHortelano.escribeHortelano(aux.get(0), Main.HORTELANOS);
     	for(String s:aux.subList(1, aux.size())) {
-    		FactoriaHortelano.añadeHortelano(s, "./data/hortelanos.csv");
+    		FactoriaHortelano.añadeHortelano(s, Main.HORTELANOS);
     	}
+    	
+    	for(JTextPane tp:lista) {
+			tp.setText("");
+		}
     }
 
     /**

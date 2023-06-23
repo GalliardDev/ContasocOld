@@ -20,6 +20,9 @@ import javax.swing.UIManager;
 public class Inicio extends javax.swing.JFrame {
     
     private int xMouse, yMouse;
+    public static String HORTELANOS_BDD;
+    public static String PAGOS_BDD;
+    public static String LISTA_ESPERA_BDD;
     
     /**
      * Creates new form Interfaz
@@ -484,12 +487,7 @@ public class Inicio extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Inicio().setVisible(true);
-            }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
