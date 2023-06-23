@@ -652,6 +652,10 @@ public class Ingresos extends javax.swing.JFrame {
 			tp.setText("");
 		}
     	
+    	List<String> ingresosList = ingresos.getIngresosPorNumero(socio).stream()
+    			.map(x->x.toString())
+    			.toList();
+    	ListaIngresosField.setText(String.join("\n", ingresosList));    	
     }
     
     private void eliminarIngreso() {

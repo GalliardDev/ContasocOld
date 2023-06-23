@@ -20,6 +20,8 @@ import es.yoshibv.contasoc.FactoriaHortelano;
 import es.yoshibv.contasoc.Hortelano;
 import es.yoshibv.contasoc.Hortelanos;
 import es.yoshibv.contasoc.Main;
+import es.yoshibv.contasoc.common.Estado;
+import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
 
 import java.util.ArrayList;
 
@@ -733,14 +735,19 @@ public class Socios extends javax.swing.JFrame {
     	CorreoField.setText(aux.get(5));
     	NumeroHuertoField.setText(aux.get(7));
     	FechaAltaField.setText(aux.get(8));
-    	if(aux.get(9).equals("")) {
+    	if(aux.get(9).equals("null")) {
+    		FechaBajaField.setText("");
+    	} else if(!(aux.get(9).equals(""))) {
     		FechaBajaField.setText(aux.get(9));
     	}
     	EstadoField.setText(aux.get(10));
     	TipoField.setText(aux.get(11));
     	
-    	String[] ingArr = aux.get(12).replace("[","").replace("]", "").replace(" ", "").split(",");
-    	ListaIngresosField.setText(String.join("\n", ingArr));
+    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+    	List<String> ingresosList = ingresos.getIngresosPorNumero(socio).stream()
+    			.map(x->x.toString())
+    			.toList();
+    	ListaIngresosField.setText(String.join("\n", ingresosList));
     	
     	
     }
@@ -781,10 +788,17 @@ public class Socios extends javax.swing.JFrame {
 			.setHuerto(hortelano.getHuerto());
 		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
 			.setAlta(hortelano.getAlta());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.setBaja(hortelano.getBaja());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.setEstado(hortelano.getEstado());
+		if(baja.equals("")) {
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setBaja(null);
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setEstado(hortelano.getEstado());
+		} else if(!(baja.equals(""))) {
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setBaja(hortelano.getBaja());
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setEstado(Estado.INACTIVO);
+		}
 		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
 			.setTipo(hortelano.getTipo());
 		List<String> aux = new ArrayList<String>();
