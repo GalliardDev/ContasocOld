@@ -9,6 +9,10 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -23,8 +27,6 @@ import es.yoshibv.contasoc.Main;
 import es.yoshibv.contasoc.common.Estado;
 import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
 import es.yoshibv.contasoc.util.Fichero;
-
-import java.util.ArrayList;
 
 /**
  *
@@ -711,9 +713,19 @@ public class Socios extends javax.swing.JFrame {
 			return;
 		}
 		
-		FactoriaHortelano.añadeHortelano(hortelano, Main.HORTELANOS);
-		Fichero.añadirAlFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
-		
+		try {
+			if(Files.readAllLines(Path.of(Main.HORTELANOS)).get(0).equals("nombre;apellidos;dni;direccion;000000000;correo;0;0;1/1/1901;2/1/1901;INACTIVO;HORTELANO")) {
+				FactoriaHortelano.escribeHortelano(hortelano, Main.HORTELANOS);
+				Fichero.escribeFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
+			} else {
+				FactoriaHortelano.añadeHortelano(hortelano, Main.HORTELANOS);
+				Fichero.añadirAlFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
 		for(JTextPane tp:lista) {
 			tp.setText("");
 		}

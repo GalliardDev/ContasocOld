@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import javax.swing.UIManager;
 
+import es.yoshibv.contasoc.util.Fichero;
 import es.yoshibv.contasoc.ventanas.Inicio;
 
 public class Main {
@@ -20,6 +21,7 @@ public class Main {
 		
 		createFolder();
 		initFiles();
+		initFileValues();
 
         try {
         	javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -77,6 +79,13 @@ public class Main {
     	} else {
     	    System.out.println("Los archivos ya existen.");
     	}
+	}
+	
+	private static void initFileValues() {
+		File hortelanos = new File(HORTELANOS);
+		if(hortelanos.length()==0L) {
+			Fichero.escribeFichero("nombre;apellidos;dni;direccion;000000000;correo;0;0;1/1/1901;2/1/1901;INACTIVO;HORTELANO", HORTELANOS);
+		}
 	}
 	
 }
