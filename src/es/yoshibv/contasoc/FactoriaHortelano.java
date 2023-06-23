@@ -3,14 +3,11 @@ package es.yoshibv.contasoc;
 import java.time.LocalDate;
 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import es.yoshibv.contasoc.common.Cuota;
 import es.yoshibv.contasoc.common.Estado;
 import es.yoshibv.contasoc.common.Tipo;
-import es.yoshibv.contasoc.ingreso.Ingreso;
 import es.yoshibv.contasoc.util.Fichero;
 
 public class FactoriaHortelano {
@@ -57,26 +54,10 @@ public class FactoriaHortelano {
 		}
 		Estado estado = Estado.valueOf(t[10]);
 		Tipo tipo = Tipo.valueOf(t[11]);
-		List<Ingreso> ingresos = null;
-		if(t[12].equals("[]")) {
-			ingresos = new ArrayList<Ingreso>();
-		} else {
-			ingresos = new ArrayList<Ingreso>();
-			String[] ingArr = t[12].replace("[", "").replace("]", "").split(",");
-			for(String ingStr:ingArr) {
-				String[] aux = ingStr.split("-");
-				String[] fechaArr = aux[0].split("/");
-				LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
-				String concepto = aux[1];
-				Double cantidad = Double.valueOf(aux[2].trim());
-				Cuota cuota = Cuota.valueOf(aux[3]);
-				ingresos.add(new Ingreso(fecha,concepto,cantidad,cuota));
-			}
-		}
-		
+	
 		Hortelano h = new Hortelano(new Persona(nombre,apellidos,dni,direccion,telefono,correo),
 				socio,huerto,alta,baja,estado,tipo);
-		ingresos.stream().forEach(x->h.añadirIngreso(x));
+		
 		return h;
 	}
 }

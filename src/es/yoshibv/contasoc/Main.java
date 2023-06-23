@@ -12,6 +12,7 @@ import es.yoshibv.contasoc.ventanas.Inicio;
 public class Main {
 	
 	public static final String HORTELANOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/hortelanos.csv";
+	public static final String INGRESOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/ingresos.csv";
 	public static final String PAGOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/pagos.csv";
 	public static final String LISTA_ESPERA = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/lista_espera.csv";
 	
@@ -59,12 +60,14 @@ public class Main {
 		String contasocFolderPath = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc";
 		
 		File hortelanos = new File(contasocFolderPath, "hortelanos.csv");
+		File ingresos = new File(contasocFolderPath, "ingresos.csv");
 		File pagos = new File(contasocFolderPath, "pagos.csv");
 		File lista_espera = new File(contasocFolderPath, "lista_espera.csv");
 		
     	if(!(hortelanos.exists() && pagos.exists() && lista_espera.exists())) {
     		try {
     	        hortelanos.createNewFile();
+    	        ingresos.createNewFile();
     	        pagos.createNewFile();
     	        lista_espera.createNewFile();
     	        System.out.println("Archivos creados correctamente.");

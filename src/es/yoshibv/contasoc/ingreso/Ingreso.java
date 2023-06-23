@@ -72,7 +72,7 @@ public class Ingreso implements Comparable<Ingreso> {
 
 	@Override
 	public String toString() {
-		return "["+Parsers.dateParser(fecha)+"-"+concepto+"-"+cantidad+"-"+cuota+"]";
+		return Parsers.dateParser(fecha)+"-"+concepto+"-"+cantidad+"-"+cuota;
 	}
 		
 }
