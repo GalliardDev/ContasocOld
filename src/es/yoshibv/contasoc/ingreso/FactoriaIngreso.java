@@ -42,7 +42,7 @@ public class FactoriaIngreso {
 			ingresos = new ArrayList<Ingreso>();
 		} else {
 			ingresos = new ArrayList<Ingreso>();
-			String[] ingArr = t[1].replace("[", "").replace("]", "").split(",");
+			String[] ingArr = t[1].replace("[", "").replace("]", "").split(", ");
 			for(String ingStr:ingArr) {
 				socio = Integer.valueOf(t[0].trim());
 				String[] aux = ingStr.split("-");

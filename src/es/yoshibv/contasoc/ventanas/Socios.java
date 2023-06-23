@@ -679,7 +679,8 @@ public class Socios extends javax.swing.JFrame {
 		String tipo = lista.get(11).getText();
 		
 		String hortelano = String.join(";", List.of(nombre,apellidos,dni,direccion,telefono,
-				correo,socio,huerto,alta,baja,estado,tipo))+";[]";
+				correo,socio,huerto,alta,baja,estado,tipo));
+		
 		if(nombre.equals("") ||
 				apellidos.equals("") ||
 				dni.equals("") ||
@@ -706,6 +707,7 @@ public class Socios extends javax.swing.JFrame {
 		               "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		
 		FactoriaHortelano.añadeHortelano(hortelano, Main.HORTELANOS);
 		
 		for(JTextPane tp:lista) {

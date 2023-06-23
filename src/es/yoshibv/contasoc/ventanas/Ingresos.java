@@ -9,8 +9,20 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
+
+import es.yoshibv.contasoc.Main;
+import es.yoshibv.contasoc.common.Cuota;
+import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
+import es.yoshibv.contasoc.ingreso.Ingreso;
+import es.yoshibv.contasoc.util.Fichero;
 
 /**
  *
@@ -368,7 +380,6 @@ public class Ingresos extends javax.swing.JFrame {
         RightPanel.setPreferredSize(new java.awt.Dimension(155, 470));
 
         AgregarBtn.setText("Agregar");
-        AgregarBtn.setToolTipText("");
         AgregarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarBtnActionPerformed(evt);
@@ -376,10 +387,25 @@ public class Ingresos extends javax.swing.JFrame {
         });
 
         BuscarBtn.setText("Buscar");
+        BuscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarBtnActionPerformed(evt);
+            }
+        });
 
         ModificarBtn.setText("Modificar");
+        ModificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarBtnActionPerformed(evt);
+            }
+        });
 
         EliminarBtn.setText("Eliminar");
+        EliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -498,9 +524,35 @@ public class Ingresos extends javax.swing.JFrame {
     	l.setVisible(true);
     }
 
+    private List<JTextPane> getTextFields(){
+    	List<JTextPane> aux = new ArrayList<JTextPane>();
+    	aux.add(NumeroSocioField);
+    	aux.add(FechaField);
+    	aux.add(ConceptoField);
+    	aux.add(CantidadField);
+    	aux.add(CuotaField);
+    	return aux;
+    }
+    
     private void AgregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
         // TODO add your handling code here:
+    	añadirIngreso();
     }//GEN-LAST:event_AgregarBtnActionPerformed
+    
+    private void BuscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
+        // TODO add your handling code here:
+    	buscarIngreso();
+    }
+    
+    private void ModificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
+        // TODO add your handling code here:
+    	modificarIngreso();
+    }
+    
+    private void EliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
+        // TODO add your handling code here:
+    	eliminarIngreso();
+    }
 
     private void PagosMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PagosMenuBtnActionPerformed
         // TODO add your handling code here:
@@ -511,6 +563,125 @@ public class Ingresos extends javax.swing.JFrame {
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
 
+    private void añadirIngreso() {
+    	List<JTextPane> lista = getTextFields();
+    	Integer socio = Integer.valueOf(lista.get(0).getText());
+    	String fecha = lista.get(1).getText();
+    	String concepto = lista.get(2).getText();
+    	String cantidad = lista.get(3).getText();
+    	String cuota = lista.get(4).getText();
+    	
+    	String i = String.join("-", List.of(fecha,concepto,cantidad,cuota));
+    	
+    	Ingreso ingreso = new Ingreso(i);
+    	
+    	if(String.valueOf(socio).equals("") ||
+				fecha.equals("") ||
+				concepto.equals("") ||
+				cantidad.equals("") ||
+				cuota.equals("")) {		
+			JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
+		               "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+    	    	
+    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+    	
+    	ingresos.agregarIngreso(Integer.valueOf(socio), ingreso);
+    	
+    	List<Integer> keys = new ArrayList<Integer>();
+    	List<List<Ingreso>> values = new ArrayList<List<Ingreso>>();
+    	for(Entry<Integer,List<Ingreso>> e:ingresos.getIngresos().entrySet()) {
+    		keys.add(e.getKey());
+    		values.add(e.getValue());
+    	}
+    	
+    	Fichero.escribeFichero(keys.get(0)+";"+values.get(0), Main.INGRESOS);
+    	for(int n = 1; n < keys.size(); n++) {
+    		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
+    	}
+    	
+    	for(JTextPane tp:lista) {
+			tp.setText("");
+		}
+    }
+    
+    private void buscarIngreso() {
+    	List<JTextPane> lista = getTextFields();
+    	Integer socio = Integer.valueOf(lista.get(0).getText());
+    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+    	List<String> ingresosList = ingresos.getIngresosPorNumero(socio).stream()
+    			.map(x->x.toString())
+    			.toList();
+    	ListaIngresosField.setText(String.join("\n", ingresosList));
+    }
+    
+    private void modificarIngreso() {
+    	List<JTextPane> lista = getTextFields();
+    	Integer socio = Integer.valueOf(lista.get(0).getText());
+    	String[] fechaArr = lista.get(1).getText().split("/");
+    	LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
+    	String concepto = lista.get(2).getText();
+    	Double cantidad = Double.valueOf(lista.get(3).getText());
+    	Cuota cuota = Cuota.valueOf(lista.get(4).getText());
+    	
+    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+    	List<Ingreso> aux = ingresos.getIngresosPorNumero(socio);
+    	
+    	for(Ingreso i:aux) {
+    		if(i.getFecha().equals(fecha)) {
+    			i.setConcepto(concepto);
+    			i.setCantidad(cantidad);
+    			i.setCuota(cuota);
+    		}
+    	}
+    	
+    	List<Integer> keys = new ArrayList<Integer>();
+    	List<List<Ingreso>> values = new ArrayList<List<Ingreso>>();
+    	for(Entry<Integer,List<Ingreso>> e:ingresos.getIngresos().entrySet()) {
+    		keys.add(e.getKey());
+    		values.add(e.getValue());
+    	}
+    	
+    	Fichero.escribeFichero(keys.get(0)+";"+values.get(0), Main.INGRESOS);
+    	for(int n = 1; n < keys.size(); n++) {
+    		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
+    	}
+    	
+    	for(JTextPane tp:lista) {
+			tp.setText("");
+		}
+    	
+    }
+    
+    private void eliminarIngreso() {
+    	List<JTextPane> lista = getTextFields();
+    	Integer socio = Integer.valueOf(lista.get(0).getText());
+    	String[] fechaArr = lista.get(1).getText().split("/");
+    	LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
+    
+    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+    
+    	ingresos.eliminarIngreso(socio, fecha);
+    	
+    	List<Integer> keys = new ArrayList<Integer>();
+    	List<List<Ingreso>> values = new ArrayList<List<Ingreso>>();
+    	for(Entry<Integer,List<Ingreso>> e:ingresos.getIngresos().entrySet()) {
+    		keys.add(e.getKey());
+    		values.add(e.getValue());
+    	}
+    	
+    	Fichero.escribeFichero(keys.get(0)+";"+values.get(0), Main.INGRESOS);
+    	for(int n = 1; n < keys.size(); n++) {
+    		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
+    	}
+    	
+    	for(JTextPane tp:lista) {
+			tp.setText("");
+		}
+    	ListaIngresosField.setText("");
+    
+    }
     
     /**
      * @param args the command line arguments

@@ -19,6 +19,21 @@ public class Ingreso implements Comparable<Ingreso> {
 		this.cantidad = cantidad;
 		this.cuota = cuota;
 	}
+	
+	public Ingreso(String s) {
+		super();
+		String[] t = s.replace("[", "").replace("]", "").split("-");
+		String[] fechaArr = t[0].split("/");
+		LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
+		String concepto = t[1];
+		Double cantidad = Double.valueOf(t[2].trim());
+		Cuota cuota = Cuota.valueOf(t[3]);
+		
+		this.fecha = fecha;
+		this.concepto = concepto;
+		this.cantidad = cantidad;
+		this.cuota = cuota;
+	}
 
 	public LocalDate getFecha() {
 		return fecha;

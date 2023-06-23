@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.UIManager;
 
+import es.yoshibv.contasoc.util.Fichero;
 import es.yoshibv.contasoc.ventanas.Inicio;
 
 public class Main {
@@ -20,6 +24,7 @@ public class Main {
 		
 		createFolder();
 		initFiles();
+		initIngresos();
 
         try {
         	javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -76,6 +81,24 @@ public class Main {
     	    }
     	} else {
     	    System.out.println("Los archivos ya existen.");
+    	}
+	}
+	
+	private static void initIngresos() {
+		String contasocFolderPath = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc";
+		File ingresos = new File(contasocFolderPath, "ingresos.csv");
+		if(ingresos.length() == 0L) {
+			Hortelanos h = FactoriaHortelano.leeHortelano(HORTELANOS);
+			List<Integer> aux = new ArrayList<Integer>();
+			for(Integer key:h.getHortelanos().keySet().stream().sorted().collect(Collectors.toSet())) {
+				aux.add(key);
+			}
+			Fichero.escribeFichero(String.valueOf(aux.get(0))+";[]", INGRESOS);
+			for(Integer i:aux.subList(1, aux.size())) {
+				Fichero.añadirAlFichero(String.valueOf(i)+";[]", INGRESOS);
+			}
+		} else {
+    	    System.out.println("El archivo ya tiene valores.");
     	}
 	}
 }
