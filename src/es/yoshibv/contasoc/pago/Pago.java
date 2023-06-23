@@ -72,7 +72,7 @@ public class Pago implements Comparable<Pago> {
 	@Override
 	public int compareTo(Pago o) {
 		// TODO Auto-generated method stub
-		return fecha.compareTo(o.fecha);
+		return proveedor.compareTo(o.proveedor);
 	}
 
 	@Override

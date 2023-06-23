@@ -373,7 +373,6 @@ public class Pagos extends javax.swing.JFrame {
         RightPanel.setPreferredSize(new java.awt.Dimension(155, 470));
 
         AgregarBtn.setText("Agregar");
-        AgregarBtn.setToolTipText("");
         AgregarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AgregarBtnActionPerformed(evt);
@@ -381,10 +380,25 @@ public class Pagos extends javax.swing.JFrame {
         });
 
         BuscarBtn.setText("Buscar");
+        BuscarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarBtnActionPerformed(evt);
+            }
+        });
 
         ModificarBtn.setText("Modificar");
+        ModificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ModificarBtnActionPerformed(evt);
+            }
+        });
 
         EliminarBtn.setText("Eliminar");
+        EliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EliminarBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
@@ -505,8 +519,24 @@ public class Pagos extends javax.swing.JFrame {
 
     private void AgregarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
         // TODO add your handling code here:
+    	añadirPago();
     }//GEN-LAST:event_AgregarBtnActionPerformed
 
+    private void BuscarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
+        // TODO add your handling code here:
+    	buscarPago();
+    }
+    
+    private void ModificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
+        // TODO add your handling code here:
+    	modificarPago();
+    }
+    
+    private void EliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgregarBtnActionPerformed
+        // TODO add your handling code here:
+    	eliminarPago();
+    }
+    
     private void IngresosMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PagosMenuBtnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PagosMenuBtnActionPerformed
@@ -518,6 +548,22 @@ public class Pagos extends javax.swing.JFrame {
     private void close() {
     	WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
+    
+    private void añadirPago() {
+    	
+    }
+    
+    private void buscarPago() {
+    	
+    }
+    
+    private void modificarPago() {
+    	
+    }
+    
+    private void eliminarPago() {
+    	
     }
 
 

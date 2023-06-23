@@ -3,23 +3,25 @@ package es.yoshibv.contasoc.pago;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
-import java.util.SortedSet;
+import java.util.SortedMap;
 import java.util.stream.Collectors;
 
 public class Pagos {
-	private SortedSet<Pago> pagos;
+	private SortedMap<String,List<Pago>> pagos;
 
-	public Pagos(SortedSet<Pago> pagos) {
+	public Pagos(SortedMap<String,List<Pago>> pagos) {
 		super();
 		this.pagos = pagos;
 	}
 
-	public SortedSet<Pago> getPagos() {
+	public SortedMap<String,List<Pago>> getPagos() {
 		return pagos;
 	}
 	
 	public List<Pago> getPagosPorFecha(LocalDate f) {
-		return getPagos().stream()
+		return getPagos().entrySet().stream()
+				.map(e->e.getValue())
+				.flatMap(x->x.stream())
 				.filter(x->x.getFecha().equals(f))
 				.sorted(Comparator.comparing(Pago::getFecha))
 				.collect(Collectors.collectingAndThen(
@@ -28,7 +30,9 @@ public class Pagos {
 	}
 	
 	public List<Pago> getPagosPorProveedor(String p){
-		return getPagos().stream()
+		return getPagos().entrySet().stream()
+				.map(e->e.getValue())
+				.flatMap(x->x.stream())
 				.filter(x->x.getProveedor().equals(p))
 				.collect(Collectors.collectingAndThen(
 						Collectors.toList(),
