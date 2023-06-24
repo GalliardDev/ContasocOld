@@ -9,8 +9,15 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
+
+import es.yoshibv.contasoc.Main;
+import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
+import es.yoshibv.contasoc.pago.FactoriaPago;
 
 /**
  *
@@ -335,7 +342,6 @@ public class Informe extends javax.swing.JFrame {
         RightPanel.setPreferredSize(new java.awt.Dimension(155, 470));
 
         CalcularBtn.setText("Calcular");
-        CalcularBtn.setToolTipText("");
         CalcularBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CalcularBtnActionPerformed(evt);
@@ -451,6 +457,7 @@ public class Informe extends javax.swing.JFrame {
 
     private void CalcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularBtnActionPerformed
         // TODO add your handling code here:
+    	calcularInforme();
     }//GEN-LAST:event_CalcularBtnActionPerformed
 
     private void IngresosMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresosMenuBtnActionPerformed
@@ -465,7 +472,30 @@ public class Informe extends javax.swing.JFrame {
     	WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
-
+    
+    private List<JTextPane> getTextFields(){
+    	List<JTextPane> aux = new ArrayList<JTextPane>();
+    	aux.add(SIBancoField);
+    	aux.add(SICajaField);
+    	return aux;
+    }
+    
+    private void calcularInforme() {
+    	List<JTextPane> lista = getTextFields();
+    	Double banco = Double.valueOf(lista.get(0).getText()); 
+    	Double caja = Double.valueOf(lista.get(1).getText());
+    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+    	Double totalIngresos = ingresos.getTotalIngresos();
+    	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
+    	Double totalPagos = pagos.getTotalPagos();
+    	
+    	InformeField.setText("Inicial banco: " + banco + "€\n" +
+    			"Inicial caja: " + caja + "€\n" + 
+    			"Total ingresos: " + totalIngresos + "€\n" + 
+    			"Total pagos: " + totalPagos + "€\n" +
+    			"-------------------\n" +
+    			"Total: " + (banco+caja+totalIngresos-totalPagos) + "€");
+    }
 
     /**
      * @param args the command line arguments

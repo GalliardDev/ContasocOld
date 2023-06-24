@@ -1,6 +1,7 @@
 package es.yoshibv.contasoc.pago;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Pago implements Comparable<Pago> {
@@ -17,6 +18,16 @@ public class Pago implements Comparable<Pago> {
 		this.concepto = concepto;
 		this.cantidad = cantidad;
 		this.factura = factura;
+	}
+	
+	public Pago(String s) {
+		super();
+		String[] t = s.split(";");
+		this.fecha = LocalDate.parse(t[0],DateTimeFormatter.ofPattern("d/M/yyyy"));
+		this.proveedor = t[1];
+		this.concepto = t[2];
+		this.cantidad = Double.valueOf(t[3].trim());
+		this.factura = t[4];
 	}
 	
 	public LocalDate getFecha() {

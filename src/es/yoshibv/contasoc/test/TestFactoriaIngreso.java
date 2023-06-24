@@ -1,6 +1,6 @@
 package es.yoshibv.contasoc.test;
 
-import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 import es.yoshibv.contasoc.Main;
 import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
@@ -12,8 +12,10 @@ public class TestFactoriaIngreso {
 		// TODO Auto-generated method stub
 		Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
 		print(ingresos.getIngresos());
-		ingresos.eliminarIngreso(2, LocalDate.of(2023, 6, 23));
-		print(ingresos.getIngresos());
+		print(ingresos.getIngresos().entrySet().stream()
+    			.map(e->e.getValue()).toList().stream()
+    			.flatMap(x->x.stream())
+    			.collect(Collectors.summingDouble(x->x.getCantidad())));
 	}
 	
 	private static void print(Object o) {

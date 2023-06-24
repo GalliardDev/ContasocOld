@@ -3,25 +3,27 @@ package es.yoshibv.contasoc.pago;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
-import java.util.SortedMap;
 import java.util.stream.Collectors;
 
 public class Pagos {
-	private SortedMap<String,List<Pago>> pagos;
+	private List<Pago> pagos;
 
-	public Pagos(SortedMap<String,List<Pago>> pagos) {
+	public Pagos(List<Pago> pagos) {
 		super();
 		this.pagos = pagos;
 	}
 
-	public SortedMap<String,List<Pago>> getPagos() {
+	public List<Pago> getPagos() {
 		return pagos;
 	}
 	
+	public Double getTotalPagos() {
+		return pagos.stream()
+		.collect(Collectors.summingDouble(x->x.getCantidad()));
+	}
+	
 	public List<Pago> getPagosPorFecha(LocalDate f) {
-		return getPagos().entrySet().stream()
-				.map(e->e.getValue())
-				.flatMap(x->x.stream())
+		return getPagos().stream()
 				.filter(x->x.getFecha().equals(f))
 				.sorted(Comparator.comparing(Pago::getFecha))
 				.collect(Collectors.collectingAndThen(
@@ -30,13 +32,19 @@ public class Pagos {
 	}
 	
 	public List<Pago> getPagosPorProveedor(String p){
-		return getPagos().entrySet().stream()
-				.map(e->e.getValue())
-				.flatMap(x->x.stream())
+		return getPagos().stream()
 				.filter(x->x.getProveedor().equals(p))
 				.collect(Collectors.collectingAndThen(
 						Collectors.toList(),
 						lista->List.copyOf(lista)));
+	}
+	
+	public Pago getPagoPorFactura(String f) {
+		return getPagos().stream()
+				.filter(x->x.getFactura().equals(f))
+				.collect(Collectors.collectingAndThen(
+						Collectors.toList(),
+						lista->List.copyOf(lista))).get(0);
 	}
 		
 }

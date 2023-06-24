@@ -9,8 +9,23 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
 import javax.swing.UIManager;
+
+import es.yoshibv.contasoc.Main;
+import es.yoshibv.contasoc.pago.FactoriaPago;
+import es.yoshibv.contasoc.pago.Pago;
+import es.yoshibv.contasoc.util.Fichero;
+import es.yoshibv.contasoc.util.Parsers;
 
 /**
  *
@@ -73,8 +88,8 @@ public class Pagos extends javax.swing.JFrame {
         NFacturaPanel = new javax.swing.JScrollPane();
         NFacturaField = new javax.swing.JTextPane();
         MiddlePanel = new javax.swing.JPanel();
-        ListaIngresosPanel = new javax.swing.JScrollPane();
-        ListaIngresosField = new javax.swing.JTextArea();
+        ListaPagosPanel = new javax.swing.JScrollPane();
+        ListaPagosField = new javax.swing.JTextArea();
         RightPanel = new javax.swing.JPanel();
         AgregarBtn = new javax.swing.JButton();
         BuscarBtn = new javax.swing.JButton();
@@ -346,10 +361,10 @@ public class Pagos extends javax.swing.JFrame {
 
         MiddlePanel.setPreferredSize(new java.awt.Dimension(255, 470));
 
-        ListaIngresosField.setEditable(false);
-        ListaIngresosField.setColumns(20);
-        ListaIngresosField.setRows(5);
-        ListaIngresosPanel.setViewportView(ListaIngresosField);
+        ListaPagosField.setEditable(false);
+        ListaPagosField.setColumns(20);
+        ListaPagosField.setRows(5);
+        ListaPagosPanel.setViewportView(ListaPagosField);
 
         javax.swing.GroupLayout MiddlePanelLayout = new javax.swing.GroupLayout(MiddlePanel);
         MiddlePanel.setLayout(MiddlePanelLayout);
@@ -357,14 +372,14 @@ public class Pagos extends javax.swing.JFrame {
             MiddlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MiddlePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ListaIngresosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
+                .addComponent(ListaPagosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
                 .addContainerGap())
         );
         MiddlePanelLayout.setVerticalGroup(
             MiddlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MiddlePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(ListaIngresosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+                .addComponent(ListaPagosPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -550,16 +565,127 @@ public class Pagos extends javax.swing.JFrame {
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
     }
     
+    private List<JTextPane> getTextFields(){
+    	List<JTextPane> aux = new ArrayList<JTextPane>();
+    	aux.add(FechaField);
+    	aux.add(ProveedorField);
+    	aux.add(ConceptoField);
+    	aux.add(CantidadField);
+    	aux.add(NFacturaField);
+    	return aux;
+    }
+    
     private void añadirPago() {
+    	List<JTextPane> lista = getTextFields();
+    	String fecha = lista.get(0).getText();
+    	String proveedor = lista.get(1).getText();
+    	String concepto = lista.get(2).getText();
+    	String cantidad = lista.get(3).getText();
+    	String factura = lista.get(4).getText();
     	
+    	String pago = String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura));
+    	
+    	if(fecha.equals("") ||
+    			proveedor.equals("") ||
+    			concepto.equals("") ||
+    			cantidad.equals("") ||
+    			factura.equals("")) {
+    		JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
+		               "Error", JOptionPane.ERROR_MESSAGE);
+    	}
+    	
+    	List<String> aux = null;
+		try {
+			aux = Files.readAllLines(Path.of(Main.PAGOS));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	aux.add(pago);
+    	
+    	Fichero.escribeFichero(aux.get(0),Main.PAGOS);
+    	for(String s:aux.subList(1, aux.size())) {
+    		Fichero.añadirAlFichero(s, Main.PAGOS);
+    	}
+    					
+		for(JTextPane tp:lista) {
+			tp.setText("");
+		}
     }
     
     private void buscarPago() {
+    	List<JTextPane> lista = getTextFields();
+    	String proveedor = lista.get(1).getText();
+    	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
+    	List<Pago> pagoList = pagos.getPagosPorProveedor(proveedor);
+    	List<String> aux = new ArrayList<String>();
+    	for(Pago p:pagoList) {
+    		String str = String.join(";", List.of(
+    				Parsers.dateParser(p.getFecha()),
+    				p.getConcepto(),
+    				p.getCantidad().toString()+"€",
+    				p.getFactura()));
+    		aux.add(str);
+    	}
+    	List<String> test = new ArrayList<String>();
+    	test.add(proveedor);
+    	for(String s:aux) {
+    		String[] t = s.split(";");
+    		test.add(String.join("\n", t));
+    	}
+    	ListaPagosField.setText(test.get(0)+"\n\n"+String.join("\n\n",test.subList(1, test.size())));
     	
     }
     
     private void modificarPago() {
+    	List<JTextPane> lista = getTextFields();
+    	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);   	
+    	String factura = lista.get(4).getText();
+    	Pago aux = pagos.getPagoPorFactura(factura);
     	
+    	String fecha = lista.get(0).getText();
+    	String concepto = lista.get(2).getText();
+    	String cantidad = lista.get(3).getText();
+    	
+    	aux.setConcepto(concepto);
+    	aux.setCantidad(Double.valueOf(cantidad));
+    	if(!(fecha).equals("")) {
+    		aux.setFecha(LocalDate.parse(
+    				fecha,
+    				DateTimeFormatter.ofPattern("d/M/yyyy")));
+    	}
+    	
+    	String[] p = aux.toString().split(";");
+    	
+    	String[] fechaP = p[0].split("-");
+    	String newFecha = Integer.valueOf(fechaP[2])+"/"+Integer.valueOf(fechaP[1])+"/"+fechaP[0];
+    	
+    	String res = String.join(";", List.of(newFecha,p[1],p[2],p[3],p[4]));
+    	
+    	List<String> strList = null;
+    	try {
+			strList = Files.readAllLines(Path.of(Main.PAGOS));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	for(String s:strList) {
+    		if(s.contains(factura)) {
+    			s.replace(s, res);
+    		}
+    	}
+    	
+    	Fichero.escribeFichero(strList.get(0), Main.PAGOS);
+    	for(int a = 1; a < strList.size(); a++) {
+    		Fichero.añadirAlFichero(strList.get(a), Main.PAGOS);
+    	}
+    	
+    	for(JTextPane tp:lista) {
+			tp.setText("");
+		}
+    	    	
     }
     
     private void eliminarPago() {
@@ -626,8 +752,8 @@ public class Pagos extends javax.swing.JFrame {
     private javax.swing.JButton InicioMenuBtn;
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JButton ListaEsperaMenuBtn;
-    private javax.swing.JTextArea ListaIngresosField;
-    private javax.swing.JScrollPane ListaIngresosPanel;
+    private javax.swing.JTextArea ListaPagosField;
+    private javax.swing.JScrollPane ListaPagosPanel;
     private javax.swing.JToolBar MenuToolBar;
     private javax.swing.JPanel MiddlePanel;
     private javax.swing.JPanel MinimizeBtn;
