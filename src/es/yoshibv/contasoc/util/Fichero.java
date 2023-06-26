@@ -1,8 +1,6 @@
 package es.yoshibv.contasoc.util;
 
 import java.io.IOException;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -29,7 +27,7 @@ public class Fichero {
 		 * es la ruta del fichero donde se va a escribir dicha string.
 		 * Lanza una IOException si hay algún error al escribir en el fichero. */
 		 try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(nombreFichero));
+			BufferedFileWriter writer = new BufferedFileWriter(nombreFichero,"UTF-8",false);
 			writer.flush();
 			writer.write(cadena);
 			writer.close();
@@ -38,27 +36,13 @@ public class Fichero {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void limpiaFichero(String nombreFichero) {
-		/* Método que usa el método .flush() de BufferedFileWriter
-		 * para limpiar el fichero especificado por la string pro-
-		 * porcionada.*/
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(nombreFichero));
-			writer.flush();
-			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+		
 	public static void añadirAlFichero(String cadena, String nombreFichero) {
 		/* Método que recibe como parámetro una string a escribir y una string que 
 		 * es la ruta del fichero donde se va a añadir dicha string.
 		 * Lanza una IOException si hay algún error al añadir la string en el fichero. */
 		 try {
-			 BufferedWriter writer = new BufferedWriter(new FileWriter(nombreFichero, true));
+			 BufferedFileWriter writer = new BufferedFileWriter(nombreFichero,"UTF-8",true);
 			 writer.append('\n');
 			 writer.append(cadena);
 			 writer.close();
