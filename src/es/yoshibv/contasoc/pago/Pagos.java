@@ -1,6 +1,7 @@
 package es.yoshibv.contasoc.pago;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,7 +9,7 @@ import java.util.stream.Collectors;
 public class Pagos {
 	private List<Pago> pagos;
 
-	public Pagos(List<Pago> pagos) {
+	public Pagos(ArrayList	<Pago> pagos) {
 		super();
 		this.pagos = pagos;
 	}
@@ -45,6 +46,10 @@ public class Pagos {
 				.collect(Collectors.collectingAndThen(
 						Collectors.toList(),
 						lista->List.copyOf(lista))).get(0);
+	}
+	
+	public void eliminarPago(Pago p) {
+		pagos.remove(p);
 	}
 		
 }

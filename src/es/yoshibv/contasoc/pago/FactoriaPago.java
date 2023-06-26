@@ -5,16 +5,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import es.yoshibv.contasoc.Main;
 
 public class FactoriaPago {
 	public static Pagos leePagos(String ruta) {
-		List<Pago> res = null;
+		ArrayList<Pago> res = null;
 		try {
 			res = Files.readAllLines(Path.of(Main.PAGOS)).stream()
-					.map(x->parseaPago(x)).toList();
+					.map(x->parseaPago(x)).collect(Collectors.toCollection(ArrayList::new));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

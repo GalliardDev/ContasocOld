@@ -666,7 +666,25 @@ public class Pagos extends javax.swing.JFrame {
     }
     
     private void eliminarPago() {
+    	List<JTextPane> lista = getTextFields();
+
+    	String factura = lista.get(4).getText();
+    	    	
+    	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
     	
+    	Pago fromTextFields = pagos.getPagoPorFactura(factura);
+    	
+    	for(Pago p:pagos.getPagos()) {
+    		if(p.getFactura().equals(fromTextFields.getFactura())) {
+    			pagos.eliminarPago(p);
+    			break;
+    		}
+    	}
+    	
+    	Fichero.escribeFichero(pagos.getPagos().get(0).toString(), Main.PAGOS);
+    	for(Pago p:pagos.getPagos().subList(1, pagos.getPagos().size())) {
+    		Fichero.añadirAlFichero(p.toString(), Main.PAGOS);
+    	}
     }
 
 
