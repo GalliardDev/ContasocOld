@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import es.yoshibv.contasoc.util.Parsers;
+
 public class Pago implements Comparable<Pago> {
 	private LocalDate fecha;
 	private String proveedor;
@@ -88,6 +90,6 @@ public class Pago implements Comparable<Pago> {
 
 	@Override
 	public String toString() {
-		return fecha+";"+proveedor+";"+concepto+";"+cantidad+";"+factura;
+		return Parsers.dateParser(fecha)+";"+proveedor+";"+concepto+";"+cantidad+";"+factura;
 	}
 }

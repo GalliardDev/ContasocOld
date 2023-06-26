@@ -12,8 +12,6 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -640,51 +638,30 @@ public class Pagos extends javax.swing.JFrame {
     
     private void modificarPago() {
     	List<JTextPane> lista = getTextFields();
-    	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);   	
-    	String factura = lista.get(4).getText();
-    	Pago aux = pagos.getPagoPorFactura(factura);
-    	
+    	   	
     	String fecha = lista.get(0).getText();
+    	String proveedor = lista.get(1).getText();
     	String concepto = lista.get(2).getText();
     	String cantidad = lista.get(3).getText();
+    	String factura = lista.get(4).getText();
+    	    	
+    	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
     	
-    	aux.setConcepto(concepto);
-    	aux.setCantidad(Double.valueOf(cantidad));
-    	if(!(fecha).equals("")) {
-    		aux.setFecha(LocalDate.parse(
-    				fecha,
-    				DateTimeFormatter.ofPattern("d/M/yyyy")));
-    	}
+    	Pago fromTextFields = new Pago(String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura)));
     	
-    	String[] p = aux.toString().split(";");
-    	
-    	String[] fechaP = p[0].split("-");
-    	String newFecha = Integer.valueOf(fechaP[2])+"/"+Integer.valueOf(fechaP[1])+"/"+fechaP[0];
-    	
-    	String res = String.join(";", List.of(newFecha,p[1],p[2],p[3],p[4]));
-    	
-    	List<String> strList = null;
-    	try {
-			strList = Files.readAllLines(Path.of(Main.PAGOS));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	for(String s:strList) {
-    		if(s.contains(factura)) {
-    			s.replace(s, res);
+    	for(Pago p:pagos.getPagos()) {
+    		if(p.getFactura().equals(fromTextFields.getFactura())) {
+    			p.setFecha(fromTextFields.getFecha());
+    			p.setProveedor(fromTextFields.getProveedor());
+    			p.setConcepto(fromTextFields.getConcepto());
+    			p.setCantidad(fromTextFields.getCantidad());
     		}
     	}
     	
-    	Fichero.escribeFichero(strList.get(0), Main.PAGOS);
-    	for(int a = 1; a < strList.size(); a++) {
-    		Fichero.añadirAlFichero(strList.get(a), Main.PAGOS);
+    	Fichero.escribeFichero(pagos.getPagos().get(0).toString(), Main.PAGOS);
+    	for(Pago p:pagos.getPagos().subList(1, pagos.getPagos().size())) {
+    		Fichero.añadirAlFichero(p.toString(), Main.PAGOS);
     	}
-    	
-    	for(JTextPane tp:lista) {
-			tp.setText("");
-		}
     	    	
     }
     
