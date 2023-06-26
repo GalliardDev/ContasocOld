@@ -9,8 +9,12 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -28,7 +32,7 @@ public class ListaEspera extends javax.swing.JFrame {
     }
     
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/logo_small.png"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/newlogo_small.png"));
         return retValue;
     }
 
@@ -49,6 +53,7 @@ public class ListaEspera extends javax.swing.JFrame {
         ExitBtn = new javax.swing.JPanel();
         ExitTxt = new javax.swing.JLabel();
         MenuToolBar = new javax.swing.JToolBar();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(0, 0));
         InicioMenuBtn = new javax.swing.JButton();
         SociosMenuBtn = new javax.swing.JButton();
         IngresosMenuBtn = new javax.swing.JButton();
@@ -60,10 +65,11 @@ public class ListaEspera extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         RightPanel = new javax.swing.JPanel();
-        CalcularBtn = new javax.swing.JButton();
+        ActualizarBtn = new javax.swing.JButton();
         jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Contasoc");
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         setIconImage(getIconImage());
@@ -78,8 +84,9 @@ public class ListaEspera extends javax.swing.JFrame {
             }
         });
 
+        ToolBar.add(filler2);
         jLabelLogo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo_small.png"))); // NOI18N
+        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/toolbarlogo.png"))); // NOI18N
         jLabelLogo.setText("Contasoc - Lista de Espera");
         jLabelLogo.setIconTextGap(6);
         jLabelLogo.setMaximumSize(new java.awt.Dimension(86, 32));
@@ -416,11 +423,11 @@ public class ListaEspera extends javax.swing.JFrame {
 
         RightPanel.setPreferredSize(new java.awt.Dimension(155, 470));
 
-        CalcularBtn.setText("Actualizar");
-        CalcularBtn.setToolTipText("");
-        CalcularBtn.addActionListener(new java.awt.event.ActionListener() {
+        ActualizarBtn.setText("Actualizar");
+        ActualizarBtn.setToolTipText("");
+        ActualizarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CalcularBtnActionPerformed(evt);
+                ActualizarBtnActionPerformed(evt);
             }
         });
 
@@ -430,14 +437,14 @@ public class ListaEspera extends javax.swing.JFrame {
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(CalcularBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                .addComponent(ActualizarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
                 .addContainerGap())
         );
         RightPanelLayout.setVerticalGroup(
             RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightPanelLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(CalcularBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ActualizarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(421, Short.MAX_VALUE))
         );
 
@@ -445,7 +452,7 @@ public class ListaEspera extends javax.swing.JFrame {
 
         getContentPane().add(DataPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 840, 480));
 
-        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bg_notext.png"))); // NOI18N
+        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/newbg_notext.png"))); // NOI18N
         jLabelFondo.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.SystemColor.windowBorder));
         jLabelFondo.setMaximumSize(new java.awt.Dimension(900, 600));
         jLabelFondo.setMinimumSize(new java.awt.Dimension(900, 600));
@@ -531,8 +538,9 @@ public class ListaEspera extends javax.swing.JFrame {
     	i.setVisible(true);
     }
 
-    private void CalcularBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularBtnActionPerformed
+    private void ActualizarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CalcularBtnActionPerformed
         // TODO add your handling code here:
+    	actualizar();
     }//GEN-LAST:event_CalcularBtnActionPerformed
 
     private void IngresosMenuBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IngresosMenuBtnActionPerformed
@@ -550,6 +558,33 @@ public class ListaEspera extends javax.swing.JFrame {
     private void close() {
     	WindowEvent closeWindow = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
     	Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(closeWindow);
+    }
+    
+    private void actualizar() {
+    	es.yoshibv.contasoc.listaespera.ListaEsperaGetter le = new es.yoshibv.contasoc.listaespera.ListaEsperaGetter();
+		List<String> hortelanos = le.getHortelanos().stream().map(x->x.toString()).toList();
+		List<List<String>> auxContainer = new ArrayList<List<String>>();
+		for(String s:hortelanos) {
+			List<String> aux = new ArrayList<String>();
+			aux.add(s.split(";")[6]);
+			aux.add(s.split(";")[0]);
+			aux.add(s.split(";")[4]);
+			aux.add(s.split(";")[5]);
+			aux.add(s.split(";")[8]);
+			auxContainer.add(aux);
+		}
+		
+		final DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
+		defaultTableCellRenderer.setHorizontalTextPosition(SwingConstants.LEFT);
+		int j = 0;
+		for(List<String> aux:auxContainer) {
+			for(int i = 0; i < 5; i++) {
+				jTable1.getColumnModel().getColumn(i).setCellRenderer(defaultTableCellRenderer);
+				jTable1.setValueAt(aux.get(i),j,i);
+			}
+			j++;
+
+		}
     }
 
 
@@ -605,7 +640,7 @@ public class ListaEspera extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton CalcularBtn;
+    private javax.swing.JButton ActualizarBtn;
     private javax.swing.JPanel DataPanel;
     private javax.swing.JPanel ExitBtn;
     private javax.swing.JLabel ExitTxt;
@@ -626,5 +661,6 @@ public class ListaEspera extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.Box.Filler toolBarFiller;
     private javax.swing.Box.Filler toolBarFiller1;
+    private javax.swing.Box.Filler filler2;
     // End of variables declaration//GEN-END:variables
 }

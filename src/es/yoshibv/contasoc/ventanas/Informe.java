@@ -41,7 +41,7 @@ public class Informe extends javax.swing.JFrame {
     }
     
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/logo_small.png"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/newlogo_small.png"));
         return retValue;
     }
 
@@ -62,6 +62,7 @@ public class Informe extends javax.swing.JFrame {
         ExitBtn = new javax.swing.JPanel();
         ExitTxt = new javax.swing.JLabel();
         MenuToolBar = new javax.swing.JToolBar();
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(0, 0));
         InicioMenuBtn = new javax.swing.JButton();
         SociosMenuBtn = new javax.swing.JButton();
         IngresosMenuBtn = new javax.swing.JButton();
@@ -84,6 +85,7 @@ public class Informe extends javax.swing.JFrame {
         jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Contasoc");
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         setIconImage(getIconImage());
@@ -98,8 +100,9 @@ public class Informe extends javax.swing.JFrame {
             }
         });
 
+        ToolBar.add(filler2);
         jLabelLogo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo_small.png"))); // NOI18N
+        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/toolbarlogo.png"))); // NOI18N
         jLabelLogo.setText("Contasoc - Informe");
         jLabelLogo.setIconTextGap(6);
         jLabelLogo.setMaximumSize(new java.awt.Dimension(86, 32));
@@ -369,7 +372,7 @@ public class Informe extends javax.swing.JFrame {
 
         getContentPane().add(DataPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 840, 480));
 
-        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bg_notext.png"))); // NOI18N
+        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/newbg_notext.png"))); // NOI18N
         jLabelFondo.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.SystemColor.windowBorder));
         jLabelFondo.setMaximumSize(new java.awt.Dimension(900, 600));
         jLabelFondo.setMinimumSize(new java.awt.Dimension(900, 600));
@@ -569,5 +572,6 @@ public class Informe extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.Box.Filler toolBarFiller;
     private javax.swing.Box.Filler toolBarFiller1;
+    private javax.swing.Box.Filler filler2;
     // End of variables declaration//GEN-END:variables
 }

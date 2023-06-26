@@ -33,7 +33,7 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/logo_small.png"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("imagenes/newlogo_small.png"));
         return retValue;
     }
 
@@ -49,6 +49,7 @@ public class Inicio extends javax.swing.JFrame {
         ToolBar = new javax.swing.JToolBar();
         jLabelLogo = new javax.swing.JLabel();
         toolBarFiller = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
+        filler2 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(5, 0), new java.awt.Dimension(0, 0));
         MinimizeBtn = new javax.swing.JPanel();
         MinimizeTxt = new javax.swing.JLabel();
         ExitBtn = new javax.swing.JPanel();
@@ -72,6 +73,7 @@ public class Inicio extends javax.swing.JFrame {
         jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Contasoc");
         setIconImage(getIconImage());
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -85,9 +87,10 @@ public class Inicio extends javax.swing.JFrame {
                 ToolBarMouseDragged(evt);
             }
         });
-
+        
+        ToolBar.add(filler2);
         jLabelLogo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo_small.png"))); // NOI18N
+        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/toolbarlogo.png"))); // NOI18N
         jLabelLogo.setText("Contasoc - Inicio");
         jLabelLogo.setIconTextGap(6);
         jLabelLogo.setMaximumSize(new java.awt.Dimension(86, 32));
@@ -326,7 +329,7 @@ public class Inicio extends javax.swing.JFrame {
         CopyrightTxt.setText("Copyright © 2023 by YoshiBv");
         getContentPane().add(CopyrightTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 580, 250, -1));
 
-        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/bg.png"))); // NOI18N
+        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/newbg.png"))); // NOI18N
         jLabelFondo.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.SystemColor.windowBorder));
         jLabelFondo.setPreferredSize(new java.awt.Dimension(960, 600));
         getContentPane().add(jLabelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 600));
@@ -515,5 +518,6 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.Box.Filler toolBarFiller;
+    private javax.swing.Box.Filler filler2;
     // End of variables declaration//GEN-END:variables
 }

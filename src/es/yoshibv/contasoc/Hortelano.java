@@ -49,7 +49,11 @@ public class Hortelano implements Comparable<Hortelano> {
 		
 		this.persona = p;
 		this.socio = Integer.valueOf(socio);
-		this.huerto = Integer.valueOf(huerto);
+		if(huerto=="") {
+			this.huerto = 0;
+		} else if(!(huerto=="")) {
+			this.huerto = Integer.valueOf(huerto);
+		}
 		String[] altaArr = altaStr.split("/");
 		LocalDate alta = LocalDate.of(Integer.valueOf(altaArr[2]),Integer.valueOf(altaArr[1]),Integer.valueOf(altaArr[0]));
 		String[] bajaArr = bajaStr.split("/");
