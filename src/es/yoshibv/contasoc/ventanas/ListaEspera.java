@@ -567,7 +567,7 @@ public class ListaEspera extends javax.swing.JFrame {
 		for(String s:hortelanos) {
 			List<String> aux = new ArrayList<String>();
 			aux.add(s.split(";")[6]);
-			aux.add(s.split(";")[0]);
+			aux.add(String.join(" ",List.of(s.split(";")[0],s.split(";")[1])));
 			aux.add(s.split(";")[4]);
 			aux.add(s.split(";")[5]);
 			aux.add(s.split(";")[8]);

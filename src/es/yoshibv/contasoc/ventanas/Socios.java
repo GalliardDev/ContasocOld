@@ -769,12 +769,16 @@ public class Socios extends javax.swing.JFrame {
     			.map(x->x.toString())
     			.toList();
     	
-    	List<String> test = new ArrayList<String>();
-    	for(String s:ingresosList) {
-    		String[] t = s.split("-");
-    		test.add(String.join("\n", t));
+    	if(!(ingresosList.size()==0)) {
+    		List<String> test = new ArrayList<String>();
+        	for(String s:ingresosList) {
+        		String[] t = s.split("-");
+        		test.add(String.join("\n", t));
+        	}
+        	ListaIngresosField.setText(test.get(0)+"\n\n"+String.join("\n\n",test.subList(1, test.size())));
+    	} else if(ingresosList.size()==0) {
+    		ListaIngresosField.setText("");
     	}
-    	ListaIngresosField.setText(test.get(0)+"\n\n"+String.join("\n\n",test.subList(1, test.size())));
     	
     	
     }
