@@ -616,7 +616,13 @@ public class Ingresos extends javax.swing.JFrame {
     	List<String> ingresosList = ingresos.getIngresosPorNumero(socio).stream()
     			.map(x->x.toString())
     			.toList();
-    	ListaIngresosField.setText(String.join("\n", ingresosList));
+    	
+    	List<String> test = new ArrayList<String>();
+    	for(String s:ingresosList) {
+    		String[] t = s.split("-");
+    		test.add(String.join("\n", t));
+    	}
+    	ListaIngresosField.setText(test.get(0)+"\n\n"+String.join("\n\n",test.subList(1, test.size())));
     }
     
     private void modificarIngreso() {
