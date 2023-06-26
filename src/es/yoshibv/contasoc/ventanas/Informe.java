@@ -9,15 +9,22 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTextPane;
 import javax.swing.UIManager;
 
+import java.text.DecimalFormat;
+
 import es.yoshibv.contasoc.Main;
 import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
 import es.yoshibv.contasoc.pago.FactoriaPago;
+import es.yoshibv.contasoc.util.Fichero;
 
 /**
  *
@@ -485,19 +492,38 @@ public class Informe extends javax.swing.JFrame {
     
     private void calcularInforme() {
     	List<JTextPane> lista = getTextFields();
-    	Double banco = Double.valueOf(lista.get(0).getText()); 
-    	Double caja = Double.valueOf(lista.get(1).getText());
+    	Double banco = null;
+    	Double caja = null;
+    	
+    	if(lista.get(0).getText().equals("") && lista.get(1).getText().equals("")) {
+    		List<String> aux = null;
+    		try {
+    			aux = Files.readAllLines(Path.of(Main.SALDO));
+    		} catch(IOException e) {
+    			e.printStackTrace();
+    		}
+    		banco = Double.valueOf(aux.get(0));
+    		caja = Double.valueOf(aux.get(1));
+    	} else if(!(lista.get(0).getText().equals("") && lista.get(1).getText().equals(""))) {
+    		banco = Double.valueOf(lista.get(0).getText()); 
+        	caja = Double.valueOf(lista.get(1).getText());
+        	Fichero.escribeFichero(String.join("\n", List.of(banco.toString(),caja.toString())), Main.SALDO);
+    	}
     	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
     	Double totalIngresos = ingresos.getTotalIngresos();
     	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
     	Double totalPagos = pagos.getTotalPagos();
+    	
+    	DecimalFormat df = new DecimalFormat("#.##");
+    	df.setRoundingMode(RoundingMode.FLOOR);
+        String total = df.format((banco+caja+totalIngresos-totalPagos));
     	
     	InformeField.setText("Inicial banco: " + banco + "€\n" +
     			"Inicial caja: " + caja + "€\n" + 
     			"Total ingresos: " + totalIngresos + "€\n" + 
     			"Total pagos: " + totalPagos + "€\n" +
     			"-------------------\n" +
-    			"Total: " + (banco+caja+totalIngresos-totalPagos) + "€");
+    			"Total: " + total + "€");
     }
 
     /**

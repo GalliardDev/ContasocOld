@@ -16,6 +16,7 @@ public class Main {
 	public static final String INGRESOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/ingresos.csv";
 	public static final String PAGOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/pagos.csv";
 	public static final String LISTA_ESPERA = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/lista_espera.csv";
+	public static final String SALDO = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/saldo.csv";
 	
 	public static void main(String[] args) {
 		
@@ -65,13 +66,15 @@ public class Main {
 		File ingresos = new File(contasocFolderPath, "ingresos.csv");
 		File pagos = new File(contasocFolderPath, "pagos.csv");
 		File lista_espera = new File(contasocFolderPath, "lista_espera.csv");
+		File saldo = new File(contasocFolderPath, "saldo.csv");
 		
-    	if(!(hortelanos.exists() && pagos.exists() && lista_espera.exists())) {
+    	if(!(hortelanos.exists() && pagos.exists() && lista_espera.exists() && ingresos.exists() && saldo.exists())) {
     		try {
     	        hortelanos.createNewFile();
     	        ingresos.createNewFile();
     	        pagos.createNewFile();
     	        lista_espera.createNewFile();
+    	        saldo.createNewFile();
     	        System.out.println("Archivos creados correctamente.");
     	    } catch (IOException e) {
     	        System.out.println("Error al crear los archivos.");
