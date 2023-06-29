@@ -3,16 +3,16 @@ package es.yoshibv.contasoc.ingreso;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import es.yoshibv.contasoc.common.Cuota;
+import es.yoshibv.contasoc.common.TipoRetribucion;
 import es.yoshibv.contasoc.util.Parsers;
 
 public class Ingreso implements Comparable<Ingreso> {
 	private LocalDate fecha;
 	private String concepto;
 	private Double cantidad;
-	private Cuota cuota;
+	private TipoRetribucion cuota;
 	
-	public Ingreso(LocalDate fecha, String concepto, Double cantidad, Cuota cuota) {
+	public Ingreso(LocalDate fecha, String concepto, Double cantidad, TipoRetribucion cuota) {
 		super();
 		this.fecha = fecha;
 		this.concepto = concepto;
@@ -27,12 +27,12 @@ public class Ingreso implements Comparable<Ingreso> {
 		LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
 		String concepto = t[1];
 		Double cantidad = Double.valueOf(t[2].trim());
-		Cuota cuota = Cuota.valueOf(t[3]);
+		TipoRetribucion tipo = TipoRetribucion.valueOf(t[3]);
 		
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.cantidad = cantidad;
-		this.cuota = cuota;
+		this.cuota = tipo;
 	}
 
 	public LocalDate getFecha() {
@@ -59,11 +59,11 @@ public class Ingreso implements Comparable<Ingreso> {
 		this.cantidad = cantidad;
 	}
 
-	public Cuota getCuota() {
+	public TipoRetribucion getCuota() {
 		return cuota;
 	}
 
-	public void setCuota(Cuota cuota) {
+	public void setCuota(TipoRetribucion cuota) {
 		this.cuota = cuota;
 	}
 

@@ -1,5 +1,5 @@
 package es.yoshibv.contasoc.common;
 
-public enum Tipo {
+public enum TipoHortelano {
 	HORTELANO, LISTA_ESPERA, COLABORADOR, HORTELANO_INVERNADERO;
 }

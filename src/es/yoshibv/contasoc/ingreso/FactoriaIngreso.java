@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import es.yoshibv.contasoc.common.Cuota;
+import es.yoshibv.contasoc.common.TipoRetribucion;
 import es.yoshibv.contasoc.util.Fichero;
 
 public class FactoriaIngreso {
@@ -50,8 +50,8 @@ public class FactoriaIngreso {
 				LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
 				String concepto = aux[1];
 				Double cantidad = Double.valueOf(aux[2].trim());
-				Cuota cuota = Cuota.valueOf(aux[3]);
-				ingresos.add(new Ingreso(fecha,concepto,cantidad,cuota));
+				TipoRetribucion tipo = TipoRetribucion.valueOf(aux[3]);
+				ingresos.add(new Ingreso(fecha,concepto,cantidad,tipo));
 			}
 		}
 		return ingresos;

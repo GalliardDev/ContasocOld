@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 import es.yoshibv.contasoc.Hortelano;
 import es.yoshibv.contasoc.Main;
-import es.yoshibv.contasoc.common.Tipo;
+import es.yoshibv.contasoc.common.TipoHortelano;
 
 public class ListaEsperaGetter {
 	private List<Hortelano> hortelanos;
@@ -28,7 +28,7 @@ public class ListaEsperaGetter {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-		aux.stream().filter(x->x.getTipo().equals(Tipo.LISTA_ESPERA)).forEach(x->hortelanos.add(x));
+		aux.stream().filter(x->x.getTipo().equals(TipoHortelano.LISTA_ESPERA)).forEach(x->hortelanos.add(x));
 		return hortelanos;
 	}
 		

@@ -4,21 +4,21 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import es.yoshibv.contasoc.common.Estado;
-import es.yoshibv.contasoc.common.Tipo;
+import es.yoshibv.contasoc.common.TipoHortelano;
 import es.yoshibv.contasoc.util.Checkers;
 import es.yoshibv.contasoc.util.Parsers;
 
 public class Hortelano implements Comparable<Hortelano> {
 	private Persona persona;
 	private Integer socio;
-	private Integer huerto;
+	private String huerto;
 	private LocalDate alta;
 	private LocalDate baja;
 	private Estado estado;
-	private Tipo tipo;
+	private TipoHortelano tipo;
 	
-	public Hortelano(Persona persona, Integer socio, Integer huerto, LocalDate alta, LocalDate baja, 
-			Estado estado, Tipo tipo) {
+	public Hortelano(Persona persona, Integer socio, String huerto, LocalDate alta, LocalDate baja, 
+			Estado estado, TipoHortelano tipo) {
 		super();
 		Checkers.checkNoNull(persona,socio,alta,estado,tipo);
 		this.persona = persona;
@@ -49,11 +49,7 @@ public class Hortelano implements Comparable<Hortelano> {
 		
 		this.persona = p;
 		this.socio = Integer.valueOf(socio);
-		if(huerto=="") {
-			this.huerto = 0;
-		} else if(!(huerto=="")) {
-			this.huerto = Integer.valueOf(huerto);
-		}
+		this.huerto = huerto;
 		String[] altaArr = altaStr.split("/");
 		LocalDate alta = LocalDate.of(Integer.valueOf(altaArr[2]),Integer.valueOf(altaArr[1]),Integer.valueOf(altaArr[0]));
 		String[] bajaArr = bajaStr.split("/");
@@ -66,7 +62,7 @@ public class Hortelano implements Comparable<Hortelano> {
 		this.alta = alta;
 		this.baja = baja;
 		this.estado = Estado.valueOf(estado);
-		this.tipo = Tipo.valueOf(tipo);
+		this.tipo = TipoHortelano.valueOf(tipo);
 	}
 	
 	public Integer getSocio() {
@@ -77,11 +73,11 @@ public class Hortelano implements Comparable<Hortelano> {
 		this.socio = socio;
 	}
 
-	public Integer getHuerto() {
+	public String getHuerto() {
 		return huerto;
 	}
 
-	public void setHuerto(Integer huerto) {
+	public void setHuerto(String huerto) {
 		this.huerto = huerto;
 	}
 
@@ -109,11 +105,11 @@ public class Hortelano implements Comparable<Hortelano> {
 		this.estado = estado;
 	}
 
-	public Tipo getTipo() {
+	public TipoHortelano getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(Tipo tipo) {
+	public void setTipo(TipoHortelano tipo) {
 		this.tipo = tipo;
 	}
 
