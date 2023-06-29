@@ -8,6 +8,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.math.RoundingMode;
 import java.nio.file.Files;
@@ -44,6 +46,8 @@ import es.yoshibv.contasoc.util.Parsers;
 @SuppressWarnings("serial")
 public class MainWindow extends javax.swing.JFrame {
 	
+	private int initialX;
+    private int initialY;
 	final int year = LocalDate.now().getYear();
 
     /**
@@ -516,6 +520,24 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         Toolbar.setBackground(new java.awt.Color(255, 255, 255));
+        Toolbar.addMouseListener(new java.awt.event.MouseAdapter() {
+        	public void mousePressed(MouseEvent e) {
+                // Guarda la posición inicial del mouse
+                initialX = e.getX();
+                initialY = e.getY();
+            }
+        });
+    
+        Toolbar.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseDragged(MouseEvent e) {
+                // Calcula la diferencia entre la posición actual y la inicial del mouse
+                int xOffset = e.getX() - initialX;
+                int yOffset = e.getY() - initialY;
+
+                // Actualiza la posición del JFrame sumando la diferencia
+                setLocation(getLocation().x + xOffset, getLocation().y + yOffset);
+            }
+        });
 
         ExitBtn.setBackground(new java.awt.Color(255, 255, 255));
         ExitBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
