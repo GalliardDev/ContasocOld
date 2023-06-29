@@ -51,6 +51,7 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         showFirstPanel();
+        actualizar();
     }
 
     /**
@@ -177,6 +178,9 @@ public class MainWindow extends javax.swing.JFrame {
         Pagos_NFacturaTxt = new javax.swing.JLabel();
         Pagos_NFacturaPanel = new javax.swing.JScrollPane();
         Pagos_NFacturaField = new javax.swing.JTextPane();
+        Pagos_TipoTxt = new javax.swing.JLabel();
+        Pagos_TipoPanel = new javax.swing.JScrollPane();
+        Pagos_TipoField = new javax.swing.JTextPane();
         Pagos_ListaPanel = new javax.swing.JScrollPane();
         Pagos_ListaField = new javax.swing.JTextArea();
         Pagos_AgregarBtn = new javax.swing.JPanel();
@@ -1244,6 +1248,12 @@ public class MainWindow extends javax.swing.JFrame {
         Pagos_NFacturaField.setMinimumSize(new java.awt.Dimension(204, 20));
         Pagos_NFacturaField.setPreferredSize(new java.awt.Dimension(260, 20));
         Pagos_NFacturaPanel.setViewportView(Pagos_NFacturaField);
+        
+        Pagos_TipoTxt.setText("Tipo:");
+
+        Pagos_TipoField.setMinimumSize(new java.awt.Dimension(204, 20));
+        Pagos_TipoField.setPreferredSize(new java.awt.Dimension(260, 20));
+        Pagos_TipoPanel.setViewportView(Pagos_TipoField);
 
         Pagos_ListaField.setColumns(20);
         Pagos_ListaField.setRows(5);
@@ -1400,24 +1410,30 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(PagosDataPanelLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Pagos_EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Pagos_ModificarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Pagos_BuscarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Pagos_AgregarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PagosDataPanelLayout.createSequentialGroup()
                         .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Pagos_CantidadTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Pagos_NFacturaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Pagos_ProveedorTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Pagos_ConceptoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Pagos_FechaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(PagosDataPanelLayout.createSequentialGroup()
+                                .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Pagos_CantidadTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Pagos_NFacturaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Pagos_ProveedorTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Pagos_ConceptoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Pagos_FechaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(PagosDataPanelLayout.createSequentialGroup()
+                                .addComponent(Pagos_TipoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(30, 30, 30)))
                         .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Pagos_TipoPanel)
                             .addComponent(Pagos_NFacturaPanel)
                             .addComponent(Pagos_CantidadPanel)
                             .addComponent(Pagos_ConceptoPanel)
                             .addComponent(Pagos_ProveedorPanel)
-                            .addComponent(Pagos_FechaPanel)))
-                    .addComponent(Pagos_EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Pagos_ModificarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Pagos_BuscarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Pagos_AgregarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(Pagos_FechaPanel))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Pagos_ListaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
@@ -1448,7 +1464,11 @@ public class MainWindow extends javax.swing.JFrame {
                         .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Pagos_NFacturaPanel)
                             .addComponent(Pagos_NFacturaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(221, 221, 221)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Pagos_TipoPanel)
+                            .addComponent(Pagos_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(193, 193, 193)
                         .addComponent(Pagos_AgregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Pagos_BuscarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1456,7 +1476,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(Pagos_ModificarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Pagos_EliminarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         VentanasInternalFrame.getContentPane().add(PagosDataPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 552));
@@ -2236,7 +2256,7 @@ public class MainWindow extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		
-		lista.get(0).setText(socio);
+		Socios_NumeroSocioField.setText(socio);
 	}
     
     private void buscarSocio() {
@@ -2523,6 +2543,7 @@ public class MainWindow extends javax.swing.JFrame {
     	aux.add(Pagos_ConceptoField);
     	aux.add(Pagos_CantidadField);
     	aux.add(Pagos_NFacturaField);
+    	aux.add(Pagos_TipoField);
     	return aux;
     }
     
@@ -2533,14 +2554,16 @@ public class MainWindow extends javax.swing.JFrame {
     	String concepto = lista.get(2).getText();
     	String cantidad = lista.get(3).getText();
     	String factura = lista.get(4).getText();
+    	String tipo = lista.get(5).getText();
     	
-    	String pago = String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura));
+    	String pago = String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura,tipo));
     	
     	if(fecha.equals("") ||
     			proveedor.equals("") ||
     			concepto.equals("") ||
     			cantidad.equals("") ||
-    			factura.equals("")) {
+    			factura.equals("") ||
+				tipo.equals("")) {
     		JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
 		               "Error", JOptionPane.ERROR_MESSAGE);
     	}
@@ -2576,7 +2599,8 @@ public class MainWindow extends javax.swing.JFrame {
     				Parsers.dateParser(p.getFecha()),
     				p.getConcepto(),
     				p.getCantidad().toString()+"€",
-    				p.getFactura()));
+    				p.getFactura(),
+    				p.getTipo().name()));
     		aux.add(str);
     	}
     	List<String> test = new ArrayList<String>();
@@ -2597,10 +2621,11 @@ public class MainWindow extends javax.swing.JFrame {
     	String concepto = lista.get(2).getText();
     	String cantidad = lista.get(3).getText();
     	String factura = lista.get(4).getText();
+    	String tipo = lista.get(5).getText();
     	    	
     	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
     	
-    	Pago fromTextFields = new Pago(String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura)));
+    	Pago fromTextFields = new Pago(String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura,tipo)));
     	
     	for(Pago p:pagos.getPagos()) {
     		if(p.getFactura().equals(fromTextFields.getFactura())) {
@@ -2608,6 +2633,7 @@ public class MainWindow extends javax.swing.JFrame {
     			p.setProveedor(fromTextFields.getProveedor());
     			p.setConcepto(fromTextFields.getConcepto());
     			p.setCantidad(fromTextFields.getCantidad());
+    			p.setTipo(fromTextFields.getTipo());
     		}
     	}
     	
@@ -2793,6 +2819,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextPane Pagos_ProveedorField;
     private javax.swing.JScrollPane Pagos_ProveedorPanel;
     private javax.swing.JLabel Pagos_ProveedorTxt;
+    private javax.swing.JTextPane Pagos_TipoField;
+    private javax.swing.JScrollPane Pagos_TipoPanel;
+    private javax.swing.JLabel Pagos_TipoTxt;
     private javax.swing.JPanel Sidebar;
     private javax.swing.JPanel SociosBtn;
     private javax.swing.JPanel SociosDataPanel;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import es.yoshibv.contasoc.Main;
+import es.yoshibv.contasoc.common.TipoRetribucion;
 
 public class FactoriaPago {
 	public static Pagos leePagos(String ruta) {
@@ -30,6 +31,7 @@ public class FactoriaPago {
 		String concepto = t[2];
 		Double cantidad = Double.parseDouble(t[3].trim());
 		String factura = t[4];
-		return new Pago(fecha,proveedor,concepto,cantidad,factura);
+		TipoRetribucion tipo = TipoRetribucion.valueOf(t[5]);
+		return new Pago(fecha,proveedor,concepto,cantidad,factura,tipo);
 	}
 }

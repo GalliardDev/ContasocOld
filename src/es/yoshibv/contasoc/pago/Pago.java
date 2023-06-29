@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+import es.yoshibv.contasoc.common.TipoRetribucion;
 import es.yoshibv.contasoc.util.Parsers;
 
 public class Pago implements Comparable<Pago> {
@@ -12,14 +13,16 @@ public class Pago implements Comparable<Pago> {
 	private String concepto;
 	private Double cantidad;
 	private String factura;
+	private TipoRetribucion tipo; 
 	
-	public Pago(LocalDate fecha, String proveedor, String concepto, Double cantidad, String factura) {
+	public Pago(LocalDate fecha, String proveedor, String concepto, Double cantidad, String factura, TipoRetribucion tipo) {
 		super();
 		this.fecha = fecha;
 		this.proveedor = proveedor;
 		this.concepto = concepto;
 		this.cantidad = cantidad;
 		this.factura = factura;
+		this.tipo = tipo;
 	}
 	
 	public Pago(String s) {
@@ -30,6 +33,7 @@ public class Pago implements Comparable<Pago> {
 		this.concepto = t[2];
 		this.cantidad = Double.valueOf(t[3].trim());
 		this.factura = t[4];
+		this.tipo = TipoRetribucion.valueOf(t[5]);
 	}
 	
 	public LocalDate getFecha() {
@@ -62,12 +66,18 @@ public class Pago implements Comparable<Pago> {
 	public void setFactura(String factura) {
 		this.factura = factura;
 	}
+	public TipoRetribucion getTipo() {
+		return tipo;
+	}
+	public void setTipo(TipoRetribucion tipo) {
+		this.tipo = tipo;
+	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(cantidad, concepto, factura, fecha, proveedor);
+		return Objects.hash(factura);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -77,11 +87,9 @@ public class Pago implements Comparable<Pago> {
 		if (getClass() != obj.getClass())
 			return false;
 		Pago other = (Pago) obj;
-		return Objects.equals(cantidad, other.cantidad) && Objects.equals(concepto, other.concepto)
-				&& Objects.equals(factura, other.factura) && Objects.equals(fecha, other.fecha)
-				&& Objects.equals(proveedor, other.proveedor);
+		return Objects.equals(factura, other.factura);
 	}
-	
+
 	@Override
 	public int compareTo(Pago o) {
 		// TODO Auto-generated method stub
@@ -90,6 +98,6 @@ public class Pago implements Comparable<Pago> {
 
 	@Override
 	public String toString() {
-		return Parsers.dateParser(fecha)+";"+proveedor+";"+concepto+";"+cantidad+";"+factura;
+		return Parsers.dateParser(fecha)+";"+proveedor+";"+concepto+";"+cantidad+";"+factura+";"+tipo;
 	}
 }

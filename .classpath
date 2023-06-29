@@ -7,6 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/LocalRepo/JAVA/AbsoluteLayout.jar"/>
-	<classpathentry kind="lib" path="C:/Users/jomaa/Desktop/flatlaf-3.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/LocalRepo/JAVA/flatlaf-3.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
