@@ -43,6 +43,8 @@ import es.yoshibv.contasoc.util.Parsers;
  */
 @SuppressWarnings("serial")
 public class MainWindow extends javax.swing.JFrame {
+	
+	final int year = LocalDate.now().getYear();
 
     /**
      * Creates new form Main
@@ -426,7 +428,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         CopyrightTxt.setForeground(new java.awt.Color(255, 255, 255));
         CopyrightTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CopyrightTxt.setText("Copyright © 2023 by YoshiBv");
+        CopyrightTxt.setText("Copyright © " + year + " by YoshiBv");
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(258, 127));
