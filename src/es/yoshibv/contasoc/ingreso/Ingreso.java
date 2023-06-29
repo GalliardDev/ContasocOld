@@ -10,14 +10,14 @@ public class Ingreso implements Comparable<Ingreso> {
 	private LocalDate fecha;
 	private String concepto;
 	private Double cantidad;
-	private TipoRetribucion cuota;
+	private TipoRetribucion tipo;
 	
-	public Ingreso(LocalDate fecha, String concepto, Double cantidad, TipoRetribucion cuota) {
+	public Ingreso(LocalDate fecha, String concepto, Double cantidad, TipoRetribucion tipo) {
 		super();
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.cantidad = cantidad;
-		this.cuota = cuota;
+		this.tipo = tipo;
 	}
 	
 	public Ingreso(String s) {
@@ -32,7 +32,7 @@ public class Ingreso implements Comparable<Ingreso> {
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.cantidad = cantidad;
-		this.cuota = tipo;
+		this.tipo = tipo;
 	}
 
 	public LocalDate getFecha() {
@@ -59,12 +59,12 @@ public class Ingreso implements Comparable<Ingreso> {
 		this.cantidad = cantidad;
 	}
 
-	public TipoRetribucion getCuota() {
-		return cuota;
+	public TipoRetribucion getTipo() {
+		return tipo;
 	}
 
-	public void setCuota(TipoRetribucion cuota) {
-		this.cuota = cuota;
+	public void setTipo(TipoRetribucion tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class Ingreso implements Comparable<Ingreso> {
 
 	@Override
 	public String toString() {
-		return Parsers.dateParser(fecha)+"-"+concepto+"-"+cantidad+"-"+cuota;
+		return Parsers.dateParser(fecha)+"-"+concepto+"-"+cantidad+"-"+tipo;
 	}
 		
 }

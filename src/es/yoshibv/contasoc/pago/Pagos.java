@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import es.yoshibv.contasoc.common.TipoRetribucion;
+
 public class Pagos {
 	private List<Pago> pagos;
 
@@ -18,8 +20,9 @@ public class Pagos {
 		return pagos;
 	}
 	
-	public Double getTotalPagos() {
+	public Double getTotalPagos(TipoRetribucion tipo) {
 		return pagos.stream()
+		.filter(x->x.getTipo().equals(tipo))
 		.collect(Collectors.summingDouble(x->x.getCantidad()));
 	}
 	

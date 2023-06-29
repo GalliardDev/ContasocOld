@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.stream.Collectors;
 
+import es.yoshibv.contasoc.common.TipoRetribucion;
+
 public class Ingresos {
 	private SortedMap<Integer,List<Ingreso>> ingresos;
 
@@ -36,10 +38,11 @@ public class Ingresos {
 		}
 	}
 	
-	public Double getTotalIngresos() {
+	public Double getTotalIngresos(TipoRetribucion tipo) {
 		return ingresos.entrySet().stream()
 				.map(e->e.getValue()).toList().stream()
 				.flatMap(x->x.stream())
+				.filter(x->x.getTipo().equals(tipo))
 				.collect(Collectors.summingDouble(x->x.getCantidad()));
 	}
 }

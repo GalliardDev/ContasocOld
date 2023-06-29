@@ -149,9 +149,9 @@ public class MainWindow extends javax.swing.JFrame {
         Ingresos_CantidadTxt = new javax.swing.JLabel();
         Ingresos_CantidadPanel = new javax.swing.JScrollPane();
         Ingresos_CantidadField = new javax.swing.JTextPane();
-        Ingresos_CuotaTxt = new javax.swing.JLabel();
-        Ingresos_CuotaPanel = new javax.swing.JScrollPane();
-        Ingresos_CuotaField = new javax.swing.JTextPane();
+        Ingresos_TipoTxt = new javax.swing.JLabel();
+        Ingresos_TipoPanel = new javax.swing.JScrollPane();
+        Ingresos_TipoField = new javax.swing.JTextPane();
         Ingresos_ListaPanel = new javax.swing.JScrollPane();
         Ingresos_ListaField = new javax.swing.JTextArea();
         Ingresos_AgregarBtn = new javax.swing.JPanel();
@@ -993,11 +993,11 @@ public class MainWindow extends javax.swing.JFrame {
         Ingresos_CantidadField.setPreferredSize(new java.awt.Dimension(204, 20));
         Ingresos_CantidadPanel.setViewportView(Ingresos_CantidadField);
 
-        Ingresos_CuotaTxt.setText("Cuota:");
+        Ingresos_TipoTxt.setText("Tipo:");
 
-        Ingresos_CuotaField.setMinimumSize(new java.awt.Dimension(260, 20));
-        Ingresos_CuotaField.setPreferredSize(new java.awt.Dimension(204, 20));
-        Ingresos_CuotaPanel.setViewportView(Ingresos_CuotaField);
+        Ingresos_TipoField.setMinimumSize(new java.awt.Dimension(260, 20));
+        Ingresos_TipoField.setPreferredSize(new java.awt.Dimension(204, 20));
+        Ingresos_TipoPanel.setViewportView(Ingresos_TipoField);
 
         Ingresos_ListaField.setColumns(20);
         Ingresos_ListaField.setRows(5);
@@ -1157,13 +1157,13 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(IngresosDataPanelLayout.createSequentialGroup()
                         .addGroup(IngresosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Ingresos_CantidadTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Ingresos_CuotaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Ingresos_TipoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Ingresos_FechaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Ingresos_ConceptoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(Ingresos_NumeroSocioTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(IngresosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Ingresos_CuotaPanel)
+                            .addComponent(Ingresos_TipoPanel)
                             .addComponent(Ingresos_CantidadPanel)
                             .addComponent(Ingresos_ConceptoPanel)
                             .addComponent(Ingresos_FechaPanel)
@@ -1200,8 +1200,8 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(Ingresos_CantidadTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
                         .addGroup(IngresosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Ingresos_CuotaPanel)
-                            .addComponent(Ingresos_CuotaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(Ingresos_TipoPanel)
+                            .addComponent(Ingresos_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(221, 221, 221)
                         .addComponent(Ingresos_AgregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2125,18 +2125,23 @@ public class MainWindow extends javax.swing.JFrame {
     	Socios_FechaBajaField.setText("");
     	Socios_EstadoField.setText("");
     	Socios_TipoField.setText("");
+    	Socios_ListaIngresosField.setText("");
     	Ingresos_NumeroSocioField.setText("");
     	Ingresos_FechaField.setText("");
     	Ingresos_ConceptoField.setText("");
     	Ingresos_CantidadField.setText("");
-    	Ingresos_CuotaField.setText("");
+    	Ingresos_TipoField.setText("");
+    	Ingresos_ListaField.setText("");
     	Pagos_FechaField.setText("");
     	Pagos_ProveedorField.setText("");
     	Pagos_ConceptoField.setText("");
     	Pagos_CantidadField.setText("");
     	Pagos_NFacturaField.setText("");
+    	Pagos_TipoField.setText("");
+    	Pagos_ListaField.setText("");
     	Informe_SIBancoField.setText("");
-    	Informe_SICajaField.setText("");    	
+    	Informe_SICajaField.setText("");
+    	Informe_ListaField.setText("");
     }//GEN-LAST:event_TrashCanBtnMouseClicked
 
     private void TrashCanBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TrashCanBtnMouseEntered
@@ -2398,7 +2403,7 @@ public class MainWindow extends javax.swing.JFrame {
     	aux.add(Ingresos_FechaField);
     	aux.add(Ingresos_ConceptoField);
     	aux.add(Ingresos_CantidadField);
-    	aux.add(Ingresos_CuotaField);
+    	aux.add(Ingresos_TipoField);
     	return aux;
     }
 
@@ -2472,7 +2477,7 @@ public class MainWindow extends javax.swing.JFrame {
     	LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
     	String concepto = lista.get(2).getText();
     	Double cantidad = Double.valueOf(lista.get(3).getText());
-    	TipoRetribucion cuota = TipoRetribucion.valueOf(lista.get(4).getText());
+    	TipoRetribucion tipo = TipoRetribucion.valueOf(lista.get(4).getText());
     	
     	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
     	List<Ingreso> aux = ingresos.getIngresosPorNumero(socio);
@@ -2481,7 +2486,7 @@ public class MainWindow extends javax.swing.JFrame {
     		if(i.getFecha().equals(fecha)) {
     			i.setConcepto(concepto);
     			i.setCantidad(cantidad);
-    			i.setCuota(cuota);
+    			i.setTipo(tipo);
     		}
     	}
     	
@@ -2693,18 +2698,22 @@ public class MainWindow extends javax.swing.JFrame {
         	Fichero.escribeFichero(String.join("\n", List.of(banco.toString(),caja.toString())), Main.SALDO);
     	}
     	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
-    	Double totalIngresos = ingresos.getTotalIngresos();
+    	Double totalIngresosBanco = ingresos.getTotalIngresos(TipoRetribucion.BANCO);
+    	Double totalIngresosCaja = ingresos.getTotalIngresos(TipoRetribucion.CAJA);
     	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
-    	Double totalPagos = pagos.getTotalPagos();
+    	Double totalPagosBanco = pagos.getTotalPagos(TipoRetribucion.BANCO);
+    	Double totalPagosCaja = pagos.getTotalPagos(TipoRetribucion.CAJA);
     	
     	DecimalFormat df = new DecimalFormat("#.##");
     	df.setRoundingMode(RoundingMode.FLOOR);
-        String total = df.format((banco+caja+totalIngresos-totalPagos));
+        String total = df.format((banco+caja+totalIngresosBanco+totalIngresosCaja-totalPagosBanco-totalPagosCaja));
     	
     	Informe_ListaField.setText("Inicial banco: " + banco + "€\n" +
     			"Inicial caja: " + caja + "€\n" + 
-    			"Total ingresos: " + totalIngresos + "€\n" + 
-    			"Total pagos: " + totalPagos + "€\n" +
+    			"Total ingresos banco: " + totalIngresosBanco + "€\n" +
+    			"Total ingresos caja: " + totalIngresosCaja + "€\n" +
+    			"Total pagos banco: " + totalPagosBanco + "€\n" +
+    			"Total pagos caja: " + totalPagosCaja + "€\n" +
     			"-------------------\n" +
     			"Total: " + total + "€");
     }
@@ -2766,9 +2775,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextPane Ingresos_ConceptoField;
     private javax.swing.JScrollPane Ingresos_ConceptoPanel;
     private javax.swing.JLabel Ingresos_ConceptoTxt;
-    private javax.swing.JTextPane Ingresos_CuotaField;
-    private javax.swing.JScrollPane Ingresos_CuotaPanel;
-    private javax.swing.JLabel Ingresos_CuotaTxt;
+    private javax.swing.JTextPane Ingresos_TipoField;
+    private javax.swing.JScrollPane Ingresos_TipoPanel;
+    private javax.swing.JLabel Ingresos_TipoTxt;
     private javax.swing.JPanel Ingresos_EliminarBtn;
     private javax.swing.JLabel Ingresos_EliminarTxt;
     private javax.swing.JTextPane Ingresos_FechaField;
