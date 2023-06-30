@@ -10,6 +10,8 @@ import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
@@ -21,6 +23,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -38,6 +42,8 @@ import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
 import es.yoshibv.contasoc.ingreso.Ingreso;
 import es.yoshibv.contasoc.pago.FactoriaPago;
 import es.yoshibv.contasoc.pago.Pago;
+import es.yoshibv.contasoc.util.DNIValidator;
+import es.yoshibv.contasoc.util.ErrorHandler;
 import es.yoshibv.contasoc.util.Fichero;
 import es.yoshibv.contasoc.util.Parsers;
 
@@ -51,7 +57,7 @@ public class MainWindow extends javax.swing.JFrame {
 	private int initialX;
     private int initialY;
 	final int year = LocalDate.now().getYear();
-
+	
     /**
      * Creates new form Main
      */
@@ -671,73 +677,182 @@ public class MainWindow extends javax.swing.JFrame {
 
         Socios_NumeroSocioField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_NumeroSocioField.setPreferredSize(new java.awt.Dimension(260, 20));
+                
         Socios_NumeroSocioPanel.setViewportView(Socios_NumeroSocioField);
+        Socios_NumeroSocioField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_NombreField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_NombreTxt.setText("Nombre:");
 
         Socios_NombreField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_NombreField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_NombrePanel.setViewportView(Socios_NombreField);
+        Socios_NombreField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_ApellidosField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_ApellidosTxt.setText("Apellidos:");
 
         Socios_ApellidosField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_ApellidosField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_ApellidosPanel.setViewportView(Socios_ApellidosField);
+        Socios_ApellidosField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_DNIField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_DNITxt.setText("DNI:");
 
         Socios_DNIField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_DNIField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_DNIPanel.setViewportView(Socios_DNIField);
+        Socios_DNIField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_DireccionField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_DireccionTxt.setText("Dirección");
 
         Socios_DireccionField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_DireccionField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_DireccionPanel.setViewportView(Socios_DireccionField);
+        Socios_DireccionField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_TelefonoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_TelefonoTxt.setText("Teléfono:");
 
         Socios_TelefonoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_TelefonoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_TelefonoPanel.setViewportView(Socios_TelefonoField);
+        Socios_TelefonoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_CorreoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_CorreoTxt.setText("Correo:");
 
         Socios_CorreoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_CorreoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_CorreoPanel.setViewportView(Socios_CorreoField);
+        Socios_CorreoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_NumeroHuertoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_NumeroHuertoTxt.setText("Número de huerto:");
 
         Socios_NumeroHuertoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_NumeroHuertoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_NumeroHuertoPanel.setViewportView(Socios_NumeroHuertoField);
+        Socios_NumeroHuertoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_FechaAltaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_FechaAltaTxt.setText("Fecha de alta:");
 
         Socios_FechaAltaField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_FechaAltaField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_FechaAltaPanel.setViewportView(Socios_FechaAltaField);
+        Socios_FechaAltaField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_FechaBajaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_FechaBajaTxt.setText("Fecha de baja:");
 
         Socios_FechaBajaField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_FechaBajaField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_FechaBajaPanel.setViewportView(Socios_FechaBajaField);
+        Socios_FechaBajaField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_EstadoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_EstadoTxt.setText("Estado:");
 
         Socios_EstadoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_EstadoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_EstadoPanel.setViewportView(Socios_EstadoField);
+        Socios_EstadoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_TipoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_TipoTxt.setText("Tipo:");
 
         Socios_TipoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Socios_TipoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Socios_TipoPanel.setViewportView(Socios_TipoField);
+        Socios_TipoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Socios_NumeroSocioField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Socios_ListaIngresosField.setColumns(20);
         Socios_ListaIngresosField.setRows(5);
@@ -1006,30 +1121,75 @@ public class MainWindow extends javax.swing.JFrame {
         Ingresos_NumeroSocioField.setMinimumSize(new java.awt.Dimension(260, 20));
         Ingresos_NumeroSocioField.setPreferredSize(new java.awt.Dimension(260, 20));
         Ingresos_NumeroSocioPanel.setViewportView(Ingresos_NumeroSocioField);
+        Ingresos_NumeroSocioField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Ingresos_FechaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Ingresos_FechaTxt.setText("Fecha:");
 
         Ingresos_FechaField.setMinimumSize(new java.awt.Dimension(260, 20));
         Ingresos_FechaField.setPreferredSize(new java.awt.Dimension(260, 20));
         Ingresos_FechaPanel.setViewportView(Ingresos_FechaField);
+        Ingresos_FechaField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Ingresos_ConceptoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Ingresos_ConceptoTxt.setText("Concepto:");
 
         Ingresos_ConceptoField.setMinimumSize(new java.awt.Dimension(260, 20));
         Ingresos_ConceptoField.setPreferredSize(new java.awt.Dimension(204, 20));
         Ingresos_ConceptoPanel.setViewportView(Ingresos_ConceptoField);
+        Ingresos_ConceptoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Ingresos_CantidadField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Ingresos_CantidadTxt.setText("Cantidad:");
 
         Ingresos_CantidadField.setMinimumSize(new java.awt.Dimension(260, 20));
         Ingresos_CantidadField.setPreferredSize(new java.awt.Dimension(204, 20));
         Ingresos_CantidadPanel.setViewportView(Ingresos_CantidadField);
+        Ingresos_CantidadField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Ingresos_TipoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Ingresos_TipoTxt.setText("Tipo:");
 
         Ingresos_TipoField.setMinimumSize(new java.awt.Dimension(260, 20));
         Ingresos_TipoField.setPreferredSize(new java.awt.Dimension(204, 20));
         Ingresos_TipoPanel.setViewportView(Ingresos_TipoField);
+        Ingresos_TipoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Ingresos_NumeroSocioField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Ingresos_ListaField.setColumns(20);
         Ingresos_ListaField.setRows(5);
@@ -1256,36 +1416,90 @@ public class MainWindow extends javax.swing.JFrame {
         Pagos_FechaField.setMinimumSize(new java.awt.Dimension(204, 20));
         Pagos_FechaField.setPreferredSize(new java.awt.Dimension(260, 20));
         Pagos_FechaPanel.setViewportView(Pagos_FechaField);
+        Pagos_FechaField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Pagos_ProveedorField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Pagos_ProveedorTxt.setText("Proveedor:");
 
         Pagos_ProveedorField.setMinimumSize(new java.awt.Dimension(204, 20));
         Pagos_ProveedorField.setPreferredSize(new java.awt.Dimension(260, 20));
         Pagos_ProveedorPanel.setViewportView(Pagos_ProveedorField);
+        Pagos_ProveedorField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Pagos_ConceptoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Pagos_ConceptoTxt.setText("Concepto:");
 
         Pagos_ConceptoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Pagos_ConceptoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Pagos_ConceptoPanel.setViewportView(Pagos_ConceptoField);
+        Pagos_ConceptoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Pagos_CantidadField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Pagos_CantidadTxt.setText("Cantidad:");
 
         Pagos_CantidadField.setMinimumSize(new java.awt.Dimension(204, 20));
         Pagos_CantidadField.setPreferredSize(new java.awt.Dimension(260, 20));
         Pagos_CantidadPanel.setViewportView(Pagos_CantidadField);
+        Pagos_CantidadField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Pagos_NFacturaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Pagos_NFacturaTxt.setText("Nº de factura:");
 
         Pagos_NFacturaField.setMinimumSize(new java.awt.Dimension(204, 20));
         Pagos_NFacturaField.setPreferredSize(new java.awt.Dimension(260, 20));
         Pagos_NFacturaPanel.setViewportView(Pagos_NFacturaField);
+        Pagos_NFacturaField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Pagos_TipoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
         
         Pagos_TipoTxt.setText("Tipo:");
 
         Pagos_TipoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Pagos_TipoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Pagos_TipoPanel.setViewportView(Pagos_TipoField);
+        Pagos_TipoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Pagos_FechaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Pagos_ListaField.setColumns(20);
         Pagos_ListaField.setRows(5);
@@ -1522,12 +1736,30 @@ public class MainWindow extends javax.swing.JFrame {
         Informe_SIBancoField.setMinimumSize(new java.awt.Dimension(204, 20));
         Informe_SIBancoField.setPreferredSize(new java.awt.Dimension(260, 20));
         Informe_SIBancoPanel.setViewportView(Informe_SIBancoField);
+        Informe_SIBancoField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Informe_SICajaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Informe_SICajaTxt.setText("Saldo inicial caja:");
 
         Informe_SICajaField.setMinimumSize(new java.awt.Dimension(204, 20));
         Informe_SICajaField.setPreferredSize(new java.awt.Dimension(260, 20));
         Informe_SICajaPanel.setViewportView(Informe_SICajaField);
+        Informe_SICajaField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_TAB) {
+                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
+                    Informe_SIBancoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                }
+            }
+        });
 
         Informe_ListaField.setColumns(20);
         Informe_ListaField.setRows(5);
@@ -1827,7 +2059,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void MinimizeBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MinimizeBtnMouseExited
         // TODO add your handling code here:
         MinimizeBtn.setBackground(Color.decode("#FFFFFF"));
@@ -2234,7 +2466,54 @@ public class MainWindow extends javax.swing.JFrame {
     	aux.add(Socios_TipoField);
     	return aux;
     }
-        
+       
+    private boolean sociosInputChecker() {
+    	if(Socios_NombreField.getText().equals("") ||
+				Socios_ApellidosField.getText().equals("") ||
+				Socios_DNIField.getText().equals("") ||
+				Socios_DireccionField.getText().equals("") ||
+				(Socios_TelefonoField.getText().equals("") && Socios_CorreoField.getText().equals("")) ||
+				Socios_FechaAltaField.getText().equals("") ||
+				Socios_TipoField.getText().equals("")) {		
+			ErrorHandler.camposObligatoriosVacios();
+			return false;
+		}
+    	if(DNIValidator.validarDNI(Socios_DNIField.getText())==false) {
+    		if(DNIValidator.validarNIE(Socios_DNIField.getText())==false) {
+    			ErrorHandler.errorAlLeerDNI();
+        		return false;
+    		}
+    	}
+    	if(!(Socios_TelefonoField.getText().equals("")) && !(Socios_TelefonoField.getText().length()==9)) {
+			ErrorHandler.errorAlLeerTlf();
+			return false;
+		}
+    	String patronCorreo = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        Pattern patternCorreo = Pattern.compile(patronCorreo);
+        Matcher matcherCorreo = patternCorreo.matcher(Socios_CorreoField.getText());
+        if(!(Socios_CorreoField.getText().equals("")) && !(matcherCorreo.matches())) {
+        	ErrorHandler.errorAlLeerCorreo();
+        	return false;
+        }
+        if(Socios_FechaAltaField.getText().split("/").length==1) {
+			ErrorHandler.errorAlLeerFecha("alta");
+			return false;
+		}
+		if(Socios_NumeroHuertoField.getText().equals("") && !(Socios_TipoField.getText().equals("LISTA_ESPERA"))) {
+			ErrorHandler.numeroHuertoVacio();
+			return false;
+		}
+		if(!(Socios_NumeroHuertoField.getText().equals("")) && Socios_TipoField.getText().equals("")) {
+			ErrorHandler.tipoSocioVacio();
+			return false;
+		}
+		if(!(Socios_NumeroHuertoField.getText().equals("")) && Socios_TipoField.getText().equals("LISTA_ESPERA")) {
+			ErrorHandler.tipoSocioNoAdecuado();
+			return false;
+		}
+		return true;
+    }
+    
     private void añadirSocio() {    	
 		List<JTextPane> lista = sociosGetTextFields();
 		String nombre = lista.get(0).getText();
@@ -2248,52 +2527,30 @@ public class MainWindow extends javax.swing.JFrame {
 		String alta = lista.get(8).getText();
 		String baja = "null";
 		String estado = "ACTIVO";
-		String tipo = lista.get(11).getText();
+		String tipo = Parsers.tipoHortelanoParser(lista.get(11).getText().toUpperCase());
 		
-		String hortelano = String.join(";", List.of(nombre,apellidos,dni,direccion,telefono,
-				correo,socio,huerto,alta,baja,estado,tipo));
-		
-		if(nombre.equals("") ||
-				apellidos.equals("") ||
-				dni.equals("") ||
-				direccion.equals("") ||
-				(telefono.equals("") && correo.equals("")) ||
-				alta.equals("") ||
-				tipo.equals("")) {		
-			JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
-		               "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		if(huerto.equals("") && !(tipo.equals("LISTA_ESPERA"))) {
-			JOptionPane.showMessageDialog(getContentPane(), "Introducir número de huerto",
-		               "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		if(!(huerto.equals("")) && tipo.equals("")) {
-			JOptionPane.showMessageDialog(getContentPane(), "Introducir tipo de socio",
-		               "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		if(!(huerto.equals("")) && tipo.equals("LISTA_ESPERA")) {
-			JOptionPane.showMessageDialog(getContentPane(), "El tipo de socio no es el adecuado",
-		               "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
-		try {
-			if(Files.readAllLines(Path.of(Main.HORTELANOS)).get(0).equals("nombre;apellidos;dni;direccion;000000000;correo;0;0;1/1/1901;2/1/1901;INACTIVO;HORTELANO")) {
-				FactoriaHortelano.escribeHortelano(hortelano, Main.HORTELANOS);
-				Fichero.escribeFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
-			} else {
-				FactoriaHortelano.añadeHortelano(hortelano, Main.HORTELANOS);
-				Fichero.añadirAlFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
+		if(!(sociosInputChecker())) {
+			
+		} else {
+						
+			String hortelano = String.join(";", List.of(nombre,apellidos,dni,direccion,telefono,
+					correo,socio,huerto,alta,baja,estado,tipo));
+
+			try {
+				if(Files.readAllLines(Path.of(Main.HORTELANOS)).get(0).equals("nombre;apellidos;dni;direccion;000000000;correo;0;0;1/1/1901;2/1/1901;INACTIVO;HORTELANO")) {
+					FactoriaHortelano.escribeHortelano(hortelano, Main.HORTELANOS);
+					Fichero.escribeFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
+				} else {
+					FactoriaHortelano.añadeHortelano(hortelano, Main.HORTELANOS);
+					Fichero.añadirAlFichero(Integer.valueOf(socio)+";[]",Main.INGRESOS);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				ErrorHandler.errorAlEscribirBDD("socios");
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			Socios_NumeroSocioField.setText(socio);
 		}
-		
-		Socios_NumeroSocioField.setText(socio);
 	}
     
     private void buscarSocio() {
@@ -2301,6 +2558,9 @@ public class MainWindow extends javax.swing.JFrame {
     	Integer socio = Integer.valueOf(lista.get(6).getText());
     	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
     	Hortelano hortelano = hortelanos.getHortelanoPorNumero(socio);
+    	if(hortelano==null) {
+    		ErrorHandler.socioNoExiste();
+    	}
     	List<String> aux = new ArrayList<String>();
     	for(String s:hortelano.toString().split(";")) {
     		aux.add(s);
@@ -2359,55 +2619,59 @@ public class MainWindow extends javax.swing.JFrame {
 		String alta = lista.get(8).getText();
 		String baja = lista.get(9).getText();
 		String estado = lista.get(10).getText();
-		String tipo = lista.get(11).getText();
-		String h = String.join(";", List.of(nombre,apellidos,dni,direccion,telefono,
-				correo,socio,huerto,alta,baja,estado,tipo));
-		Hortelano hortelano = new Hortelano(h);
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.getPersona().setNombre(hortelano.getPersona().getNombre());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.getPersona().setApellidos(hortelano.getPersona().getApellidos());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.getPersona().setDni(hortelano.getPersona().getDni());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.getPersona().setDireccion(hortelano.getPersona().getDireccion());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.getPersona().setTelefono(hortelano.getPersona().getTelefono());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.getPersona().setCorreo(hortelano.getPersona().getCorreo());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.setSocio(hortelano.getSocio());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.setHuerto(hortelano.getHuerto());
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.setAlta(hortelano.getAlta());
-		if(baja.equals("")) {
+		String tipo = Parsers.tipoHortelanoParser(lista.get(11).getText().toUpperCase());
+		if(!(sociosInputChecker())) {
+			
+		} else {
+			String h = String.join(";", List.of(nombre,apellidos,dni,direccion,telefono,
+					correo,socio,huerto,alta,baja,estado,tipo));
+			Hortelano hortelano = new Hortelano(h);
 			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-				.setBaja(null);
+				.getPersona().setNombre(hortelano.getPersona().getNombre());
 			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-				.setEstado(hortelano.getEstado());
-		} else if(!(baja.equals(""))) {
+				.getPersona().setApellidos(hortelano.getPersona().getApellidos());
 			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-				.setBaja(hortelano.getBaja());
+				.getPersona().setDni(hortelano.getPersona().getDni());
 			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-				.setEstado(Estado.INACTIVO);
+				.getPersona().setDireccion(hortelano.getPersona().getDireccion());
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.getPersona().setTelefono(hortelano.getPersona().getTelefono());
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.getPersona().setCorreo(hortelano.getPersona().getCorreo());
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setSocio(hortelano.getSocio());
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setHuerto(hortelano.getHuerto());
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setAlta(hortelano.getAlta());
+			if(baja.equals("")) {
+				hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+					.setBaja(null);
+				hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+					.setEstado(Estado.ACTIVO);
+			} else if(!(baja.equals(""))) {
+				hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+					.setBaja(hortelano.getBaja());
+				hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+					.setEstado(Estado.INACTIVO);
+			}
+			hortelanos.getHortelanoPorNumero(hortelano.getSocio())
+				.setTipo(hortelano.getTipo());
+			List<String> aux = new ArrayList<String>();
+	    	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
+	    		aux.add(e.getValue().toString().replace(" [", "["));
+	    	}
+	    	FactoriaHortelano.escribeHortelano(aux.get(0), Main.HORTELANOS);
+	    	for(String s:aux.subList(1, aux.size())) {
+	    		FactoriaHortelano.añadeHortelano(s, Main.HORTELANOS);
+	    	}
+	    	
+	    	for(JTextPane tp:lista) {
+				tp.setText("");
+			}
+	    	
+	    	Socios_ListaIngresosField.setText("");
 		}
-		hortelanos.getHortelanoPorNumero(hortelano.getSocio())
-			.setTipo(hortelano.getTipo());
-		List<String> aux = new ArrayList<String>();
-    	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
-    		aux.add(e.getValue().toString().replace(" [", "["));
-    	}
-    	FactoriaHortelano.escribeHortelano(aux.get(0), Main.HORTELANOS);
-    	for(String s:aux.subList(1, aux.size())) {
-    		FactoriaHortelano.añadeHortelano(s, Main.HORTELANOS);
-    	}
-    	
-    	for(JTextPane tp:lista) {
-			tp.setText("");
-		}
-    	
-    	Socios_ListaIngresosField.setText("");
 			
     }
     
@@ -2442,58 +2706,75 @@ public class MainWindow extends javax.swing.JFrame {
     	aux.add(Ingresos_TipoField);
     	return aux;
     }
-
+    
+    private boolean ingresosInputChecker() {
+    	if(Ingresos_NumeroSocioField.getText().equals("") ||
+				Ingresos_FechaField.getText().equals("") ||
+				Ingresos_ConceptoField.getText().equals("") ||
+				Ingresos_CantidadField.getText().equals("") ||
+				Ingresos_TipoField.getText().equals("")) {		
+			ErrorHandler.camposObligatoriosVacios();
+			return false;
+		}
+    	if(Ingresos_FechaField.getText().split("/").length==1) {
+			ErrorHandler.errorAlLeerFecha("registro del ingreso");
+			return false;
+		}
+    	if(!(Double.valueOf(Ingresos_CantidadField.getText()) instanceof Double)) {
+    		ErrorHandler.errorAlLeerCantidadNumerica(Ingresos_CantidadField.getText());
+    		return false;
+    	}
+    	return true;
+    }
+    
     private void añadirIngreso() {
     	List<JTextPane> lista = ingresosGetTextFields();
-    	Integer socio = Integer.valueOf(lista.get(0).getText());
+    	String socio = lista.get(0).getText();
     	String fecha = lista.get(1).getText();
     	String concepto = lista.get(2).getText();
-    	String cantidad = lista.get(3).getText();
-    	String tipoIngreso = lista.get(4).getText();
+    	String cantidad = Parsers.decimalSymbolParser(lista.get(3).getText());
+    	String tipoIngreso = lista.get(4).getText().toUpperCase();
     	
     	String i = String.join("-", List.of(fecha,concepto,cantidad,tipoIngreso));
     	
-    	Ingreso ingreso = new Ingreso(i);
-    	
-    	if(String.valueOf(socio).equals("") ||
-				fecha.equals("") ||
-				concepto.equals("") ||
-				cantidad.equals("") ||
-				tipoIngreso.equals("")) {		
-			JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
-		               "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-    	    	
-    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
-    	
-    	ingresos.agregarIngreso(Integer.valueOf(socio), ingreso);
-    	
-    	List<Integer> keys = new ArrayList<Integer>();
-    	List<List<Ingreso>> values = new ArrayList<List<Ingreso>>();
-    	for(Entry<Integer,List<Ingreso>> e:ingresos.getIngresos().entrySet()) {
-    		keys.add(e.getKey());
-    		values.add(e.getValue());
+    	if(!(ingresosInputChecker())) {
+    		
+    	} else {
+    		Ingreso ingreso = new Ingreso(i);
+        	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+        	
+        	ingresos.agregarIngreso(Integer.valueOf(socio), ingreso);
+        	
+        	List<Integer> keys = new ArrayList<Integer>();
+        	List<List<Ingreso>> values = new ArrayList<List<Ingreso>>();
+        	for(Entry<Integer,List<Ingreso>> e:ingresos.getIngresos().entrySet()) {
+        		keys.add(e.getKey());
+        		values.add(e.getValue());
+        	}
+        	
+        	Fichero.escribeFichero(keys.get(0)+";"+values.get(0), Main.INGRESOS);
+        	for(int n = 1; n < keys.size(); n++) {
+        		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
+        	}
+        	
+        	for(JTextPane tp:lista) {
+    			tp.setText("");
+    		}
     	}
-    	
-    	Fichero.escribeFichero(keys.get(0)+";"+values.get(0), Main.INGRESOS);
-    	for(int n = 1; n < keys.size(); n++) {
-    		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
-    	}
-    	
-    	for(JTextPane tp:lista) {
-			tp.setText("");
-		}
     }
     
     private void buscarIngreso() {
     	List<JTextPane> lista = ingresosGetTextFields();
     	Integer socio = Integer.valueOf(lista.get(0).getText());
     	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
-    	List<String> ingresosList = ingresos.getIngresosPorNumero(socio).stream()
-    			.map(x->x.toString())
-    			.toList();
-    	
+    	List<String> ingresosList = null;
+    	try {
+    		ingresosList = ingresos.getIngresosPorNumero(socio).stream()
+        			.map(x->x.toString())
+        			.toList();
+    	} catch(Exception e) {
+    		ErrorHandler.ingresoNoExiste();
+    	}
     	if(!(ingresosList.size()==0)) {
     		List<String> test = new ArrayList<String>();
         	for(String s:ingresosList) {
@@ -2508,44 +2789,47 @@ public class MainWindow extends javax.swing.JFrame {
     
     private void modificarIngreso() {
     	List<JTextPane> lista = ingresosGetTextFields();
-    	Integer socio = Integer.valueOf(lista.get(0).getText());
-    	String[] fechaArr = lista.get(1).getText().split("/");
-    	LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
+    	String socio = lista.get(0).getText();
+    	String fecha = lista.get(1).getText();
     	String concepto = lista.get(2).getText();
-    	Double cantidad = Double.valueOf(lista.get(3).getText());
-    	TipoRetribucion tipo = TipoRetribucion.valueOf(lista.get(4).getText());
+    	String cantidad = lista.get(3).getText();
+    	String tipo = lista.get(4).getText();
     	
-    	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
-    	List<Ingreso> aux = ingresos.getIngresosPorNumero(socio);
-    	
-    	for(Ingreso i:aux) {
-    		if(i.getFecha().equals(fecha)) {
-    			i.setConcepto(concepto);
-    			i.setCantidad(cantidad);
-    			i.setTipo(tipo);
+    	if(!(ingresosInputChecker())) {
+    		
+    	} else {    		
+    		es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+        	List<Ingreso> aux = ingresos.getIngresosPorNumero(Integer.valueOf(socio));
+        	
+        	for(Ingreso i:aux) {
+        		if(Parsers.dateParser(i.getFecha()).equals(fecha)) {
+        			i.setConcepto(concepto);
+        			i.setCantidad(Double.valueOf(cantidad));
+        			i.setTipo(TipoRetribucion.valueOf(tipo));
+        		}
+        	}
+        	
+        	List<Integer> keys = new ArrayList<Integer>();
+        	List<List<Ingreso>> values = new ArrayList<List<Ingreso>>();
+        	for(Entry<Integer,List<Ingreso>> e:ingresos.getIngresos().entrySet()) {
+        		keys.add(e.getKey());
+        		values.add(e.getValue());
+        	}
+        	
+        	Fichero.escribeFichero(keys.get(0)+";"+values.get(0), Main.INGRESOS);
+        	for(int n = 1; n < keys.size(); n++) {
+        		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
+        	}
+        	
+        	for(JTextPane tp:lista) {
+    			tp.setText("");
     		}
+        	
+        	List<String> ingresosList = ingresos.getIngresosPorNumero(Integer.valueOf(socio)).stream()
+        			.map(x->x.toString())
+        			.toList();
+        	Ingresos_ListaField.setText(String.join("\n", ingresosList));
     	}
-    	
-    	List<Integer> keys = new ArrayList<Integer>();
-    	List<List<Ingreso>> values = new ArrayList<List<Ingreso>>();
-    	for(Entry<Integer,List<Ingreso>> e:ingresos.getIngresos().entrySet()) {
-    		keys.add(e.getKey());
-    		values.add(e.getValue());
-    	}
-    	
-    	Fichero.escribeFichero(keys.get(0)+";"+values.get(0), Main.INGRESOS);
-    	for(int n = 1; n < keys.size(); n++) {
-    		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
-    	}
-    	
-    	for(JTextPane tp:lista) {
-			tp.setText("");
-		}
-    	
-    	List<String> ingresosList = ingresos.getIngresosPorNumero(socio).stream()
-    			.map(x->x.toString())
-    			.toList();
-    	Ingresos_ListaField.setText(String.join("\n", ingresosList));    	
     }
     
     private void eliminarIngreso() {
@@ -2588,6 +2872,27 @@ public class MainWindow extends javax.swing.JFrame {
     	return aux;
     }
     
+    private boolean pagosInputChecker() {
+    	if(Pagos_FechaField.getText().equals("") ||
+    			Pagos_ProveedorField.getText().equals("") ||
+    			Pagos_ConceptoField.getText().equals("") ||
+    			Pagos_CantidadField.getText().equals("") ||
+    			Pagos_NFacturaField.getText().equals("") ||
+    			Pagos_TipoField.getText().equals("")) {		
+			ErrorHandler.camposObligatoriosVacios();
+			return false;
+		}
+    	if(Pagos_FechaField.getText().split("/").length==1) {
+			ErrorHandler.errorAlLeerFecha("registro del pago");
+			return false;
+		}
+    	if(!(Double.valueOf(Pagos_CantidadField.getText()) instanceof Double)) {
+    		ErrorHandler.errorAlLeerCantidadNumerica(Pagos_CantidadField.getText());
+    		return false;
+    	}
+    	return true;
+    }
+    
     private void añadirPago() {
     	List<JTextPane> lista = pagosGetTextFields();
     	String fecha = lista.get(0).getText();
@@ -2595,38 +2900,42 @@ public class MainWindow extends javax.swing.JFrame {
     	String concepto = lista.get(2).getText();
     	String cantidad = lista.get(3).getText();
     	String factura = lista.get(4).getText();
-    	String tipo = lista.get(5).getText();
+    	String tipo = lista.get(5).getText().toUpperCase();
     	
-    	String pago = String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura,tipo));
-    	
-    	if(fecha.equals("") ||
-    			proveedor.equals("") ||
-    			concepto.equals("") ||
-    			cantidad.equals("") ||
-    			factura.equals("") ||
-				tipo.equals("")) {
-    		JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
-		               "Error", JOptionPane.ERROR_MESSAGE);
+    	if(!(pagosInputChecker())) {
+    		
+    	} else {
+    		String pago = String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura,tipo));
+        	
+        	if(fecha.equals("") ||
+        			proveedor.equals("") ||
+        			concepto.equals("") ||
+        			cantidad.equals("") ||
+        			factura.equals("") ||
+    				tipo.equals("")) {
+        		JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
+    		               "Error", JOptionPane.ERROR_MESSAGE);
+        	}
+        	
+        	List<String> aux = null;
+    		try {
+    			aux = Files.readAllLines(Path.of(Main.PAGOS));
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			ErrorHandler.errorAlLeerBDD("pagos");
+    		}
+        	
+        	aux.add(pago);
+        	
+        	Fichero.escribeFichero(aux.get(0),Main.PAGOS);
+        	for(String s:aux.subList(1, aux.size())) {
+        		Fichero.añadirAlFichero(s, Main.PAGOS);
+        	}
+        					
+    		for(JTextPane tp:lista) {
+    			tp.setText("");
+    		}
     	}
-    	
-    	List<String> aux = null;
-		try {
-			aux = Files.readAllLines(Path.of(Main.PAGOS));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	aux.add(pago);
-    	
-    	Fichero.escribeFichero(aux.get(0),Main.PAGOS);
-    	for(String s:aux.subList(1, aux.size())) {
-    		Fichero.añadirAlFichero(s, Main.PAGOS);
-    	}
-    					
-		for(JTextPane tp:lista) {
-			tp.setText("");
-		}
     }
     
     private void buscarPago() {
@@ -2660,30 +2969,34 @@ public class MainWindow extends javax.swing.JFrame {
     	String fecha = lista.get(0).getText();
     	String proveedor = lista.get(1).getText();
     	String concepto = lista.get(2).getText();
-    	String cantidad = lista.get(3).getText();
+    	String cantidad = Parsers.decimalSymbolParser(lista.get(3).getText());
     	String factura = lista.get(4).getText();
-    	String tipo = lista.get(5).getText();
+    	String tipo = lista.get(5).getText().toUpperCase();
     	    	
-    	es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
-    	
-    	Pago fromTextFields = new Pago(String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura,tipo)));
-    	
-    	for(Pago p:pagos.getPagos()) {
-    		if(p.getFactura().equals(fromTextFields.getFactura())) {
-    			p.setFecha(fromTextFields.getFecha());
-    			p.setProveedor(fromTextFields.getProveedor());
-    			p.setConcepto(fromTextFields.getConcepto());
-    			p.setCantidad(fromTextFields.getCantidad());
-    			p.setTipo(fromTextFields.getTipo());
-    		}
+    	if(!(pagosInputChecker())) {
+    		
+    	} else {
+    		es.yoshibv.contasoc.pago.Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
+        	
+        	Pago fromTextFields = new Pago(String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura,tipo)));
+        	
+        	for(Pago p:pagos.getPagos()) {
+        		if(p.getFactura().equals(fromTextFields.getFactura())) {
+        			p.setFecha(fromTextFields.getFecha());
+        			p.setProveedor(fromTextFields.getProveedor());
+        			p.setConcepto(fromTextFields.getConcepto());
+        			p.setCantidad(fromTextFields.getCantidad());
+        			p.setTipo(fromTextFields.getTipo());
+        		}
+        	}
+        	
+        	Fichero.escribeFichero(pagos.getPagos().get(0).toString(), Main.PAGOS);
+        	for(Pago p:pagos.getPagos().subList(1, pagos.getPagos().size())) {
+        		Fichero.añadirAlFichero(p.toString(), Main.PAGOS);
+        	}
+        	
+        	Pagos_ListaField.setText("");
     	}
-    	
-    	Fichero.escribeFichero(pagos.getPagos().get(0).toString(), Main.PAGOS);
-    	for(Pago p:pagos.getPagos().subList(1, pagos.getPagos().size())) {
-    		Fichero.añadirAlFichero(p.toString(), Main.PAGOS);
-    	}
-    	
-    	Pagos_ListaField.setText("");
     	    	
     }
     
@@ -2728,7 +3041,7 @@ public class MainWindow extends javax.swing.JFrame {
     		try {
     			aux = Files.readAllLines(Path.of(Main.SALDO));
     		} catch(IOException e) {
-    			e.printStackTrace();
+    			ErrorHandler.errorAlLeerBDD("informe");
     		}
     		banco = Double.valueOf(aux.get(0));
     		caja = Double.valueOf(aux.get(1));

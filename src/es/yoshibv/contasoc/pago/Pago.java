@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import es.yoshibv.contasoc.common.TipoRetribucion;
+import es.yoshibv.contasoc.util.Checkers;
 import es.yoshibv.contasoc.util.Parsers;
 
 public class Pago implements Comparable<Pago> {
@@ -17,6 +18,7 @@ public class Pago implements Comparable<Pago> {
 	
 	public Pago(LocalDate fecha, String proveedor, String concepto, Double cantidad, String factura, TipoRetribucion tipo) {
 		super();
+		Checkers.checkNoNull(fecha,proveedor,concepto,cantidad,factura,tipo);
 		this.fecha = fecha;
 		this.proveedor = proveedor;
 		this.concepto = concepto;
@@ -92,8 +94,11 @@ public class Pago implements Comparable<Pago> {
 
 	@Override
 	public int compareTo(Pago o) {
-		// TODO Auto-generated method stub
-		return proveedor.compareTo(o.proveedor);
+		int res = proveedor.compareTo(o.getProveedor());
+		if(res==0) {
+			res = fecha.compareTo(o.getFecha());
+		}
+		return res;
 	}
 
 	@Override

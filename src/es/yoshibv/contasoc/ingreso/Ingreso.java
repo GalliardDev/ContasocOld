@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import es.yoshibv.contasoc.common.TipoRetribucion;
+import es.yoshibv.contasoc.util.Checkers;
 import es.yoshibv.contasoc.util.Parsers;
 
 public class Ingreso implements Comparable<Ingreso> {
@@ -14,6 +15,7 @@ public class Ingreso implements Comparable<Ingreso> {
 	
 	public Ingreso(LocalDate fecha, String concepto, Double cantidad, TipoRetribucion tipo) {
 		super();
+		Checkers.checkNoNull(fecha,concepto,cantidad,tipo);
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.cantidad = cantidad;

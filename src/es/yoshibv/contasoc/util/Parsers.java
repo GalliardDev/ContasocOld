@@ -9,4 +9,26 @@ public class Parsers {
 		}
 		return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();
 	}
+	
+	public static String decimalSymbolParser(String cantidad) {
+		if(cantidad.contains(",")) {
+    		cantidad.replace(",", ".");
+    	} else if(cantidad.contains("'")) {
+    		cantidad.replace("'", ".");
+    	}
+		return cantidad;
+	}
+	
+	public static String tipoHortelanoParser(String tipo) {
+		if(tipo.equals("LISTA DE ESPERA") || tipo.equals("LISTA ESPERA")) {
+			tipo = "LISTA_ESPERA";
+		} else if(tipo.equals("HORTELANO_INVERNADERO") ||
+				tipo.equals("HORTELANO+INVERNADERO") ||
+				tipo.equals("HORTELANO + INVERNADERO") || 
+				tipo.equals("HORTELANO E INVERNADERO") ||
+				tipo.equals("HORTELANO INVERNADERO")){
+			tipo = "HORTELANO_INVERNADERO";
+		}
+		return tipo;
+	}
 }

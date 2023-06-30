@@ -13,6 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import es.yoshibv.contasoc.gui.MainWindow;
+import es.yoshibv.contasoc.util.ErrorHandler;
 import es.yoshibv.contasoc.util.Fichero;
 
 public class Main {
@@ -24,11 +25,7 @@ public class Main {
 	public static final String SALDO = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/saldo.csv";
 	
 	public static void main(String[] args) {
-		
-		createFolder();
-		initFiles();
-		initFileValues();
-		
+
 		try {
             UIManager.setLookAndFeel(new FlatLightLaf());
         } catch (UnsupportedLookAndFeelException ex) {
@@ -38,6 +35,10 @@ public class Main {
         java.awt.EventQueue.invokeLater(() -> {
             new MainWindow().setVisible(true);
         });
+        
+        createFolder();
+		initFiles();
+		initFileValues();
 	}
 	
 	private static void createFolder() {
@@ -50,7 +51,7 @@ public class Main {
 					Files.createDirectories(Paths.get(folderPath));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ErrorHandler.errorAlCrearDirectorio();
 				}	
 			}
 		}
@@ -73,8 +74,10 @@ public class Main {
     	        lista_espera.createNewFile();
     	        saldo.createNewFile();
     	        System.out.println("Archivos creados correctamente.");
+    	        ErrorHandler.BDDCreada();
     	    } catch (IOException e) {
     	        System.out.println("Error al crear los archivos.");
+    	        ErrorHandler.errorAlCrearBDD();
     	    }
     	} else {
     	    System.out.println("Los archivos ya existen.");

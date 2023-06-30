@@ -17,7 +17,7 @@ public class Fichero {
 			l = Files.lines(Paths.get(nomfich),StandardCharsets.UTF_8).toList();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorHandler.errorAlLeerBDD(nomfich);
 		}
 		return l;
 	}
@@ -33,7 +33,7 @@ public class Fichero {
 			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ErrorHandler.errorAlEscribirBDD(nombreFichero);
 		}
 	}
 		
@@ -47,7 +47,7 @@ public class Fichero {
 			 writer.append(cadena);
 			 writer.close();
 		 } catch(IOException e) {
-			 e.printStackTrace();
+			 ErrorHandler.errorAlEscribirBDD(nombreFichero);
 		 }
 	}
 }
