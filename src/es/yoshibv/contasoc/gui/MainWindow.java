@@ -2406,6 +2406,8 @@ public class MainWindow extends javax.swing.JFrame {
     	for(JTextPane tp:lista) {
 			tp.setText("");
 		}
+    	
+    	Socios_ListaIngresosField.setText("");
 			
     }
     
@@ -2427,6 +2429,8 @@ public class MainWindow extends javax.swing.JFrame {
     	for(JTextPane tp:lista) {
 			tp.setText("");
 		}
+    	
+    	Socios_ListaIngresosField.setText("");
     }
     
     private List<JTextPane> ingresosGetTextFields(){
@@ -2678,6 +2682,8 @@ public class MainWindow extends javax.swing.JFrame {
     	for(Pago p:pagos.getPagos().subList(1, pagos.getPagos().size())) {
     		Fichero.añadirAlFichero(p.toString(), Main.PAGOS);
     	}
+    	
+    	Pagos_ListaField.setText("");
     	    	
     }
     
@@ -2701,6 +2707,8 @@ public class MainWindow extends javax.swing.JFrame {
     	for(Pago p:pagos.getPagos().subList(1, pagos.getPagos().size())) {
     		Fichero.añadirAlFichero(p.toString(), Main.PAGOS);
     	}
+    	
+    	Pagos_ListaField.setText("");
     }
     
     private List<JTextPane> informeGetTextFields(){
