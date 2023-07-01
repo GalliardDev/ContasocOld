@@ -20,7 +20,7 @@ public class Hortelanos {
 		return hortelanos.get(id);
 	}
 	
-	public Hortelano getHortelanoPorNumeroDeHuerto(Integer id) {
+	public Hortelano getHortelanoPorNumeroDeHuerto(String id) {
 		return hortelanos.entrySet().stream()
 				.filter(e->e.getValue().getHuerto().equals(id))
 				.map(x->x.getValue())
