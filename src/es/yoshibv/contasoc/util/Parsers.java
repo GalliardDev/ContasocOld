@@ -20,13 +20,9 @@ public class Parsers {
 	}
 	
 	public static String tipoHortelanoParser(String tipo) {
-		if(tipo.equals("LISTA DE ESPERA") || tipo.equals("LISTA ESPERA")) {
+		if(tipo.equals("LISTA DE ESPERA")) {
 			tipo = "LISTA_ESPERA";
-		} else if(tipo.equals("HORTELANO_INVERNADERO") ||
-				tipo.equals("HORTELANO+INVERNADERO") ||
-				tipo.equals("HORTELANO + INVERNADERO") || 
-				tipo.equals("HORTELANO E INVERNADERO") ||
-				tipo.equals("HORTELANO INVERNADERO")){
+		} else if(tipo.equals("HORTELANO+INVERNADERO")) {
 			tipo = "HORTELANO_INVERNADERO";
 		}
 		return tipo;

@@ -26,11 +26,11 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.AbstractDocument;
 
 import es.yoshibv.contasoc.FactoriaHortelano;
 import es.yoshibv.contasoc.Hortelano;
@@ -46,6 +46,7 @@ import es.yoshibv.contasoc.util.DNIValidator;
 import es.yoshibv.contasoc.util.ErrorHandler;
 import es.yoshibv.contasoc.util.Fichero;
 import es.yoshibv.contasoc.util.Parsers;
+import es.yoshibv.contasoc.util.UpperCaseFilter;
 
 /**
  *
@@ -66,6 +67,7 @@ public class MainWindow extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         showFirstPanel();
         actualizar();
+        setFilters();
     }
     
     public Image getIconImage() {
@@ -143,8 +145,7 @@ public class MainWindow extends javax.swing.JFrame {
         Socios_EstadoPanel = new javax.swing.JScrollPane();
         Socios_EstadoField = new javax.swing.JTextPane();
         Socios_TipoTxt = new javax.swing.JLabel();
-        Socios_TipoPanel = new javax.swing.JScrollPane();
-        Socios_TipoField = new javax.swing.JTextPane();
+        Socios_TipoComboBox = new javax.swing.JComboBox<>();
         Socios_ListaIngresosPanel = new javax.swing.JScrollPane();
         Socios_ListaIngresosField = new javax.swing.JTextArea();
         Socios_AgregarBtn = new javax.swing.JPanel();
@@ -169,8 +170,7 @@ public class MainWindow extends javax.swing.JFrame {
         Ingresos_CantidadPanel = new javax.swing.JScrollPane();
         Ingresos_CantidadField = new javax.swing.JTextPane();
         Ingresos_TipoTxt = new javax.swing.JLabel();
-        Ingresos_TipoPanel = new javax.swing.JScrollPane();
-        Ingresos_TipoField = new javax.swing.JTextPane();
+        Ingresos_TipoComboBox = new javax.swing.JComboBox<>();
         Ingresos_ListaPanel = new javax.swing.JScrollPane();
         Ingresos_ListaField = new javax.swing.JTextArea();
         Ingresos_AgregarBtn = new javax.swing.JPanel();
@@ -198,8 +198,7 @@ public class MainWindow extends javax.swing.JFrame {
         Pagos_NFacturaPanel = new javax.swing.JScrollPane();
         Pagos_NFacturaField = new javax.swing.JTextPane();
         Pagos_TipoTxt = new javax.swing.JLabel();
-        Pagos_TipoPanel = new javax.swing.JScrollPane();
-        Pagos_TipoField = new javax.swing.JTextPane();
+        Pagos_TipoComboBox = new javax.swing.JComboBox<>();
         Pagos_ListaPanel = new javax.swing.JScrollPane();
         Pagos_ListaField = new javax.swing.JTextArea();
         Pagos_AgregarBtn = new javax.swing.JPanel();
@@ -232,6 +231,7 @@ public class MainWindow extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         setIconImage(getIconImage());
+        setLocationByPlatform(true);
 
         MainPanel.setBackground(new java.awt.Color(255, 255, 255));
         MainPanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.SystemColor.windowBorder));
@@ -834,25 +834,14 @@ public class MainWindow extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_TAB) {
                     e.consume(); // Evitar el comportamiento predeterminado del tabulador
-                    Socios_TipoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                    Socios_NumeroSocioField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
                 }
             }
         });
 
         Socios_TipoTxt.setText("Tipo:");
 
-        Socios_TipoField.setMinimumSize(new java.awt.Dimension(204, 20));
-        Socios_TipoField.setPreferredSize(new java.awt.Dimension(260, 20));
-        Socios_TipoPanel.setViewportView(Socios_TipoField);
-        Socios_TipoField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_TAB) {
-                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
-                    Socios_NumeroSocioField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
-                }
-            }
-        });
+        Socios_TipoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HORTELANO", "HORTELANO+INVERNADERO", "LISTA DE ESPERA" }));       
 
         Socios_ListaIngresosField.setColumns(20);
         Socios_ListaIngresosField.setRows(5);
@@ -1035,8 +1024,8 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(Socios_FechaAltaPanel)
                             .addComponent(Socios_FechaBajaPanel)
                             .addComponent(Socios_EstadoPanel)
-                            .addComponent(Socios_TipoPanel)
-                            .addComponent(Socios_NumeroSocioPanel, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(Socios_NumeroSocioPanel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Socios_TipoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(Socios_EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Socios_ModificarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Socios_BuscarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1096,9 +1085,9 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(Socios_EstadoPanel)
                             .addComponent(Socios_EstadoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
-                        .addGroup(SociosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Socios_TipoPanel)
-                            .addComponent(Socios_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(SociosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Socios_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Socios_TipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(Socios_AgregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1107,7 +1096,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(Socios_ModificarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Socios_EliminarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         VentanasInternalFrame.getContentPane().add(SociosDataPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 552));
@@ -1171,26 +1160,15 @@ public class MainWindow extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_TAB) {
                     e.consume(); // Evitar el comportamiento predeterminado del tabulador
-                    Ingresos_TipoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                    Ingresos_NumeroSocioField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
                 }
             }
         });
 
         Ingresos_TipoTxt.setText("Tipo:");
 
-        Ingresos_TipoField.setMinimumSize(new java.awt.Dimension(260, 20));
-        Ingresos_TipoField.setPreferredSize(new java.awt.Dimension(204, 20));
-        Ingresos_TipoPanel.setViewportView(Ingresos_TipoField);
-        Ingresos_TipoField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_TAB) {
-                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
-                    Ingresos_NumeroSocioField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
-                }
-            }
-        });
-
+        Ingresos_TipoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HORTELANO", "HORTELANO+INVERNADERO", "LISTA DE ESPERA" }));
+        
         Ingresos_ListaField.setColumns(20);
         Ingresos_ListaField.setRows(5);
         Ingresos_ListaPanel.setViewportView(Ingresos_ListaField);
@@ -1355,11 +1333,11 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(Ingresos_NumeroSocioTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(IngresosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Ingresos_TipoPanel)
                             .addComponent(Ingresos_CantidadPanel)
                             .addComponent(Ingresos_ConceptoPanel)
                             .addComponent(Ingresos_FechaPanel)
-                            .addComponent(Ingresos_NumeroSocioPanel, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(Ingresos_NumeroSocioPanel, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(Ingresos_TipoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(Ingresos_EliminarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Ingresos_ModificarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Ingresos_BuscarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1391,9 +1369,9 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(Ingresos_CantidadPanel)
                             .addComponent(Ingresos_CantidadTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(7, 7, 7)
-                        .addGroup(IngresosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Ingresos_TipoPanel)
-                            .addComponent(Ingresos_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(IngresosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Ingresos_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Ingresos_TipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(221, 221, 221)
                         .addComponent(Ingresos_AgregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1402,7 +1380,7 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(Ingresos_ModificarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(Ingresos_EliminarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         VentanasInternalFrame.getContentPane().add(IngresosDataPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 552));
@@ -1481,25 +1459,14 @@ public class MainWindow extends javax.swing.JFrame {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_TAB) {
                     e.consume(); // Evitar el comportamiento predeterminado del tabulador
-                    Pagos_TipoField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
+                    Pagos_FechaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
                 }
             }
         });
         
         Pagos_TipoTxt.setText("Tipo:");
 
-        Pagos_TipoField.setMinimumSize(new java.awt.Dimension(204, 20));
-        Pagos_TipoField.setPreferredSize(new java.awt.Dimension(260, 20));
-        Pagos_TipoPanel.setViewportView(Pagos_TipoField);
-        Pagos_TipoField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_TAB) {
-                    e.consume(); // Evitar el comportamiento predeterminado del tabulador
-                    Pagos_FechaField.requestFocus(); // Cambiar el enfoque al siguiente JTextField
-                }
-            }
-        });
+        Pagos_TipoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BANCO", "CAJA" }));
 
         Pagos_ListaField.setColumns(20);
         Pagos_ListaField.setRows(5);
@@ -1674,12 +1641,12 @@ public class MainWindow extends javax.swing.JFrame {
                                 .addComponent(Pagos_TipoTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(30, 30, 30)))
                         .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Pagos_TipoPanel)
                             .addComponent(Pagos_NFacturaPanel)
                             .addComponent(Pagos_CantidadPanel)
                             .addComponent(Pagos_ConceptoPanel)
                             .addComponent(Pagos_ProveedorPanel)
-                            .addComponent(Pagos_FechaPanel))))
+                            .addComponent(Pagos_FechaPanel)
+                            .addComponent(Pagos_TipoComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Pagos_ListaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
@@ -1711,9 +1678,9 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(Pagos_NFacturaPanel)
                             .addComponent(Pagos_NFacturaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Pagos_TipoPanel)
-                            .addComponent(Pagos_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(PagosDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Pagos_TipoTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Pagos_TipoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(193, 193, 193)
                         .addComponent(Pagos_AgregarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2388,20 +2355,17 @@ public class MainWindow extends javax.swing.JFrame {
     	Socios_FechaAltaField.setText("");
     	Socios_FechaBajaField.setText("");
     	Socios_EstadoField.setText("");
-    	Socios_TipoField.setText("");
     	Socios_ListaIngresosField.setText("");
     	Ingresos_NumeroSocioField.setText("");
     	Ingresos_FechaField.setText("");
     	Ingresos_ConceptoField.setText("");
     	Ingresos_CantidadField.setText("");
-    	Ingresos_TipoField.setText("");
     	Ingresos_ListaField.setText("");
     	Pagos_FechaField.setText("");
     	Pagos_ProveedorField.setText("");
     	Pagos_ConceptoField.setText("");
     	Pagos_CantidadField.setText("");
     	Pagos_NFacturaField.setText("");
-    	Pagos_TipoField.setText("");
     	Pagos_ListaField.setText("");
     	Informe_SIBancoField.setText("");
     	Informe_SICajaField.setText("");
@@ -2463,7 +2427,6 @@ public class MainWindow extends javax.swing.JFrame {
     	aux.add(Socios_FechaAltaField);
     	aux.add(Socios_FechaBajaField);
     	aux.add(Socios_EstadoField);
-    	aux.add(Socios_TipoField);
     	return aux;
     }
        
@@ -2473,8 +2436,7 @@ public class MainWindow extends javax.swing.JFrame {
 				Socios_DNIField.getText().equals("") ||
 				Socios_DireccionField.getText().equals("") ||
 				(Socios_TelefonoField.getText().equals("") && Socios_CorreoField.getText().equals("")) ||
-				Socios_FechaAltaField.getText().equals("") ||
-				Socios_TipoField.getText().equals("")) {		
+				Socios_FechaAltaField.getText().equals("")) {		
 			ErrorHandler.camposObligatoriosVacios();
 			return false;
 		}
@@ -2499,15 +2461,11 @@ public class MainWindow extends javax.swing.JFrame {
 			ErrorHandler.errorAlLeerFecha("alta");
 			return false;
 		}
-		if(Socios_NumeroHuertoField.getText().equals("") && !(Socios_TipoField.getText().equals("LISTA_ESPERA"))) {
+		if(Socios_NumeroHuertoField.getText().equals("") && (!(Socios_TipoComboBox.getSelectedItem().toString().equals("LISTA DE ESPERA")))) {
 			ErrorHandler.numeroHuertoVacio();
 			return false;
 		}
-		if(!(Socios_NumeroHuertoField.getText().equals("")) && Socios_TipoField.getText().equals("")) {
-			ErrorHandler.tipoSocioVacio();
-			return false;
-		}
-		if(!(Socios_NumeroHuertoField.getText().equals("")) && Socios_TipoField.getText().equals("LISTA_ESPERA")) {
+		if(!(Socios_NumeroHuertoField.getText().equals("")) && Socios_TipoComboBox.getSelectedItem().toString().equals("LISTA DE ESPERA")) {
 			ErrorHandler.tipoSocioNoAdecuado();
 			return false;
 		}
@@ -2527,7 +2485,7 @@ public class MainWindow extends javax.swing.JFrame {
 		String alta = lista.get(8).getText();
 		String baja = "null";
 		String estado = "ACTIVO";
-		String tipo = Parsers.tipoHortelanoParser(lista.get(11).getText().toUpperCase());
+		String tipo = Parsers.tipoHortelanoParser(Socios_TipoComboBox.getSelectedItem().toString());
 		
 		if(!(sociosInputChecker())) {
 			
@@ -2584,7 +2542,13 @@ public class MainWindow extends javax.swing.JFrame {
     		Socios_FechaBajaField.setText(aux.get(9));
     	}
     	Socios_EstadoField.setText(aux.get(10));
-    	Socios_TipoField.setText(aux.get(11));
+    	if(aux.get(11).equals("LISTA_ESPERA")) {
+    		Socios_TipoComboBox.setSelectedItem("LISTA DE ESPERA");
+    	} else if(aux.get(11).equals("HORTELANO")) {
+    		Socios_TipoComboBox.setSelectedItem("HORTELANO");
+    	} else if(aux.get(11).equals("HORTELANO_INVERNADERO")) {
+    		Socios_TipoComboBox.setSelectedItem("HORTELANO+INVERNADERO");
+    	}
     	
     	es.yoshibv.contasoc.ingreso.Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
     	List<String> ingresosList = ingresos.getIngresosPorNumero(socio).stream()
@@ -2619,7 +2583,7 @@ public class MainWindow extends javax.swing.JFrame {
 		String alta = lista.get(8).getText();
 		String baja = lista.get(9).getText();
 		String estado = lista.get(10).getText();
-		String tipo = Parsers.tipoHortelanoParser(lista.get(11).getText().toUpperCase());
+		String tipo = Parsers.tipoHortelanoParser(Socios_TipoComboBox.getSelectedItem().toString());
 		if(!(sociosInputChecker())) {
 			
 		} else {
@@ -2665,12 +2629,6 @@ public class MainWindow extends javax.swing.JFrame {
 	    	for(String s:aux.subList(1, aux.size())) {
 	    		FactoriaHortelano.añadeHortelano(s, Main.HORTELANOS);
 	    	}
-	    	
-	    	for(JTextPane tp:lista) {
-				tp.setText("");
-			}
-	    	
-	    	Socios_ListaIngresosField.setText("");
 		}
 			
     }
@@ -2689,11 +2647,9 @@ public class MainWindow extends javax.swing.JFrame {
     	for(String s:aux.subList(1, aux.size())) {
     		FactoriaHortelano.añadeHortelano(s, Main.HORTELANOS);
     	}
-    	
     	for(JTextPane tp:lista) {
-			tp.setText("");
-		}
-    	
+    		tp.setText("");
+    	}
     	Socios_ListaIngresosField.setText("");
     }
     
@@ -2703,7 +2659,6 @@ public class MainWindow extends javax.swing.JFrame {
     	aux.add(Ingresos_FechaField);
     	aux.add(Ingresos_ConceptoField);
     	aux.add(Ingresos_CantidadField);
-    	aux.add(Ingresos_TipoField);
     	return aux;
     }
     
@@ -2711,8 +2666,7 @@ public class MainWindow extends javax.swing.JFrame {
     	if(Ingresos_NumeroSocioField.getText().equals("") ||
 				Ingresos_FechaField.getText().equals("") ||
 				Ingresos_ConceptoField.getText().equals("") ||
-				Ingresos_CantidadField.getText().equals("") ||
-				Ingresos_TipoField.getText().equals("")) {		
+				Ingresos_CantidadField.getText().equals("")) {		
 			ErrorHandler.camposObligatoriosVacios();
 			return false;
 		}
@@ -2733,7 +2687,7 @@ public class MainWindow extends javax.swing.JFrame {
     	String fecha = lista.get(1).getText();
     	String concepto = lista.get(2).getText();
     	String cantidad = Parsers.decimalSymbolParser(lista.get(3).getText());
-    	String tipoIngreso = lista.get(4).getText().toUpperCase();
+    	String tipoIngreso = Ingresos_TipoComboBox.getSelectedItem().toString();
     	
     	String i = String.join("-", List.of(fecha,concepto,cantidad,tipoIngreso));
     	
@@ -2756,10 +2710,7 @@ public class MainWindow extends javax.swing.JFrame {
         	for(int n = 1; n < keys.size(); n++) {
         		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
         	}
-        	
-        	for(JTextPane tp:lista) {
-    			tp.setText("");
-    		}
+
     	}
     }
     
@@ -2793,7 +2744,7 @@ public class MainWindow extends javax.swing.JFrame {
     	String fecha = lista.get(1).getText();
     	String concepto = lista.get(2).getText();
     	String cantidad = lista.get(3).getText();
-    	String tipo = lista.get(4).getText();
+    	String tipo = Ingresos_TipoComboBox.getSelectedItem().toString();
     	
     	if(!(ingresosInputChecker())) {
     		
@@ -2821,9 +2772,7 @@ public class MainWindow extends javax.swing.JFrame {
         		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
         	}
         	
-        	for(JTextPane tp:lista) {
-    			tp.setText("");
-    		}
+
         	
         	List<String> ingresosList = ingresos.getIngresosPorNumero(Integer.valueOf(socio)).stream()
         			.map(x->x.toString())
@@ -2868,7 +2817,6 @@ public class MainWindow extends javax.swing.JFrame {
     	aux.add(Pagos_ConceptoField);
     	aux.add(Pagos_CantidadField);
     	aux.add(Pagos_NFacturaField);
-    	aux.add(Pagos_TipoField);
     	return aux;
     }
     
@@ -2877,8 +2825,7 @@ public class MainWindow extends javax.swing.JFrame {
     			Pagos_ProveedorField.getText().equals("") ||
     			Pagos_ConceptoField.getText().equals("") ||
     			Pagos_CantidadField.getText().equals("") ||
-    			Pagos_NFacturaField.getText().equals("") ||
-    			Pagos_TipoField.getText().equals("")) {		
+    			Pagos_NFacturaField.getText().equals("")) {		
 			ErrorHandler.camposObligatoriosVacios();
 			return false;
 		}
@@ -2900,22 +2847,12 @@ public class MainWindow extends javax.swing.JFrame {
     	String concepto = lista.get(2).getText();
     	String cantidad = lista.get(3).getText();
     	String factura = lista.get(4).getText();
-    	String tipo = lista.get(5).getText().toUpperCase();
+    	String tipo = Pagos_TipoComboBox.getSelectedItem().toString();
     	
     	if(!(pagosInputChecker())) {
     		
     	} else {
     		String pago = String.join(";", List.of(fecha,proveedor,concepto,cantidad,factura,tipo));
-        	
-        	if(fecha.equals("") ||
-        			proveedor.equals("") ||
-        			concepto.equals("") ||
-        			cantidad.equals("") ||
-        			factura.equals("") ||
-    				tipo.equals("")) {
-        		JOptionPane.showMessageDialog(getContentPane(), "Hay campos obligatorios vacíos",
-    		               "Error", JOptionPane.ERROR_MESSAGE);
-        	}
         	
         	List<String> aux = null;
     		try {
@@ -2971,7 +2908,7 @@ public class MainWindow extends javax.swing.JFrame {
     	String concepto = lista.get(2).getText();
     	String cantidad = Parsers.decimalSymbolParser(lista.get(3).getText());
     	String factura = lista.get(4).getText();
-    	String tipo = lista.get(5).getText().toUpperCase();
+    	String tipo = Pagos_TipoComboBox.getSelectedItem().toString();
     	    	
     	if(!(pagosInputChecker())) {
     		
@@ -2994,8 +2931,7 @@ public class MainWindow extends javax.swing.JFrame {
         	for(Pago p:pagos.getPagos().subList(1, pagos.getPagos().size())) {
         		Fichero.añadirAlFichero(p.toString(), Main.PAGOS);
         	}
-        	
-        	Pagos_ListaField.setText("");
+
     	}
     	    	
     }
@@ -3097,6 +3033,24 @@ public class MainWindow extends javax.swing.JFrame {
 
 		}
     }
+    
+    private void setFilters() {
+    	List<JTextPane> lista = List.of(
+    			Socios_NombreField,
+    			Socios_ApellidosField,
+    			Socios_DNIField,
+    			Socios_DireccionField,
+    			Socios_TelefonoField,
+    			Socios_NumeroSocioField,
+    			Socios_NumeroHuertoField,
+    			Socios_FechaAltaField,
+    			Socios_FechaBajaField,
+    			Socios_EstadoField);
+    	for(JTextPane jtp:lista) {
+    		AbstractDocument doc = (AbstractDocument) jtp.getDocument();
+	        doc.setDocumentFilter( new UpperCaseFilter());
+    	}
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CopyrightTxt;
@@ -3128,8 +3082,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextPane Ingresos_ConceptoField;
     private javax.swing.JScrollPane Ingresos_ConceptoPanel;
     private javax.swing.JLabel Ingresos_ConceptoTxt;
-    private javax.swing.JTextPane Ingresos_TipoField;
-    private javax.swing.JScrollPane Ingresos_TipoPanel;
+    private javax.swing.JComboBox<String> Ingresos_TipoComboBox;
     private javax.swing.JLabel Ingresos_TipoTxt;
     private javax.swing.JPanel Ingresos_EliminarBtn;
     private javax.swing.JLabel Ingresos_EliminarTxt;
@@ -3181,8 +3134,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextPane Pagos_ProveedorField;
     private javax.swing.JScrollPane Pagos_ProveedorPanel;
     private javax.swing.JLabel Pagos_ProveedorTxt;
-    private javax.swing.JTextPane Pagos_TipoField;
-    private javax.swing.JScrollPane Pagos_TipoPanel;
+    private javax.swing.JComboBox<String> Pagos_TipoComboBox;
     private javax.swing.JLabel Pagos_TipoTxt;
     private javax.swing.JPanel Sidebar;
     private javax.swing.JPanel SociosBtn;
@@ -3231,8 +3183,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JTextPane Socios_TelefonoField;
     private javax.swing.JScrollPane Socios_TelefonoPanel;
     private javax.swing.JLabel Socios_TelefonoTxt;
-    private javax.swing.JTextPane Socios_TipoField;
-    private javax.swing.JScrollPane Socios_TipoPanel;
+    private javax.swing.JComboBox<String> Socios_TipoComboBox;
     private javax.swing.JLabel Socios_TipoTxt;
     private javax.swing.JSeparator TitleBtnsSeparator;
     private javax.swing.JLabel TitleTxt1;

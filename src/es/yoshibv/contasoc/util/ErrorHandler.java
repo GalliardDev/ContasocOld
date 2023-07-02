@@ -19,10 +19,7 @@ public class ErrorHandler {
 		JOptionPane.showMessageDialog(main.getContentPane(), "Ya existe un socio con ese número de socio", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	public static void tipoSocioNoAdecuado() throws HeadlessException {
-		JOptionPane.showMessageDialog(main.getContentPane(), "EL tipo de socio no es el adecuado", "Error", JOptionPane.ERROR_MESSAGE);
-	}
-	public static void tipoSocioVacio() throws HeadlessException {
-		JOptionPane.showMessageDialog(main.getContentPane(), "Introducir tipo de socio", "Error", JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(main.getContentPane(), "El tipo de socio no es el adecuado", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	public static void numeroHuertoVacio() throws HeadlessException {
 		JOptionPane.showMessageDialog(main.getContentPane(), "Introducir número de huerto", "Error", JOptionPane.ERROR_MESSAGE);
