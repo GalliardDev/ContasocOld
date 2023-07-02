@@ -1167,7 +1167,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         Ingresos_TipoTxt.setText("Tipo:");
 
-        Ingresos_TipoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HORTELANO", "HORTELANO+INVERNADERO", "LISTA DE ESPERA" }));
+        Ingresos_TipoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BANCO", "CAJA" }));
         
         Ingresos_ListaField.setColumns(20);
         Ingresos_ListaField.setRows(5);
