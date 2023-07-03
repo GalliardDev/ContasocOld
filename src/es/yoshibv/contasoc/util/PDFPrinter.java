@@ -1,22 +1,23 @@
 package es.yoshibv.contasoc.util;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfPCell;
-
-import es.yoshibv.contasoc.Main;
-
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.FileOutputStream;
 
 import javax.swing.JTable;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import es.yoshibv.contasoc.Main;
 
 public class PDFPrinter {
     public static void printFromString(String content, String filename) {
@@ -77,29 +78,16 @@ public class PDFPrinter {
     }
     
     public static void printTableToPDF(JTable table, String filename) {
-        // Crear el documento PDF
-        Document document = new Document(PageSize.A4.rotate(),0f,0f,30f,30f);
-
+        Document document = new Document(new Rectangle(PageSize.A4.getWidth(), PageSize.A4.getHeight()).rotate());
+        document.setMargins(0,0,10f,10f);
         try {
-            // Crear un escritor de PDF para guardar el documento en un archivo
             PdfWriter.getInstance(document, new FileOutputStream(filename));
-
-            // Abrir el documento para agregar contenido
             document.open();
-
-            // Crear una tabla PDF con el mismo número de columnas que la JTable
             PdfPTable pdfTable = new PdfPTable(table.getColumnCount());
-           
-            // Calcular el ancho proporcional para cada columna
-            float[] columnWidths = new float[table.getColumnCount()];
-            for (int i = 0; i < table.getColumnCount(); i++) {
-                columnWidths[i] = 30;
-            }
-
-            // Establecer los anchos de las columnas en la tabla PDF
+            float[] columnWidths = {65f,105f,40f,185f,35f,90f,15f,15f,35f,35f,35f,90f};
             pdfTable.setWidths(columnWidths);
-
-            // Recorrer las filas y columnas de la JTable y agregar los datos a la tabla PDF
+            pdfTable.setTotalWidth(745f);
+            pdfTable.setLockedWidth(true);
             for (int i = 0; i < table.getRowCount(); i++) {
                 for (int j = 0; j < table.getColumnCount(); j++) {
                     Object value = table.getValueAt(i, j);
@@ -107,10 +95,7 @@ public class PDFPrinter {
                     pdfTable.addCell(cell);
                 }
             }
-
-            // Agregar la tabla PDF al documento
             document.add(pdfTable);
-
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -122,7 +107,7 @@ public class PDFPrinter {
     }
     
     private static Font getFont() {
-        Font font = new Font(Font.FontFamily.HELVETICA, 12);
+        Font font = new Font(Font.FontFamily.HELVETICA, 6);
         return font;
     }
 }

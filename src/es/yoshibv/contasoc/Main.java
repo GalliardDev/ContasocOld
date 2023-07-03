@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,9 +17,10 @@ import com.formdev.flatlaf.FlatLightLaf;
 import es.yoshibv.contasoc.gui.MainWindow;
 import es.yoshibv.contasoc.util.ErrorHandler;
 import es.yoshibv.contasoc.util.Fichero;
+import es.yoshibv.contasoc.util.Parsers;
 
 public class Main {
-	public static final String VERSION_APP = "Versión: RELEASE-2.4";
+	public static final String VERSION_APP = "Contasoc v2.4.1";
 	public static final String ESCRITORIO = "C:/Users/" + System.getenv("USERNAME") + "/Desktop";
 	public static final String HORTELANOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/hortelanos.csv";
 	public static final String INGRESOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/ingresos.csv";

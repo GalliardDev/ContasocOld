@@ -27,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -62,7 +63,7 @@ public class MainWindow extends javax.swing.JFrame {
 	
 	private int initialX;
     private int initialY;
-	final int year = LocalDate.now().getYear();
+	public static String valor = null;
 	
     /**
      * Creates new form Main
@@ -3464,6 +3465,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void sociosPrintView() {
+    	valor = "Socios";
     	Imprimir_ContentField.setText("");
     	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
     	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
@@ -3478,12 +3480,13 @@ public class MainWindow extends javax.swing.JFrame {
     				"Fecha de alta: " + Parsers.dateParser(aux.getAlta()) + "\n" +
     				"Fecha de baja: " + Parsers.printDateParser(aux.getBaja()) + "\n" +
     				"Estado: " + aux.getEstado() + "\n" +
-    				"Tipo: " + aux.getTipo().toString().replace("_", " DE ") + "\n\n"
+    				"Tipo: " + aux.getTipo().toString().replace("A_E", "A DE E").replace("O_I", "O + I") + "\n\n"
     				);
     	}
     }
     
 	private void ingresosPrintView() {
+		valor = "Ingresos";
 		Imprimir_ContentField.setText("");
 		Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
 		Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
@@ -3500,6 +3503,7 @@ public class MainWindow extends javax.swing.JFrame {
 	}
     
     private void pagosPrintView() {
+    	valor = "Pagos";
     	Imprimir_ContentField.setText("");
     	Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
     	for(Pago p:pagos.getPagos()) {
@@ -3514,6 +3518,7 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void listaEsperaPrintView() {
+    	valor = "ListaEspera";
     	Imprimir_ContentField.setText("");
     	ListaEsperaGetter le = new ListaEsperaGetter();
     	List<Hortelano> hortelanos = le.getHortelanos();
@@ -3536,26 +3541,32 @@ public class MainWindow extends javax.swing.JFrame {
     		i++;
     	}
     }
-    
+
     private void printContent() {
-    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
-    	List<String> aux = hortelanos.getHortelanos().entrySet().stream().map(x->x.getValue()).map(x->x.toString()).toList();
-    	    	
-    	String[][] matriz = new String[aux.size()][12];
-    	
-    	for (int i = 0; i < aux.size(); i++) {
-            String[] fields = aux.get(i).split(";");
-            System.arraycopy(fields, 0, matriz[i], 0, 12);
-        }
-    	
-    	javax.swing.JTable tabla = new javax.swing.JTable(new DefaultTableModel(matriz, new String[] {
-    			"Nombre", "Apellidos", "DNI", "Dirección", "Teléfono", "Correo", "Nº de socio", "Nº de huerto",
-    			"Fecha de alta", "Fecha de baja", "Estado", "Tipo"
-    	}));
-		
-		PDFPrinter.printTableToPDF(tabla, Main.ESCRITORIO+"/output.pdf");
-		//PDFPrinter.printFromString(Imprimir_ContentField.getText(), Main.ESCRITORIO+"/output.pdf");
-		
+    	JTable tabla = null;
+    	if(valor=="Socios") {
+    		Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
+        	List<String> aux = hortelanos.getHortelanos().entrySet().stream().map(x->x.getValue()).map(x->x.toString()).toList();
+        	    	
+        	String[][] matriz = new String[aux.size()][12];
+        	
+        	for (int i = 0; i < aux.size(); i++) {
+                String[] fields = aux.get(i).split(";");
+                System.arraycopy(fields, 0, matriz[i], 0, 12);
+            }
+        	
+        	tabla = new javax.swing.JTable(new DefaultTableModel(matriz, new String[] {
+        			"Nombre", "Apellidos", "DNI", "Dirección", "Teléfono", "Correo", "Nº de socio", "Nº de huerto",
+        			"Fecha de alta", "Fecha de baja", "Estado", "Tipo"
+        	}));
+        	PDFPrinter.printTableToPDF(tabla, Main.ESCRITORIO+"/socios.pdf");
+    	} else if(valor=="Ingresos"){
+    		PDFPrinter.printFromString(Imprimir_ContentField.getText(), Main.ESCRITORIO+"/ingresos.pdf");
+    	} else if(valor=="Pagos"){
+    		PDFPrinter.printFromString(Imprimir_ContentField.getText(), Main.ESCRITORIO+"/pagos.pdf");
+    	} else if(valor=="ListaEspera"){
+    		PDFPrinter.printFromString(Imprimir_ContentField.getText(), Main.ESCRITORIO+"/lista de espera.pdf");
+    	}
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
