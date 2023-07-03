@@ -507,7 +507,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         CopyrightTxt.setForeground(new java.awt.Color(255, 255, 255));
         CopyrightTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        CopyrightTxt.setText("Copyright © " + year + " by YoshiBv");
+        CopyrightTxt.setText(Main.VERSION_APP);
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(258, 127));
