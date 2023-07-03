@@ -29,6 +29,15 @@ public class Hortelanos {
 						lista->List.copyOf(lista).get(0)));
 	}
 	
+	public List<String> getNombreHortelanoPorNumeroDeSocio(Integer id) {
+		return hortelanos.entrySet().stream()
+				.filter(e->e.getValue().getSocio().equals(id))
+				.map(x->x.getValue())
+				.collect(Collectors.collectingAndThen(
+						Collectors.toList(),
+						lista->List.copyOf(lista).stream().map(x->x.getPersona().getNombreYApellidos()).toList()));
+	}
+	
 	public Hortelano getHortelanoPorNombreCompleto(String nc) {
 		return hortelanos.entrySet().stream()
 				.filter(e->String.join(" ", List.of(e.getValue().getPersona().getNombre(),e.getValue().getPersona().getApellidos())).equals(nc))

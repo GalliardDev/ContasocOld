@@ -17,7 +17,7 @@ import es.yoshibv.contasoc.util.ErrorHandler;
 import es.yoshibv.contasoc.util.Fichero;
 
 public class Main {
-	
+	public static final String ESCRITORIO = "C:/Users/" + System.getenv("USERNAME") + "/Desktop";
 	public static final String HORTELANOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/hortelanos.csv";
 	public static final String INGRESOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/ingresos.csv";
 	public static final String PAGOS = "C:/Users/" + System.getenv("USERNAME") + "/Documents/Contasoc/pagos.csv";

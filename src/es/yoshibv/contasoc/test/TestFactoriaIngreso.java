@@ -16,6 +16,7 @@ public class TestFactoriaIngreso {
     			.map(e->e.getValue()).toList().stream()
     			.flatMap(x->x.stream())
     			.collect(Collectors.summingDouble(x->x.getCantidad())));
+		print(ingresos.getIngresosPorNumero(147));
 	}
 	
 	private static void print(Object o) {

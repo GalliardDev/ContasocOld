@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/LocalRepo/JAVA/AbsoluteLayout.jar"/>
 	<classpathentry kind="lib" path="D:/LocalRepo/JAVA/flatlaf-3.1.1.jar"/>
+	<classpathentry kind="lib" path="D:/LocalRepo/JAVA/itextpdf-5.5.13.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

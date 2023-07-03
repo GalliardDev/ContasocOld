@@ -30,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 
 import es.yoshibv.contasoc.FactoriaHortelano;
@@ -40,11 +41,15 @@ import es.yoshibv.contasoc.common.Estado;
 import es.yoshibv.contasoc.common.TipoRetribucion;
 import es.yoshibv.contasoc.ingreso.FactoriaIngreso;
 import es.yoshibv.contasoc.ingreso.Ingreso;
+import es.yoshibv.contasoc.ingreso.Ingresos;
+import es.yoshibv.contasoc.listaespera.ListaEsperaGetter;
 import es.yoshibv.contasoc.pago.FactoriaPago;
 import es.yoshibv.contasoc.pago.Pago;
+import es.yoshibv.contasoc.pago.Pagos;
 import es.yoshibv.contasoc.util.DNIValidator;
 import es.yoshibv.contasoc.util.ErrorHandler;
 import es.yoshibv.contasoc.util.Fichero;
+import es.yoshibv.contasoc.util.PDFPrinter;
 import es.yoshibv.contasoc.util.Parsers;
 import es.yoshibv.contasoc.util.UpperCaseFilter;
 
@@ -225,6 +230,22 @@ public class MainWindow extends javax.swing.JFrame {
         ListaEspera_ActualizarTxt = new javax.swing.JLabel();
         ListaEspera_Panel = new javax.swing.JScrollPane();
         ListaEspera_Table = new javax.swing.JTable();
+        
+        ImprimirBtn = new javax.swing.JPanel();
+        ImprimirTxt = new javax.swing.JLabel();
+        ImprimirDataPanel = new javax.swing.JPanel();
+        Imprimir_IngresosBtn = new javax.swing.JPanel();
+        Imprimir_SociosTxt = new javax.swing.JLabel();
+        Imprimir_SociosBtn = new javax.swing.JPanel();
+        Imprimir_IngresosTxt = new javax.swing.JLabel();
+        Imprimir_PagosBtn = new javax.swing.JPanel();
+        Imprimir_PagosTxt = new javax.swing.JLabel();
+        Imprimir_ListaEsperaBtn = new javax.swing.JPanel();
+        Imprimir_ListaEsperaTxt = new javax.swing.JLabel();
+        Imprimir_PrinterBtn = new javax.swing.JPanel();
+        Imprimir_PrinterTxt = new javax.swing.JLabel();
+        Imprimir_ContentPane = new javax.swing.JScrollPane();
+        Imprimir_ContentField = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(900, 600));
@@ -232,6 +253,7 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         setIconImage(getIconImage());
         setLocationByPlatform(true);
+        setTitle("Contasoc");
 
         MainPanel.setBackground(new java.awt.Color(255, 255, 255));
         MainPanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.SystemColor.windowBorder));
@@ -443,6 +465,45 @@ public class MainWindow extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(ListaEsperaTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+        
+        ImprimirBtn.setBackground(new java.awt.Color(0, 102, 255));
+        ImprimirBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ImprimirBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ImprimirBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ImprimirBtnMouseExited(evt);
+            }
+        });
+
+        ImprimirTxt.setBackground(new java.awt.Color(255, 255, 255));
+        ImprimirTxt.setFont(new java.awt.Font("Microsoft New Tai Lue", 1, 18)); // NOI18N
+        ImprimirTxt.setForeground(new java.awt.Color(255, 255, 255));
+        ImprimirTxt.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ImprimirTxt.setText("Listado/Imprimir");
+        ImprimirTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ImprimirTxt.setMaximumSize(new java.awt.Dimension(120, 40));
+        ImprimirTxt.setMinimumSize(new java.awt.Dimension(120, 40));
+        ImprimirTxt.setPreferredSize(new java.awt.Dimension(120, 40));
+
+        javax.swing.GroupLayout ImprimirBtnLayout = new javax.swing.GroupLayout(ImprimirBtn);
+        ImprimirBtn.setLayout(ImprimirBtnLayout);
+        ImprimirBtnLayout.setHorizontalGroup(
+            ImprimirBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ImprimirBtnLayout.createSequentialGroup()
+                .addGap(75, 75, 75)
+                .addComponent(ImprimirTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+        ImprimirBtnLayout.setVerticalGroup(
+            ImprimirBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ImprimirBtnLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(ImprimirTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         CopyrightTxt.setForeground(new java.awt.Color(255, 255, 255));
         CopyrightTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -508,7 +569,8 @@ public class MainWindow extends javax.swing.JFrame {
                         .addComponent(CopyrightTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(SidebarLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ImprimirBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         SidebarLayout.setVerticalGroup(
@@ -528,7 +590,9 @@ public class MainWindow extends javax.swing.JFrame {
                 .addComponent(InformeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(ListaEsperaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(ImprimirBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 152, Short.MAX_VALUE)
                 .addComponent(CopyrightTxt)
                 .addContainerGap())
         );
@@ -845,6 +909,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         Socios_ListaIngresosField.setColumns(20);
         Socios_ListaIngresosField.setRows(5);
+        Socios_ListaIngresosField.setEditable(false);
         Socios_ListaIngresosPanel.setViewportView(Socios_ListaIngresosField);
 
         Socios_AgregarBtn.setBackground(new java.awt.Color(0, 102, 255));
@@ -1171,6 +1236,7 @@ public class MainWindow extends javax.swing.JFrame {
         
         Ingresos_ListaField.setColumns(20);
         Ingresos_ListaField.setRows(5);
+        Ingresos_ListaField.setEditable(false);
         Ingresos_ListaPanel.setViewportView(Ingresos_ListaField);
 
         Ingresos_AgregarBtn.setBackground(new java.awt.Color(0, 102, 255));
@@ -1470,6 +1536,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         Pagos_ListaField.setColumns(20);
         Pagos_ListaField.setRows(5);
+        Pagos_ListaField.setEditable(false);
         Pagos_ListaPanel.setViewportView(Pagos_ListaField);
 
         Pagos_AgregarBtn.setBackground(new java.awt.Color(0, 102, 255));
@@ -1730,6 +1797,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         Informe_ListaField.setColumns(20);
         Informe_ListaField.setRows(5);
+        Informe_ListaField.setEditable(false);
         Informe_ListaPanel.setViewportView(Informe_ListaField);
 
         Informe_CalcularBtn.setBackground(new java.awt.Color(0, 102, 255));
@@ -1951,6 +2019,7 @@ public class MainWindow extends javax.swing.JFrame {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null}
+                
             },
             new String [] {
                 "Nº socio", "Nombre", "Teléfono", "Email", "Fecha de Alta"
@@ -1973,6 +2042,7 @@ public class MainWindow extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        ListaEspera_Table.getTableHeader().setReorderingAllowed(false);
         ListaEspera_Panel.setViewportView(ListaEspera_Table);
 
         javax.swing.GroupLayout ListaEsperaDataPanelLayout = new javax.swing.GroupLayout(ListaEsperaDataPanel);
@@ -2000,6 +2070,235 @@ public class MainWindow extends javax.swing.JFrame {
         );
 
         VentanasInternalFrame.getContentPane().add(ListaEsperaDataPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 552));
+        
+        ImprimirDataPanel.setBackground(new java.awt.Color(255, 255, 255));
+        ImprimirDataPanel.setName("Imprimir"); // NOI18N
+        ImprimirDataPanel.setPreferredSize(new java.awt.Dimension(648, 549));
+
+        Imprimir_ContentField.setColumns(20);
+        Imprimir_ContentField.setRows(5);
+        Imprimir_ContentField.setEditable(false);
+        Imprimir_ContentPane.setViewportView(Imprimir_ContentField);
+
+        Imprimir_IngresosBtn.setBackground(new java.awt.Color(0, 102, 255));
+        Imprimir_IngresosBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Imprimir_IngresosBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Imprimir_IngresosBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Imprimir_IngresosBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Imprimir_IngresosBtnMouseExited(evt);
+            }
+        });
+
+        Imprimir_SociosTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Imprimir_SociosTxt.setForeground(new java.awt.Color(255, 255, 255));
+        Imprimir_SociosTxt.setText("INGRESOS");
+        Imprimir_SociosTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout Imprimir_IngresosBtnLayout = new javax.swing.GroupLayout(Imprimir_IngresosBtn);
+        Imprimir_IngresosBtn.setLayout(Imprimir_IngresosBtnLayout);
+        Imprimir_IngresosBtnLayout.setHorizontalGroup(
+            Imprimir_IngresosBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_IngresosBtnLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(Imprimir_SociosTxt)
+                .addContainerGap(145, Short.MAX_VALUE))
+        );
+        Imprimir_IngresosBtnLayout.setVerticalGroup(
+            Imprimir_IngresosBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_IngresosBtnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Imprimir_SociosTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        Imprimir_SociosBtn.setBackground(new java.awt.Color(0, 102, 255));
+        Imprimir_SociosBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Imprimir_SociosBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Imprimir_SociosBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Imprimir_SociosBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Imprimir_SociosBtnMouseExited(evt);
+            }
+        });
+
+        Imprimir_IngresosTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Imprimir_IngresosTxt.setForeground(new java.awt.Color(255, 255, 255));
+        Imprimir_IngresosTxt.setText("SOCIOS");
+        Imprimir_IngresosTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout Imprimir_SociosBtnLayout = new javax.swing.GroupLayout(Imprimir_SociosBtn);
+        Imprimir_SociosBtn.setLayout(Imprimir_SociosBtnLayout);
+        Imprimir_SociosBtnLayout.setHorizontalGroup(
+            Imprimir_SociosBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_SociosBtnLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(Imprimir_IngresosTxt)
+                .addContainerGap(165, Short.MAX_VALUE))
+        );
+        Imprimir_SociosBtnLayout.setVerticalGroup(
+            Imprimir_SociosBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_SociosBtnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Imprimir_IngresosTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        Imprimir_PagosBtn.setBackground(new java.awt.Color(0, 102, 255));
+        Imprimir_PagosBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Imprimir_PagosBtn.setPreferredSize(new java.awt.Dimension(270, 37));
+        Imprimir_PagosBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Imprimir_PagosBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Imprimir_PagosBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Imprimir_PagosBtnMouseExited(evt);
+            }
+        });
+
+        Imprimir_PagosTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Imprimir_PagosTxt.setForeground(new java.awt.Color(255, 255, 255));
+        Imprimir_PagosTxt.setText("PAGOS");
+        Imprimir_PagosTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout Imprimir_PagosBtnLayout = new javax.swing.GroupLayout(Imprimir_PagosBtn);
+        Imprimir_PagosBtn.setLayout(Imprimir_PagosBtnLayout);
+        Imprimir_PagosBtnLayout.setHorizontalGroup(
+            Imprimir_PagosBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_PagosBtnLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(Imprimir_PagosTxt)
+                .addContainerGap(171, Short.MAX_VALUE))
+        );
+        Imprimir_PagosBtnLayout.setVerticalGroup(
+            Imprimir_PagosBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_PagosBtnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Imprimir_PagosTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        Imprimir_ListaEsperaBtn.setBackground(new java.awt.Color(0, 102, 255));
+        Imprimir_ListaEsperaBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Imprimir_ListaEsperaBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Imprimir_ListaEsperaBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                Imprimir_ListaEsperaBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                Imprimir_ListaEsperaBtnMouseExited(evt);
+            }
+        });
+
+        Imprimir_ListaEsperaTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Imprimir_ListaEsperaTxt.setForeground(new java.awt.Color(255, 255, 255));
+        Imprimir_ListaEsperaTxt.setText("LISTA DE ESPERA");
+        Imprimir_ListaEsperaTxt.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout Imprimir_ListaEsperaBtnLayout = new javax.swing.GroupLayout(Imprimir_ListaEsperaBtn);
+        Imprimir_ListaEsperaBtn.setLayout(Imprimir_ListaEsperaBtnLayout);
+        Imprimir_ListaEsperaBtnLayout.setHorizontalGroup(
+            Imprimir_ListaEsperaBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_ListaEsperaBtnLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(Imprimir_ListaEsperaTxt)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        Imprimir_ListaEsperaBtnLayout.setVerticalGroup(
+            Imprimir_ListaEsperaBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Imprimir_ListaEsperaBtnLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Imprimir_ListaEsperaTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        Imprimir_PrinterBtn.setBackground(new java.awt.Color(0, 102, 255));
+        Imprimir_PrinterBtn.setPreferredSize(new java.awt.Dimension(58, 58));
+        Imprimir_PrinterBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            	Imprimir_PrinterBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+            	Imprimir_PrinterBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+            	Imprimir_PrinterBtnMouseExited(evt);
+            }
+        });
+
+        Imprimir_PrinterTxt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/printer_small.png"))); // NOI18N
+
+        javax.swing.GroupLayout Imprimir_PrinterBtnLayout = new javax.swing.GroupLayout(Imprimir_PrinterBtn);
+        Imprimir_PrinterBtn.setLayout(Imprimir_PrinterBtnLayout);
+        Imprimir_PrinterBtnLayout.setHorizontalGroup(
+            Imprimir_PrinterBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Imprimir_PrinterTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        Imprimir_PrinterBtnLayout.setVerticalGroup(
+            Imprimir_PrinterBtnLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Imprimir_PrinterTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout ImprimirDataPanelLayout = new javax.swing.GroupLayout(ImprimirDataPanel);
+        ImprimirDataPanel.setLayout(ImprimirDataPanelLayout);
+        ImprimirDataPanelLayout.setHorizontalGroup(
+            ImprimirDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ImprimirDataPanelLayout.createSequentialGroup()
+                .addGroup(ImprimirDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ImprimirDataPanelLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(Imprimir_ContentPane, javax.swing.GroupLayout.PREFERRED_SIZE, 620, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ImprimirDataPanelLayout.createSequentialGroup()
+                        .addGroup(ImprimirDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(ImprimirDataPanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(Imprimir_IngresosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(11, 11, 11))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ImprimirDataPanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(Imprimir_SociosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addComponent(Imprimir_PrinterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addGroup(ImprimirDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Imprimir_ListaEsperaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Imprimir_PagosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(12, 12, 12))
+        );
+        ImprimirDataPanelLayout.setVerticalGroup(
+            ImprimirDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ImprimirDataPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Imprimir_ContentPane, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(ImprimirDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(Imprimir_IngresosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(ImprimirDataPanelLayout.createSequentialGroup()
+                        .addGroup(ImprimirDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Imprimir_SociosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Imprimir_PagosBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Imprimir_ListaEsperaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ImprimirDataPanelLayout.createSequentialGroup()
+                        .addComponent(Imprimir_PrinterBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addGap(9, 9, 9))
+        );
+
+        VentanasInternalFrame.getContentPane().add(ImprimirDataPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 552));
 
         javax.swing.GroupLayout MainPanelLayout = new javax.swing.GroupLayout(MainPanel);
         MainPanel.setLayout(MainPanelLayout);
@@ -2342,6 +2641,97 @@ public class MainWindow extends javax.swing.JFrame {
         ListaEspera_ActualizarBtn.setBackground(Color.decode("#0066FF"));
     }//GEN-LAST:event_ListaEspera_ActualizarBtnMouseExited
     
+    private void ImprimirBtnMouseClicked(java.awt.event.MouseEvent evt) {                                         
+        // TODO add your handling code here:
+    	showPanel(VentanasInternalFrame.getContentPane(),ImprimirDataPanel.getName());
+    }                                        
+
+    private void ImprimirBtnMouseEntered(java.awt.event.MouseEvent evt) {                                         
+        // TODO add your handling code here:
+    	ImprimirBtn.setBackground(Color.decode("#0AAFF"));
+    }                                        
+
+    private void ImprimirBtnMouseExited(java.awt.event.MouseEvent evt) {                                        
+        // TODO add your handling code here:
+    	ImprimirBtn.setBackground(Color.decode("#0066FF"));
+    }                                       
+
+    private void Imprimir_IngresosBtnMouseClicked(java.awt.event.MouseEvent evt) {                                                
+        // TODO add your handling code here:
+    	ingresosPrintView();
+    }                                               
+
+    private void Imprimir_IngresosBtnMouseEntered(java.awt.event.MouseEvent evt) {                                                
+        // TODO add your handling code here:
+    	Imprimir_IngresosBtn.setBackground(Color.decode("#0AAFF"));
+    }                                               
+
+    private void Imprimir_IngresosBtnMouseExited(java.awt.event.MouseEvent evt) {                                               
+        // TODO add your handling code here:
+    	Imprimir_IngresosBtn.setBackground(Color.decode("#0066FF"));
+    }                                              
+
+    private void Imprimir_SociosBtnMouseClicked(java.awt.event.MouseEvent evt) {                                                  
+        // TODO add your handling code here:
+    	sociosPrintView();
+    }                                                 
+
+    private void Imprimir_SociosBtnMouseEntered(java.awt.event.MouseEvent evt) {                                                  
+        // TODO add your handling code here:
+    	Imprimir_SociosBtn.setBackground(Color.decode("#0AAFF"));
+    }                                                 
+
+    private void Imprimir_SociosBtnMouseExited(java.awt.event.MouseEvent evt) {                                                 
+        // TODO add your handling code here:
+    	Imprimir_SociosBtn.setBackground(Color.decode("#0066FF"));
+    }                                                
+
+    private void Imprimir_PagosBtnMouseClicked(java.awt.event.MouseEvent evt) {                                               
+        // TODO add your handling code here:
+    	pagosPrintView();
+    }                                              
+
+    private void Imprimir_PagosBtnMouseEntered(java.awt.event.MouseEvent evt) {                                               
+        // TODO add your handling code here:
+    	Imprimir_PagosBtn.setBackground(Color.decode("#0AAFF"));
+    }                                              
+
+    private void Imprimir_PagosBtnMouseExited(java.awt.event.MouseEvent evt) {                                              
+        // TODO add your handling code here:
+    	Imprimir_PagosBtn.setBackground(Color.decode("#0066FF"));
+    }                                             
+
+    private void Imprimir_ListaEsperaBtnMouseClicked(java.awt.event.MouseEvent evt) {                                                     
+        // TODO add your handling code here:
+    	listaEsperaPrintView();
+    }                                                    
+
+    private void Imprimir_ListaEsperaBtnMouseEntered(java.awt.event.MouseEvent evt) {                                                     
+        // TODO add your handling code here:
+    	Imprimir_ListaEsperaBtn.setBackground(Color.decode("#0AAFF"));
+    }                                                    
+
+    private void Imprimir_ListaEsperaBtnMouseExited(java.awt.event.MouseEvent evt) {                                                    
+        // TODO add your handling code here:
+    	Imprimir_ListaEsperaBtn.setBackground(Color.decode("#0066FF"));
+    }
+    
+    private void Imprimir_PrinterBtnMouseClicked(java.awt.event.MouseEvent evt) {                                                    
+        // TODO add your handling code here:
+    	printContent();
+
+    }
+    
+    private void Imprimir_PrinterBtnMouseEntered(java.awt.event.MouseEvent evt) {                                                    
+        // TODO add your handling code here:
+    	Imprimir_PrinterBtn.setBackground(Color.decode("#0AAFF"));
+    }
+    
+    private void Imprimir_PrinterBtnMouseExited(java.awt.event.MouseEvent evt) {                                                    
+        // TODO add your handling code here:
+    	Imprimir_PrinterBtn.setBackground(Color.decode("#0066FF"));
+    }
+    
     private void TrashCanBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TrashCanBtnMouseClicked
         // TODO add your handling code here:
     	Socios_NumeroSocioField.setText("");
@@ -2397,6 +2787,7 @@ public class MainWindow extends javax.swing.JFrame {
         aux.get(2).setVisible(false);
         aux.get(3).setVisible(false);
         aux.get(4).setVisible(false);
+        aux.get(5).setVisible(false);
         
     }
     
@@ -2508,6 +2899,16 @@ public class MainWindow extends javax.swing.JFrame {
 			}
 			
 			Socios_NumeroSocioField.setText(socio);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Socios_ListaIngresosField.setText("");
+			for(JTextPane tp:lista) {
+				tp.setText("");
+			}
 		}
 	}
     
@@ -2710,6 +3111,11 @@ public class MainWindow extends javax.swing.JFrame {
         	for(int n = 1; n < keys.size(); n++) {
         		Fichero.añadirAlFichero(keys.get(n)+";"+values.get(n), Main.INGRESOS);
         	}
+        	
+        	Ingresos_ListaField.setText("");
+        	for(JTextPane tp:lista) {
+				tp.setText("");
+			}
 
     	}
     }
@@ -2872,6 +3278,11 @@ public class MainWindow extends javax.swing.JFrame {
     		for(JTextPane tp:lista) {
     			tp.setText("");
     		}
+    		
+    		for(JTextPane tp:lista) {
+				tp.setText("");
+			}
+    		Pagos_ListaField.setText("");
     	}
     }
     
@@ -3051,6 +3462,101 @@ public class MainWindow extends javax.swing.JFrame {
 	        doc.setDocumentFilter( new UpperCaseFilter());
     	}
     }
+    
+    private void sociosPrintView() {
+    	Imprimir_ContentField.setText("");
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
+    	for(Entry<Integer,Hortelano> e:hortelanos.getHortelanos().entrySet()) {
+    		Hortelano aux = e.getValue();
+    		Imprimir_ContentField.append("Nombre: " + aux.getPersona().getNombre()+" "+aux.getPersona().getApellidos() + "\n" + 
+    				"DNI: " + aux.getPersona().getDni() + "\n" +
+    				"Dirección: " + aux.getPersona().getDireccion() + "\n" +
+    				"Teléfono: " + aux.getPersona().getTelefono() + "\n" +
+    				"Correo: " + aux.getPersona().getCorreo() + "\n" +
+    				"Nº de socio: " + aux.getSocio() + "\n" +
+    				"Nº de huerto: " + aux.getHuerto() + "\n" +
+    				"Fecha de alta: " + Parsers.dateParser(aux.getAlta()) + "\n" +
+    				"Fecha de baja: " + Parsers.printDateParser(aux.getBaja()) + "\n" +
+    				"Estado: " + aux.getEstado() + "\n" +
+    				"Tipo: " + aux.getTipo().toString().replace("_", " DE ") + "\n\n"
+    				);
+    	}
+    }
+    
+	private void ingresosPrintView() {
+		Imprimir_ContentField.setText("");
+		Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
+		Ingresos ingresos = FactoriaIngreso.leeIngresos(Main.INGRESOS);
+		for (Entry<Integer, List<Ingreso>> e : ingresos.getIngresos().entrySet()) {
+			List<String> h = hortelanos.getNombreHortelanoPorNumeroDeSocio(e.getKey());
+			List<String> i = ingresos.getIngresosPorNumeroForPrint(e.getKey());
+			Imprimir_ContentField.append(h.get(0).replace("[", "").replace("]", "") + " (" + e.getKey() + ")\n"
+					+ "=========================" + "\n");
+			for (String s : i) {
+				Imprimir_ContentField.append("Fecha: " + s.split("-")[0] + "\n" + "Concepto: " + s.split("-")[1] + "\n"
+						+ "Cantidad: " + s.split("-")[2] + "\n" + "Tipo: " + s.split("-")[3] + "\n\n");
+			}
+		}
+	}
+    
+    private void pagosPrintView() {
+    	Imprimir_ContentField.setText("");
+    	Pagos pagos = FactoriaPago.leePagos(Main.PAGOS);
+    	for(Pago p:pagos.getPagos()) {
+    		Imprimir_ContentField.append(
+    				p.getProveedor() + "\n" +
+    				"Fecha: " + p.getFecha() + "\n" +
+    				"Concepto: " + p.getConcepto() + "\n" +
+    				"Cantidad: " + p.getCantidad() + "\n" +
+    				"Factura: " + p.getFactura() + "\n" +
+    				"Tipo: " + p.getTipo() + "\n\n");
+    	}
+    }
+    
+    private void listaEsperaPrintView() {
+    	Imprimir_ContentField.setText("");
+    	ListaEsperaGetter le = new ListaEsperaGetter();
+    	List<Hortelano> hortelanos = le.getHortelanos();
+    	int i = 1;
+    	for(Hortelano h:hortelanos) {
+    		Imprimir_ContentField.append("Posición " + i + " en la lista de espera" + "\n" +
+    				"=============================================" + "\n" +
+    				"Nombre: " + h.getPersona().getNombreYApellidos() + "\n" + 
+    				"DNI: " + h.getPersona().getDni() + "\n" +
+    				"Dirección: " + h.getPersona().getDireccion() + "\n" +
+    				"Teléfono: " + h.getPersona().getTelefono() + "\n" +
+    				"Correo: " + h.getPersona().getCorreo() + "\n" +
+    				"Nº de socio: " + h.getSocio() + "\n" +
+    				"Nº de huerto: " + h.getHuerto() + "\n" +
+    				"Fecha de alta: " + Parsers.dateParser(h.getAlta()) + "\n" +
+    				"Fecha de baja: " + Parsers.printDateParser(h.getBaja()) + "\n" +
+    				"Estado: " + h.getEstado() + "\n" +
+    				"Tipo: " + h.getTipo().toString().replace("_", " DE ") +"\n\n"
+    				);
+    		i++;
+    	}
+    }
+    
+    private void printContent() {
+    	Hortelanos hortelanos = FactoriaHortelano.leeHortelano(Main.HORTELANOS);
+    	List<String> aux = hortelanos.getHortelanos().entrySet().stream().map(x->x.getValue()).map(x->x.toString()).toList();
+    	    	
+    	String[][] matriz = new String[aux.size()][12];
+    	
+    	for (int i = 0; i < aux.size(); i++) {
+            String[] fields = aux.get(i).split(";");
+            System.arraycopy(fields, 0, matriz[i], 0, 12);
+        }
+    	
+    	javax.swing.JTable tabla = new javax.swing.JTable(new DefaultTableModel(matriz, new String[] {
+    			"Nombre", "Apellidos", "DNI", "Dirección", "Teléfono", "Correo", "Nº de socio", "Nº de huerto",
+    			"Fecha de alta", "Fecha de baja", "Estado", "Tipo"
+    	}));
+		
+		PDFPrinter.printTableToPDF(tabla, Main.ESCRITORIO+"/output.pdf");
+		//PDFPrinter.printFromString(Imprimir_ContentField.getText(), Main.ESCRITORIO+"/output.pdf");
+		
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CopyrightTxt;
@@ -3194,5 +3700,22 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JInternalFrame VentanasInternalFrame;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    
+    private javax.swing.JPanel ImprimirBtn;
+    private javax.swing.JLabel ImprimirTxt;
+    private javax.swing.JPanel ImprimirDataPanel;
+    private javax.swing.JPanel Imprimir_IngresosBtn;
+    private javax.swing.JLabel Imprimir_SociosTxt;
+    private javax.swing.JPanel Imprimir_SociosBtn;
+    private javax.swing.JLabel Imprimir_IngresosTxt;
+    private javax.swing.JPanel Imprimir_PagosBtn;
+    private javax.swing.JLabel Imprimir_PagosTxt;
+    private javax.swing.JPanel Imprimir_ListaEsperaBtn;
+    private javax.swing.JLabel Imprimir_ListaEsperaTxt;
+    private javax.swing.JPanel Imprimir_PrinterBtn;
+    private javax.swing.JLabel Imprimir_PrinterTxt;
+    private javax.swing.JScrollPane Imprimir_ContentPane;
+    private javax.swing.JTextArea Imprimir_ContentField;
+    
     // End of variables declaration//GEN-END:variables
 }

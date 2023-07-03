@@ -10,6 +10,13 @@ public class Parsers {
 		return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();
 	}
 	
+	public static String printDateParser(LocalDate date) {
+		if(date==null) {
+			return "";
+		}
+		return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();
+	}
+	
 	public static String decimalSymbolParser(String cantidad) {
 		if(cantidad.contains(",")) {
     		cantidad.replace(",", ".");

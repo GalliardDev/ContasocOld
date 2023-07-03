@@ -23,6 +23,10 @@ public class Ingresos {
 		return ingresos.get(id);
 	}
 	
+	public List<String> getIngresosPorNumeroForPrint(Integer id) {
+		return ingresos.get(id).stream().map(x->x.toString()).toList();
+	}
+	
 	public void agregarIngreso(Integer id, Ingreso i) {
 		List<Ingreso> aux = getIngresosPorNumero(id);
 		aux.add(i);

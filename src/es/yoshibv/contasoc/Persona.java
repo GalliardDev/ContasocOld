@@ -70,6 +70,10 @@ public class Persona {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+	
+	public String getNombreYApellidos() {
+		return this.nombre +" "+ this.apellidos;
+	}
 
 	@Override
 	public int hashCode() {
