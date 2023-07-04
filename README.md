@@ -1,4 +1,4 @@
-# **Contasoc - Control de asociaciones**
+# **Contasoc - Control de asociaciones** [![Github All Releases](https://img.shields.io/github/downloads/yoshibv/Contasoc/total.svg)]()
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)
 
 ## **INFORMACIÓN**
