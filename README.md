@@ -1,8 +1,9 @@
-# **Contasoc - Control de asociaciones** [![Github All Releases](https://img.shields.io/github/downloads/yoshibv/Contasoc/total.svg)]()
+# **Contasoc - Control de asociaciones**
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)
 
 ## **INFORMACIÓN**
 ---
+[![Github All Releases](https://img.shields.io/github/downloads/yoshibv/Contasoc/total.svg)]()
 La aplicación está desarrollada en Java completamente, usando Swing para el apartado gráfico.
 
 Si es requerido por la asociación, se puede automáticamente enviar un mail cuando salga una nueva versión de la app. (El correo se enviará automáticamente desde mi correo personal, porque no me puedo permitir un servidor de correo :P)
