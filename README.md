@@ -2,7 +2,7 @@
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)
 
 ## **INFORMACIÓN**
----
+
 [![Github All Releases](https://img.shields.io/github/downloads/yoshibv/Contasoc/total.svg)]()<br>
 La aplicación está desarrollada en Java completamente, usando Swing para el apartado gráfico.
 
@@ -11,7 +11,7 @@ Si es requerido por la asociación, se puede automáticamente enviar un mail cua
 *Próximamente intentaré que Contasoc sea personalizable al 100%, es decir que sea una aplicación válida para cualquier asociación que quiera usarla y siempre será bajo la licencia [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.txt) (código abierto, es decir, gratis)* .-YoshiBv
 
 ## **DESCARGA**
----
+
 En en link de descarga en las [Releases](https://github.com/yoshibv/Contasoc/releases) o desde mi [página web](https://yoshibv.es), descargas el Setup para instalar Contasoc. El setup instala el programa en `C:/Archivos de Programa (x86)/Contasoc` por defecto pudiéndolo cambiar a elección del usuario. También permite elegir si crear o no un acceso directo en `Escritorio` o en `C:/ProgramData/Microsoft/Windows/Start Menu/Programs`. 
 
 Luego de la instalación, crea en `C:/Users/TU_USUARIO/Documentos` una carpeta (Contasoc) para almacenar las bases de datos desde las cuales se leerán y almacenarán datos.
@@ -21,7 +21,7 @@ Contasoc también lleva integrada una versión de [Java](https://www.oracle.com/
 Por último, en la carpeta `Programs` mencionada anteriormente, hay un ejecutable que se crea en el proceso de instalación llamado `unins000.exe` el cual desinstalará Contasoc de tu equipo pero **no eliminará las bases de datos** por si hiciese falta actualizar el programa o exportar los datos.
 
 ## **INTERFAZ**
----
+
 Los botones de la barra de la barra de herramientas (Toolbar) son, respectivamente, limpiar todos los campos, minimizar y cerrar. También se puede apreciar el logo de la asociación en la parte de arriba a la izquierda y la versión actual justo abajo en el menú lateral.
 
 Este es el apartado de socios de la aplicación. Se puede añadir, buscar, modificar o eliminar socios desde aquí.
