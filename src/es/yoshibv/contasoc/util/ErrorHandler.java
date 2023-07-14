@@ -96,4 +96,13 @@ public class ErrorHandler {
 	public static void errorNumeroColumnas() {
 		JOptionPane.showMessageDialog(main.getContentPane(), "El número de columnas no coincide con el número de nuevos valores", "Error", JOptionPane.ERROR_MESSAGE);
 	}
+	public static void mailEnviado() {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha enviado el email al/los destinatario/s especificado/s", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void borradorGuardado() {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha guardado el borrador en el Escritorio", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void error() {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha producido un error desconocido", "Error", JOptionPane.ERROR_MESSAGE);
+	}
 }

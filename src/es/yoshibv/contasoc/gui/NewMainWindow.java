@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -43,11 +44,13 @@ import es.yoshibv.contasoc.ingreso.Ingreso;
 import es.yoshibv.contasoc.pago.Pago;
 import es.yoshibv.contasoc.persona.hortelano.Hortelano;
 import es.yoshibv.contasoc.util.DNIValidator;
+import es.yoshibv.contasoc.util.EmailSender;
 import es.yoshibv.contasoc.util.ErrorHandler;
 import es.yoshibv.contasoc.util.PDFPrinter;
 import es.yoshibv.contasoc.util.Parsers;
 import es.yoshibv.contasoc.util.StretchIcon;
 import es.yoshibv.contasoc.util.UpperCaseFilter;
+import es.yoshibv.contasoc.util.Utils;
 
 /**
  *
@@ -110,7 +113,8 @@ public class NewMainWindow extends javax.swing.JFrame {
 		actualizar();
 		setFilters();
 		showFirstPanel();
-		setTableSorter();
+		setTableSorter(sociosTabla, 1, false);
+		setTableSorter(listaEsperaTabla, 4, true);
 	}
 
 	private void setNoResIfInicio() {
@@ -149,7 +153,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 	}
 
 	private boolean sociosInputChecker() {
-		if (sociosNSocioField.getText().equals("") || sociosNombreField.getText().equals("")
+		if (sociosNombreField.getText().equals("")
 				|| sociosDniField.getText().equals("") || sociosFechaAltaField.getText().equals("")) {
 			ErrorHandler.camposObligatoriosVacios();
 			return false;
@@ -186,89 +190,45 @@ public class NewMainWindow extends javax.swing.JFrame {
 	}
 
 	private void añadirSocio() {
-		List<JTextField> lista = sociosGetTextFields();
-		String huerto = lista.get(0).getText();
-		List<Hortelano> aux = ContasocDAO.toHortelano(ContasocDAO.leerTabla("hortelanos"));
-		String socio = String.valueOf(aux.get(aux.size() - 1).getSocio() + 1);
-		String nombre = lista.get(2).getText();
-		String dni = lista.get(3).getText();
-		String telefono = lista.get(4).getText();
-		String correo = lista.get(5).getText();
-		String alta = lista.get(6).getText();
-		String entrega = lista.get(7).getText();
-		String baja = "null";
-		String notas = lista.get(9).getText();
-		String tipo = Parsers.tipoHortelanoParser(sociosTipoComboBox.getSelectedItem().toString());
-		String estado = "ACTIVO";
+	    List<JTextField> lista = sociosGetTextFields();
+	    String huerto = lista.get(0).getText();
+	    List<Hortelano> aux = ContasocDAO.toHortelano(ContasocDAO.leerTabla("hortelanos"));
+	    String socio = String.valueOf(aux.get(aux.size() - 1).getSocio() + 1);
+	    String nombre = lista.get(2).getText();
+	    String dni = lista.get(3).getText();
+	    String telefono = lista.get(4).getText();
+	    String correo = lista.get(5).getText();
+	    String alta = lista.get(6).getText();
+	    String entrega = lista.get(7).getText();
+	    String baja = "null";
+	    String notas = lista.get(9).getText();
+	    String tipo = Parsers.tipoHortelanoParser(sociosTipoComboBox.getSelectedItem().toString());
+	    String estado = "ACTIVO";
 
-		if (!(sociosInputChecker())) {
+	    if (!(sociosInputChecker())) {
+	        // Realizar alguna acción si la entrada del socio no es válida
+	    } else {
+	        List<String> registroExistente = ContasocDAO.buscarDatos("hortelanos", "numSocio", socio);
+	        System.out.println(registroExistente);
+	        if (!registroExistente.isEmpty()) {
+	            // Modificar el registro existente en la base de datos
+	            modificarSocio();
+	        } else {
+	            // Agregar el nuevo registro a la tabla "hortelanos"
+	            ContasocDAO.agregarDatos("hortelanos", new String[] { huerto, socio, nombre, dni, telefono, correo,
+	                    alta, entrega, baja, notas, tipo, estado });
+	        }
 
-		} else {
-			List<String> registroExistente = ContasocDAO.buscarDatosDobleEntrada("hortelanos", "numSocio", socio,
-					"nombre", nombre);
+	        // Restablecer los campos de entrada
+	        for (JTextField jtf : lista) {
+	            jtf.setText("");
+	        }
 
-			if (!registroExistente.isEmpty()) {
-				// Realiza alguna acción si el registro ya existe en la base de datos
-				modificarSocio();
-			} else {
-				// Agregar el nuevo registro a la tabla "pagos"
-				ContasocDAO.agregarDatos("hortelanos", new String[] { huerto, socio, nombre, dni, telefono, correo,
-						alta, entrega, baja, notas, tipo, estado });
-
-				// Restablecer los campos de entrada
-				for (JTextField jtf : lista) {
-					jtf.setText("");
-				}
-			}
-			ErrorHandler.socioAgregado(Integer.valueOf(socio));
-			ContasocDAO.eliminarDatos("hortelanos", "numSocio", "0");
-		}
+	        ErrorHandler.socioAgregado(Integer.valueOf(socio));
+	        ContasocDAO.eliminarDatos("hortelanos", "numSocio", "0");
+	    }
 	}
 
-	/*
-	 * private void buscarSocio() { List<JTextField> lista = sociosGetTextFields();
-	 * String socio = lista.get(1).getText(); String huerto =
-	 * lista.get(0).getText(); String nombre = lista.get(2).getText(); List<String>
-	 * hortelanosSocio = ContasocDAO.buscarDatos("hortelanos", "numSocio", socio);
-	 * List<String> hortelanosHuerto = ContasocDAO.buscarDatos("hortelanos",
-	 * "numHuerto", huerto); List<String> hortelanosNombreComp =
-	 * ContasocDAO.buscarDatos("hortelanos", "nombre", nombre);
-	 * if(hortelanosSocio.size()==0&&hortelanosHuerto.size()==0&&
-	 * hortelanosNombreComp.size()==0) { ErrorHandler.socioNoExiste(); } else {
-	 * if(socio!=""&&huerto==""&&nombre=="") { String[] hArr =
-	 * hortelanosSocio.get(0).split(";"); int i = 0; while(i<11) {
-	 * lista.get(i).setText(hArr[i].replace("null", "")); i++; }
-	 * if(hArr[11].equals("LISTA_ESPERA")) {
-	 * sociosTipoComboBox.setSelectedItem("LISTA DE ESPERA"); } else
-	 * if(hArr[11].equals("HORTELANO")) {
-	 * sociosTipoComboBox.setSelectedItem("HORTELANO"); } else
-	 * if(hArr[11].equals("HORTELANO_INVERNADERO")) {
-	 * sociosTipoComboBox.setSelectedItem("HORTELANO+INVERNADERO"); } else
-	 * if(hArr[11].equals("COLABORADOR")) {
-	 * sociosTipoComboBox.setSelectedItem("COLABORADOR"); } } else
-	 * if(socio==""&&huerto!=""&&nombre=="") { String[] hArr =
-	 * hortelanosHuerto.get(0).split(";"); int i = 0; while(i<11) {
-	 * lista.get(i).setText(hArr[i].replace("null", "")); i++; }
-	 * if(hArr[11].equals("LISTA_ESPERA")) {
-	 * sociosTipoComboBox.setSelectedItem("LISTA DE ESPERA"); } else
-	 * if(hArr[11].equals("HORTELANO")) {
-	 * sociosTipoComboBox.setSelectedItem("HORTELANO"); } else
-	 * if(hArr[11].equals("HORTELANO_INVERNADERO")) {
-	 * sociosTipoComboBox.setSelectedItem("HORTELANO+INVERNADERO"); } else
-	 * if(hArr[11].equals("COLABORADOR")) {
-	 * sociosTipoComboBox.setSelectedItem("COLABORADOR"); } } else
-	 * if(socio==""&&huerto==""&&nombre!="") { String[] hArr =
-	 * hortelanosNombreComp.get(0).split(";"); int i = 0; while(i<11) {
-	 * lista.get(i).setText(hArr[i].replace("null", "")); i++; }
-	 * if(hArr[11].equals("LISTA_ESPERA")) {
-	 * sociosTipoComboBox.setSelectedItem("LISTA DE ESPERA"); } else
-	 * if(hArr[11].equals("HORTELANO")) {
-	 * sociosTipoComboBox.setSelectedItem("HORTELANO"); } else
-	 * if(hArr[11].equals("HORTELANO_INVERNADERO")) {
-	 * sociosTipoComboBox.setSelectedItem("HORTELANO+INVERNADERO"); } else
-	 * if(hArr[11].equals("COLABORADOR")) {
-	 * sociosTipoComboBox.setSelectedItem("COLABORADOR"); } } } }
-	 */
 
 	private void modificarSocio() {
 		List<JTextField> lista = sociosGetTextFields();
@@ -554,11 +514,11 @@ public class NewMainWindow extends javax.swing.JFrame {
 		Double banco = null;
 		Double caja = null;
 
-		if (lista.get(0).getText().equals("") && lista.get(1).getText().equals("")) {
+		if (lista.get(0).getText().replace("    ","").equals(",   €") && lista.get(1).getText().replace("    ","").equals(",   €")) {
 			String[] aux = ContasocDAO.leerTabla("informe").get(0).split(";");
-			banco = Double.valueOf(aux[0].replace(",", ".").replace(" €", ""));
-			caja = Double.valueOf(aux[1].replace(",", ".").replace(" €", ""));
-		} else if (!(lista.get(0).getText().equals("") && lista.get(1).getText().equals(""))) {
+			banco = Double.valueOf(aux[0]);
+			caja = Double.valueOf(aux[1]);
+		} else if (!(lista.get(0).getText().equals("    ,   €") && lista.get(1).getText().equals("    ,   €"))) {
 			banco = Double.valueOf(lista.get(0).getText().replace(",", ".").replace(" €", ""));
 			caja = Double.valueOf(lista.get(1).getText().replace(",", ".").replace(" €", ""));
 			ContasocDAO.reemplazarPrimero(String.valueOf(banco), String.valueOf(caja));
@@ -580,9 +540,9 @@ public class NewMainWindow extends javax.swing.JFrame {
 		String total = df
 				.format((banco + caja + totalIngresosBanco + totalIngresosCaja - totalPagosBanco - totalPagosCaja));
 
-		balanceLista.setText("Inicial banco: " + banco + "€\n" + "Inicial caja: " + caja + "€\n"
-				+ "Total ingresos banco: " + totalIngresosBanco + "€\n" + "Total ingresos caja: " + totalIngresosCaja
-				+ "€\n" + "Total pagos banco: " + totalPagosBanco + "€\n" + "Total pagos caja: " + totalPagosCaja
+		balanceLista.setText("Inicial banco: " + df.format(banco) + "€\n" + "Inicial caja: " + df.format(caja) + "€\n"
+				+ "Total ingresos banco: " + df.format(totalIngresosBanco) + "€\n" + "Total ingresos caja: " + df.format(totalIngresosCaja)
+				+ "€\n" + "Total pagos banco: " + df.format(totalPagosBanco) + "€\n" + "Total pagos caja: " + df.format(totalPagosCaja)
 				+ "€\n" + "-------------------\n" + "Total: " + total + "€");
 	}
 
@@ -777,7 +737,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 					true, 8, Main.ESCRITORIO + "/socios.pdf");
 			ErrorHandler.pdfCreado();
 		} else if (valor == "Ingresos") {
-			PDFPrinter.printStringToPDF(ingresos, 6, new float[] { 35f, 170f, 50f, 70f, 45f, 90f },
+			PDFPrinter.printStringToPDF(ingresos, 6, new float[] { 35f, 170f, 50f, 120f, 45f, 60f },
 					"logohuerto_sinletras.png", "Listado de ingresos", true,
 					new String[] { "Nº socio", "Nombre y apellidos", "Fecha", "Concepto", "Cantidad", "Tipo" }, false,
 					10, Main.ESCRITORIO + "/ingresos.pdf");
@@ -802,16 +762,20 @@ public class NewMainWindow extends javax.swing.JFrame {
 		ContasocDAO.fillTableFromDatabase("hortelanos", (DefaultTableModel) sociosTabla.getModel());
 	}
 
-	private void setTableSorter() {
-		TableRowSorter<TableModel> sorter = new TableRowSorter<>(sociosTabla.getModel());
-		sociosTabla.setRowSorter(sorter);
+	private void setTableSorter(JTable tabla, int columna, boolean usarComparador) {	    
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tabla.getModel());
+        tabla.setRowSorter(sorter);
 
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
-		sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
-		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-		sorter.setSortKeys(sortKeys);
-	}
-
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
+        sortKeys.add(new RowSorter.SortKey(columna, SortOrder.ASCENDING));
+        if(usarComparador) {
+        	sorter.setSortKeys(sortKeys);
+        	sorter.setComparator(columna, Utils.dateComparator);
+        } else {
+        	sorter.setSortKeys(sortKeys);
+        }
+    }
+	
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -1310,7 +1274,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 		}, new String[] { "Nº huerto", "Nº socio", "Nombre", "DNI", "Teléfono", "Correo", "F. Alta", "F. Entrega",
 				"F. Baja", "Notas", "Tipo", "Estado" }) {
 			@SuppressWarnings("rawtypes")
-			Class[] types = new Class[] { java.lang.String.class, java.lang.String.class, java.lang.String.class,
+			Class[] types = new Class[] { java.lang.String.class, java.lang.Integer.class, java.lang.String.class,
 					java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
 					java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
 					java.lang.String.class };
@@ -2374,10 +2338,12 @@ public class NewMainWindow extends javax.swing.JFrame {
 
 	private void emailEnviarBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailEnviarBtnActionPerformed
 		// TODO add your handling code here:
+		EmailSender.sendEmail(emailDestinatarioField.getText(), emailAsuntoField.getText(), EmailSender.MSG_BEFORE+emailLista.getText()+EmailSender.MSG_AFTER);
 	}// GEN-LAST:event_emailEnviarBtnActionPerformed
 
 	private void emailBorradorBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailBorradorBtnActionPerformed
 		// TODO add your handling code here:
+		EmailSender.crearBorrador(emailDestinatarioField.getText(), emailAsuntoField.getText(), emailLista.getText());
 	}// GEN-LAST:event_emailBorradorBtnActionPerformed
 
 	protected void sociosFechaBajaFieldKeyPressed(KeyEvent evt) {

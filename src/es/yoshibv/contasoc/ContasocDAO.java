@@ -69,15 +69,6 @@ public class ContasocDAO {
                     "inicialCaja REAL" +
                     ")");
             
-            // Crear tabla lista_espera
-            stmt.execute("CREATE TABLE IF NOT EXISTS lista_espera (" +
-            		"numSocio INTEGER, " +
-            		"nombre TEXT, " + 
-            		"telefono TEXT, " +
-            		"correo TEXT, " +
-            		"fechaAlta TEXT" +
-            		")");
-           
             if(ContasocDAO.leerTabla("hortelanos").size()==0) {
             	ContasocDAO.agregarDatos("hortelanos", new String[] {"0","0","nombre apellidos","00000000T","telefono","correo@mail.dom","1/1/1900","null","null","notas","HORTELANO","ACTIVO"});
             }
