@@ -1028,8 +1028,9 @@ public class NewMainWindow extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Asoc. Huertos la Salud Bellavista");
+        setTitle(Main.VERSION_APP);
         setBackground(new java.awt.Color(255, 255, 255));
+        setAlwaysOnTop(true);
         setIconImage(getIconImage());
         setLocationByPlatform(true);
 

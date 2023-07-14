@@ -17,7 +17,7 @@ import es.yoshibv.contasoc.gui.NewMainWindow;
 import es.yoshibv.contasoc.util.ErrorHandler;
 
 public class Main {
-	public static final String VERSION_APP = "Contasoc v4.0.0";
+	public static final String VERSION_APP = "Contasoc v4.1.0";
 	public static final String ESCRITORIO = "C:/Users/" + System.getenv("USERNAME") + "/Desktop";
 	public static final String BDD = "C:/Contasoc/contasoc.db";
 	
