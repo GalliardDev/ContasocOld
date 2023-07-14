@@ -2,7 +2,11 @@
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)
 
 ## **INFORMACIÓN**
+<<<<<<< HEAD
+---
+=======
 
+>>>>>>> branch 'master' of https://github.com/yoshibv/Contasoc.git
 [![Github All Releases](https://img.shields.io/github/downloads/yoshibv/Contasoc/total.svg)]()<br>
 La aplicación está desarrollada en Java completamente, usando Swing para el apartado gráfico.
 

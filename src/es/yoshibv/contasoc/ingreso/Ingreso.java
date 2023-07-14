@@ -8,14 +8,16 @@ import es.yoshibv.contasoc.util.Checkers;
 import es.yoshibv.contasoc.util.Parsers;
 
 public class Ingreso implements Comparable<Ingreso> {
+	private Integer socio;
 	private LocalDate fecha;
 	private String concepto;
 	private Double cantidad;
 	private TipoRetribucion tipo;
 	
-	public Ingreso(LocalDate fecha, String concepto, Double cantidad, TipoRetribucion tipo) {
+	public Ingreso(Integer socio, LocalDate fecha, String concepto, Double cantidad, TipoRetribucion tipo) {
 		super();
-		Checkers.checkNoNull(fecha,concepto,cantidad,tipo);
+		Checkers.checkNoNull(socio,fecha,concepto,cantidad,tipo);
+		this.socio = socio;
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.cantidad = cantidad;
@@ -24,17 +26,27 @@ public class Ingreso implements Comparable<Ingreso> {
 	
 	public Ingreso(String s) {
 		super();
-		String[] t = s.replace("[", "").replace("]", "").split("-");
-		String[] fechaArr = t[0].split("/");
+		String[] t = s.split(";");
+		Integer socio = Integer.valueOf(t[0].trim());
+		String[] fechaArr = t[1].split("/");
 		LocalDate fecha = LocalDate.of(Integer.valueOf(fechaArr[2]),Integer.valueOf(fechaArr[1]),Integer.valueOf(fechaArr[0]));
-		String concepto = t[1];
-		Double cantidad = Double.valueOf(t[2].trim());
-		TipoRetribucion tipo = TipoRetribucion.valueOf(t[3]);
+		String concepto = t[2];
+		Double cantidad = Double.valueOf(t[3].trim());
+		TipoRetribucion tipo = TipoRetribucion.valueOf(t[4]);
 		
+		this.socio = socio;
 		this.fecha = fecha;
 		this.concepto = concepto;
 		this.cantidad = cantidad;
 		this.tipo = tipo;
+	}
+	
+	public Integer getSocio() {
+		return socio;
+	}
+
+	public void setSocio(Integer socio) {
+		this.socio = socio;
 	}
 
 	public LocalDate getFecha() {
@@ -84,12 +96,16 @@ public class Ingreso implements Comparable<Ingreso> {
 	@Override
 	public int compareTo(Ingreso p) {
 		// TODO Auto-generated method stub
-		return fecha.compareTo(p.fecha);
+		int res = this.socio.compareTo(p.getSocio());
+		if(res==0) {
+			res = fecha.compareTo(p.fecha);
+		}
+		return res;
 	}
 
 	@Override
 	public String toString() {
-		return Parsers.dateParser(fecha)+"-"+concepto+"-"+cantidad+"-"+tipo;
+		return socio+";"+Parsers.dateParser(fecha)+";"+concepto+";"+cantidad+";"+tipo;
 	}
 		
 }

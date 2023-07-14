@@ -38,7 +38,12 @@ public class DNIValidator {
 
         char letra = Character.toUpperCase(dni.charAt(8));
         char[] digitos = dni.substring(0, 8).toCharArray();
-        int numero = Integer.parseInt(new String(digitos));
+        int numero = 0;
+        try {
+        	numero = Integer.parseInt(new String(digitos));
+        } catch(Exception e) {
+        	return false;
+        }
 
         int resto = numero % 23;
         int valorLetra = valoresLetras.get(letra);

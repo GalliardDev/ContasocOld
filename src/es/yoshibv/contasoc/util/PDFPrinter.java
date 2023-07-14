@@ -1,97 +1,128 @@
 package es.yoshibv.contasoc.util;
 
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
 import java.io.FileOutputStream;
+import java.util.List;
 
 import javax.swing.JTable;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import es.yoshibv.contasoc.Main;
-
 public class PDFPrinter {
-    public static void printFromString(String content, String filename) {
-        // Crear el documento PDF
-        Document document = new Document(PageSize.A4);
 
-        try {
-            // Crear un escritor de PDF para guardar el documento en un archivo
-            PdfWriter.getInstance(document, new FileOutputStream(filename));
 
-            // Abrir el documento para agregar contenido
-            document.open();
-
-            // Agregar el contenido al documento
-            Font font = new Font(Font.FontFamily.HELVETICA, 12);
-            Paragraph paragraph = new Paragraph(content, font);
-            document.add(paragraph);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // Cerrar el documento
-            document.close();
-        }
+    public static void printStringToPDF(
+        List<String> inputs, 
+        int numColumns,
+        float[] columnWidths, 
+        String logoPath, 
+        String tituloTabla, 
+        boolean mostrarTitulos, 
+        String[] columnTitles, 
+        boolean rotar,
+        int tamañoFuente, 
+        String outFile) {
+    Document document = null;
+    if(rotar){
+        document = new Document(PageSize.A4.rotate(), 10f, 10f, 10f, 10f);
+    } else{
+        document = new Document(PageSize.A4, 10f, 10f, 10f, 10f);
     }
-    
-    public static void printFromPrintable(Printable printable) {
-        // Crear el documento PDF
-        Document document = new Document(PageSize.A4);
+    try {
+        PdfWriter.getInstance(document, new FileOutputStream(outFile));
+        document.open();
 
-        try {
-            // Crear un escritor de PDF para guardar el documento en un archivo
-            PdfWriter.getInstance(document, new FileOutputStream(Main.ESCRITORIO+"/output.pdf"));
+        // Encabezado
+        Paragraph header = new Paragraph();
+        header.add(new Phrase("Asociación Huertos la Salud Bellavista\nC/ Cronos SN, Bellavista, 41014 Sevilla\nhuertoslasaludbellavista@gmail.com"));
+        header.setAlignment(Element.ALIGN_RIGHT);
+        document.add(header);
 
-            // Abrir el documento para agregar contenido
-            document.open();
+        // Logo
+        Image logo = Image.getInstance(PDFPrinter.class.getClassLoader().getResource("imagenes/"+logoPath));
+        logo.setAbsolutePosition(0, document.getPageSize().getHeight()-87f);
+        document.add(logo);
 
-            // Crear un objeto PrinterJob
-            PrinterJob printerJob = PrinterJob.getPrinterJob();
+        // Título de la tabla
+        Paragraph title = new Paragraph(tituloTabla);
+        title.setFont(new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD));
+        title.setAlignment(Element.ALIGN_CENTER);
+        document.add(title);
 
-            // Asignar el objeto Printable al PrinterJob
-            printerJob.setPrintable(printable);
+        // Tabla
+        PdfPTable table = new PdfPTable(numColumns);
+        table.setWidthPercentage(100);
+        table.setSpacingBefore(10f);
+        table.setSpacingAfter(10f);
 
-            // Imprimir en el documento PDF
-            printerJob.print();
-
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (PrinterException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // Cerrar el documento
-            document.close();
+        if(mostrarTitulos){
+            // Títulos de las columnas
+            for (String columnTitle : columnTitles) {
+                PdfPCell cell = new PdfPCell(new Phrase(columnTitle,new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD)));
+                cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                cell.setBorderWidthTop(1f);
+                cell.setBorderWidthBottom(1f);
+                cell.setBorderWidthLeft(0f);
+                cell.setBorderWidthRight(0f);
+                table.addCell(cell);
+            }
         }
+
+        // Datos
+        for (String input : inputs) {
+            String[] fields = input.split(";");
+            if (fields.length != numColumns) {
+                System.out.println("La cadena de entrada debe tener " + numColumns + " campos separados por ';'");
+                return;
+            }
+            for (String field : fields) {
+                PdfPCell cell = new PdfPCell(new Phrase(field,getFont(tamañoFuente)));
+                cell.setBorderWidthTop(0f);
+                cell.setBorderWidthBottom(0.5f);
+                cell.setBorderWidthLeft(0f);
+                cell.setBorderWidthRight(0f);
+                table.addCell(cell);
+            }
+        }
+
+        table.setWidths(columnWidths);
+
+        document.add(table);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        document.close();
     }
-    
-    public static void printTableToPDF(JTable table, String filename) {
+}
+
+
+    public static void printTableToPDF(JTable table, String filename, int tamañoFuente) {
         Document document = new Document(new Rectangle(PageSize.A4.getWidth(), PageSize.A4.getHeight()).rotate());
-        document.setMargins(0,0,10f,10f);
+        document.setMargins(0, 0, 10f, 10f);
         try {
             PdfWriter.getInstance(document, new FileOutputStream(filename));
             document.open();
             PdfPTable pdfTable = new PdfPTable(table.getColumnCount());
-            float[] columnWidths = {65f,105f,40f,185f,35f,90f,15f,15f,35f,35f,35f,90f};
+            float[] columnWidths = { 65f, 105f, 40f, 185f, 35f, 90f, 15f, 15f, 35f, 35f, 35f, 90f };
             pdfTable.setWidths(columnWidths);
             pdfTable.setTotalWidth(745f);
             pdfTable.setLockedWidth(true);
             for (int i = 0; i < table.getRowCount(); i++) {
                 for (int j = 0; j < table.getColumnCount(); j++) {
                     Object value = table.getValueAt(i, j);
-                    PdfPCell cell = new PdfPCell(new Paragraph(value.toString(), getFont()));
+                    PdfPCell cell = new PdfPCell(new Paragraph(value.toString(), getFont(tamañoFuente)));
                     pdfTable.addCell(cell);
                 }
             }
@@ -105,9 +136,9 @@ public class PDFPrinter {
             document.close();
         }
     }
-    
-    private static Font getFont() {
-        Font font = new Font(Font.FontFamily.HELVETICA, 6);
+
+    private static Font getFont(int tamaño) {
+        Font font = new Font(Font.FontFamily.HELVETICA, tamaño);
         return font;
     }
 }

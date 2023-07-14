@@ -4,10 +4,10 @@ import java.awt.HeadlessException;
 
 import javax.swing.JOptionPane;
 
-import es.yoshibv.contasoc.gui.MainWindow;
+import es.yoshibv.contasoc.gui.NewMainWindow;
 
 public class ErrorHandler {
-	private static MainWindow main = new MainWindow();
+	private static NewMainWindow main = new NewMainWindow();
 	JOptionPane jop = new JOptionPane();
 	public static void camposObligatoriosVacios() throws HeadlessException {
 		JOptionPane.showMessageDialog(main.getContentPane(), "Hay campos obligatorios vacíos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -18,6 +18,15 @@ public class ErrorHandler {
 	public static void socioYaExiste() throws HeadlessException {
 		JOptionPane.showMessageDialog(main.getContentPane(), "Ya existe un socio con ese número de socio", "Error", JOptionPane.ERROR_MESSAGE);
 	}
+	public static void socioAgregado(Integer num) {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha agregado el socio nº " + num, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void socioModificado(Integer num) {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha modificado el socio nº " + num, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void socioEliminado(Integer num) {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha eliminado el socio nº " + num, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
 	public static void tipoSocioNoAdecuado() throws HeadlessException {
 		JOptionPane.showMessageDialog(main.getContentPane(), "El tipo de socio no es el adecuado", "Error", JOptionPane.ERROR_MESSAGE);
 	}
@@ -26,6 +35,24 @@ public class ErrorHandler {
 	}
 	public static void ingresoNoExiste() throws HeadlessException {
 		JOptionPane.showMessageDialog(main.getContentPane(), "No hay ingresos registrados de ese socio o ese socio no existe", "Error", JOptionPane.ERROR_MESSAGE);		
+	}
+	public static void ingresoAgregado(Integer num) {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha agregado el ingreso al socio nº " + num, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void ingresoModificado(Integer num) {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha modificado el ingreso al socio nº " + num, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void ingresoEliminado(Integer num) {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha eliminado el ingreso del socio nº " + num, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void pagoAgregado(String fac) {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha agregado el pago con factura: " + fac, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void pagoModificado() {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha modificado el pago", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void pagoEliminado() {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha eliminado el pago", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 	}
 	public static void errorAlCrearDirectorio() throws HeadlessException {
 		JOptionPane.showMessageDialog(main.getContentPane(), "Hubo un error al crear una carpeta necesaria para la aplicación", "Error", JOptionPane.ERROR_MESSAGE);
@@ -62,5 +89,11 @@ public class ErrorHandler {
 	}
 	public static void errorAlLeerTipoRetr() {
 		JOptionPane.showMessageDialog(main.getContentPane(), "Hay un error en el formato del tipo de ingreso/pago", "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	public static void pdfCreado() {
+		JOptionPane.showMessageDialog(main.getContentPane(), "Se ha generado el PDF y se ha guardado en el Escritorio", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+	}
+	public static void errorNumeroColumnas() {
+		JOptionPane.showMessageDialog(main.getContentPane(), "El número de columnas no coincide con el número de nuevos valores", "Error", JOptionPane.ERROR_MESSAGE);
 	}
 }
