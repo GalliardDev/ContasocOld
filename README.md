@@ -2,11 +2,7 @@
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)
 
 ## **INFORMACIÓN**
-<<<<<<< HEAD
----
-=======
 
->>>>>>> branch 'master' of https://github.com/yoshibv/Contasoc.git
 [![Github All Releases](https://img.shields.io/github/downloads/yoshibv/Contasoc/total.svg)]()<br>
 La aplicación está desarrollada en Java completamente, usando Swing para el apartado gráfico.
 
@@ -25,23 +21,30 @@ Contasoc también lleva integrada una versión de [Java](https://www.oracle.com/
 Por último, en la carpeta `Programs` mencionada anteriormente, hay un ejecutable que se crea en el proceso de instalación llamado `unins000.exe` el cual desinstalará Contasoc de tu equipo pero **no eliminará las bases de datos** por si hiciese falta actualizar el programa o exportar los datos.
 
 ## **INTERFAZ**
+<p style="color: orange;">Se ha actualizado la interfaz a la v3.0!</p>
 
 Los botones de la barra de la barra de herramientas (Toolbar) son, respectivamente, limpiar todos los campos, minimizar y cerrar. También se puede apreciar el logo de la asociación en la parte de arriba a la izquierda y la versión actual justo abajo en el menú lateral.
 
-Este es el apartado de socios de la aplicación. Se puede añadir, buscar, modificar o eliminar socios desde aquí.
-![Socios](https://i.imgur.com/gPW1UH0.png)
+Esta es la pantalla de inicio para entrar a la app, ya que he porteado a SQLite, próximamente se añadirá un sistema de login con usuario y contraseña para cada miembro de la directiva de la asociación.
+![Inicio](https://i.imgur.com/1v3aKty.png)
+
+Este es el apartado de socios de la aplicación. Se pueden añadir (`ENTER`), buscar (`TABLA`), modificar (`ENTER`) o eliminar (`SUPR`/`DEL`) socios desde aquí.
+![Socios](https://i.imgur.com/ZxiLltU.png)
 
 Este es el apartado de ingresos de la aplicación. Ingresos se refiere a los ingresos que realizan los socios para obtener un huerto o entrar en lista de espera.Se pueden añadir, buscar, modificar o eliminar ingresos desde aquí.
-![Ingresos](https://i.imgur.com/8rlgyDh.png)
+![Ingresos](https://i.imgur.com/PGqwpmH.png)
 
-Este es el apartado de pagos de la aplicación. Pagos se refiere a los pagos que realiza la asociación a sus proveedores.Se pueden añadir, buscar, modificar o eliminar pagos desde aquí.
-![Pagos](https://i.imgur.com/rOhGVFQ.png)
+Este es el apartado de gastos de la aplicación. Gastos se refiere a los pagos que realiza la asociación a sus proveedores.Se pueden añadir, buscar, modificar y eliminar esos pagos desde aquí.
+![Gastos](https://i.imgur.com/Ubva1sB.png)
 
-Este es el apartado de informe. Sirve para generar un informe de lo que se ha gastado calculando con el saldo incial de banco y caja introducidos y la suma total de ingresos (por caja y banco) y pagos (también por caja y banco) el total de dinero que queda.
-![Informe](https://i.imgur.com/u2lbdKr.png)
+Este es el apartado de balance. Sirve para generar un informe de lo que se ha gastado calculando con el saldo incial de banco y caja introducidos y la suma total de ingresos (por caja y banco) y pagos (también por caja y banco) el total de dinero que queda.
+![Balance](https://i.imgur.com/cKnzmVf.png)
 
 Una lista de socios filtrada por los que están en lista de espera y mostrados en una tabla. Se puede actualizar si se modifica un socio y se le quita el estado de lista de espera.
-![Lista de espera](https://i.imgur.com/LOyzx1h.png)
+![Lista de espera](https://i.imgur.com/1ldbjoG.png)
 
 En este apartado se puede mostar un listado completo de socios, pagos, ingresos y lista de espera para luego imprimirlo en un PDF, por si hiciera falta una copia física.
-![Impresión](https://i.imgur.com/SchAdoc.png)
+![Impresión](https://i.imgur.com/WbVHqiA.png)
+
+`En este nuevo apartado se podrán enviar emails a uno o varios destinatarios especificando un asunto y un cuerpo, y el email se formateará automáticamente usando HTML y CSS inline. También se podra guardar un borrador en HTML del cuerpo.`
+![Email](https://i.imgur.com/qW6PbQG.png)
