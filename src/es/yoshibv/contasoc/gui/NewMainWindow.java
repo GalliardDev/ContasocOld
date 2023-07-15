@@ -1126,6 +1126,11 @@ public class NewMainWindow extends javax.swing.JFrame {
 		appPanel.setForeground(new java.awt.Color(255, 255, 255));
 		appPanel.setName("tabbedPanel"); // NOI18N
 		appPanel.setOpaque(true);
+		appPanel.addKeyListener(new java.awt.event.KeyAdapter() {
+			public void keyPressed(java.awt.event.KeyEvent evt) {
+				appPanelKeyPressed(evt);
+			}
+		});
 
 		sociosPanel.setBackground(new java.awt.Color(70, 73, 75));
 		sociosPanel.setName("sociosPanel"); // NOI18N
@@ -2360,13 +2365,16 @@ public class NewMainWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_imprimirListaEsperaBtnActionPerformed
 
 	private void emailEnviarBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailEnviarBtnActionPerformed
-		
 		EmailSender.sendEmail(emailDestinatarioField.getText(), emailAsuntoField.getText(), EmailSender.MSG_BEFORE+emailLista.getText()+EmailSender.MSG_AFTER);
+		ErrorHandler.mailEnviado();
+		emailAsuntoField.setText("");
+		emailDestinatarioField.setText("");
+		emailLista.setText("");
 	}// GEN-LAST:event_emailEnviarBtnActionPerformed
 
 	private void emailBorradorBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailBorradorBtnActionPerformed
-		
 		EmailSender.crearBorrador(emailDestinatarioField.getText(), emailAsuntoField.getText(), emailLista.getText());
+		ErrorHandler.borradorGuardado();
 	}// GEN-LAST:event_emailBorradorBtnActionPerformed
 
 	protected void sociosFechaBajaFieldKeyPressed(KeyEvent evt) {
@@ -2572,6 +2580,12 @@ public class NewMainWindow extends javax.swing.JFrame {
 		this.isResizable = !isResizable;
         this.setResizable(isResizable);
         showPanel(this.getContentPane(), "tabbedPanel");
+	}
+	
+	private void appPanelKeyPressed(KeyEvent evt) {
+		if(evt.getKeyCode()==KeyEvent.VK_ESCAPE){
+            showPanel(getContentPane(), inicioPanel.getName());
+        }
 	}
 
 	// Variables declaration - do not modify
