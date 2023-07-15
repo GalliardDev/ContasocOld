@@ -72,9 +72,9 @@ public class EmailSender {
 			+ "</html>";
     private static final String SMTP_SERVER = "smtp.gmail.com";
     private static final int SMTP_PORT = 587;
-    private static final String SMTP_USERNAME = "jomaamga@gmail.com";
-    private static final String SMTP_PASSWORD = "amewytspgfiiiojc";
-    private static final String SENDER_EMAIL = "jomaamga@gmail.com";
+    private static final String SMTP_USERNAME = "huertoslasaludbellavista@gmail.com";
+    private static final String SMTP_PASSWORD = "ixdmevohktgjkoau";
+    private static final String SENDER_EMAIL = "huertoslasaludbellavista@gmail.com";
 
     public static void sendEmail(String destinatario, String asunto, String cuerpo) {
         Properties props = new Properties();
