@@ -715,6 +715,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 
 	private void printContent() {
 		List<String> hortelanos = new ArrayList<>();
+		List<Hortelano> aux = new ArrayList<>();
 		List<String> listaEspera = new ArrayList<>();
 		for (Hortelano h : ContasocDAO.leerTabla("hortelanos").stream().map(x -> Parsers.hortelanoParser(x)).toList()) {
 			if (h.getEstado() != Estado.INACTIVO) {
@@ -727,12 +728,16 @@ public class NewMainWindow extends javax.swing.JFrame {
 						+ h.getEstado());
 
 			}
-
-			if (h.getTipo() == TipoHortelano.LISTA_ESPERA) {
-				listaEspera.add(h.getSocio() + ";" + h.getPersona().getNombre() + ";" + h.getPersona().getTelefono()
-						+ ";" + h.getPersona().getCorreo() + ";" + Parsers.printDateParser(h.getAlta()));
-			}
 		}
+		aux = ContasocDAO.leerTabla("hortelanos").stream().map(x -> Parsers.hortelanoParser(x)).toList().stream()
+				.filter(x->x.getTipo().equals(TipoHortelano.LISTA_ESPERA))
+				.sorted(Comparator.comparing(Hortelano::getAlta)).toList();
+		
+		aux.stream()
+			.forEach(x->listaEspera.add(
+					x.getSocio() + ";" + x.getPersona().getNombre() + ";" + x.getPersona().getTelefono()
+					+ ";" + x.getPersona().getCorreo() + ";" + Parsers.printDateParser(x.getAlta())));
+				
 		List<String> ingresos = new ArrayList<>();
 		for (Ingreso i : ContasocDAO.leerTabla("ingresos").stream().map(x -> Parsers.ingresoParser(x)).toList()) {
 			String[] ingArr = i.toString().split(";");
