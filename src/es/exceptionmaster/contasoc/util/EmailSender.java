@@ -1,9 +1,9 @@
-package es.yoshibv.contasoc.util;
+package es.exceptionmaster.contasoc.util;
 
 import javax.mail.*;
 import javax.mail.internet.*;
 
-import es.yoshibv.contasoc.Main;
+import es.exceptionmaster.contasoc.Main;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package es.yoshibv.contasoc.util;
+package es.exceptionmaster.contasoc.util;
 
 import java.io.FileOutputStream;
 import java.util.List;

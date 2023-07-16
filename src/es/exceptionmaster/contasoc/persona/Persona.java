@@ -1,8 +1,8 @@
-package es.yoshibv.contasoc.persona;
+package es.exceptionmaster.contasoc.persona;
 
 import java.util.Objects;
 
-import es.yoshibv.contasoc.util.Checkers;
+import es.exceptionmaster.contasoc.util.Checkers;
 
 public class Persona {
 	private String nombre;

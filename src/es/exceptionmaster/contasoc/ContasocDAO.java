@@ -1,4 +1,4 @@
-package es.yoshibv.contasoc;
+package es.exceptionmaster.contasoc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,11 +15,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import es.yoshibv.contasoc.ingreso.Ingreso;
-import es.yoshibv.contasoc.pago.Pago;
-import es.yoshibv.contasoc.persona.hortelano.Hortelano;
-import es.yoshibv.contasoc.util.ErrorHandler;
-import es.yoshibv.contasoc.util.Parsers;
+import es.exceptionmaster.contasoc.ingreso.Ingreso;
+import es.exceptionmaster.contasoc.pago.Pago;
+import es.exceptionmaster.contasoc.persona.hortelano.Hortelano;
+import es.exceptionmaster.contasoc.util.ErrorHandler;
+import es.exceptionmaster.contasoc.util.Parsers;
 
 public class ContasocDAO {
 	private static final String URL = "jdbc:sqlite:" + Main.BDD;

@@ -1,4 +1,4 @@
-package es.yoshibv.contasoc.util;
+package es.exceptionmaster.contasoc.util;
 
 /**
  * @author reinaqu

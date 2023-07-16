@@ -1,4 +1,4 @@
-package es.yoshibv.contasoc;
+package es.exceptionmaster.contasoc;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,8 +13,8 @@ import java.nio.file.Paths;
 
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 
-import es.yoshibv.contasoc.gui.NewMainWindow;
-import es.yoshibv.contasoc.util.ErrorHandler;
+import es.exceptionmaster.contasoc.gui.NewMainWindow;
+import es.exceptionmaster.contasoc.util.ErrorHandler;
 
 public class Main {
 	public static final String VERSION_APP = "Contasoc v5.0.1";

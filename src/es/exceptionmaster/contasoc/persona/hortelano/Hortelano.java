@@ -1,13 +1,13 @@
-package es.yoshibv.contasoc.persona.hortelano;
+package es.exceptionmaster.contasoc.persona.hortelano;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-import es.yoshibv.contasoc.common.Estado;
-import es.yoshibv.contasoc.common.TipoHortelano;
-import es.yoshibv.contasoc.persona.Persona;
-import es.yoshibv.contasoc.util.Checkers;
-import es.yoshibv.contasoc.util.Parsers;
+import es.exceptionmaster.contasoc.common.Estado;
+import es.exceptionmaster.contasoc.common.TipoHortelano;
+import es.exceptionmaster.contasoc.persona.Persona;
+import es.exceptionmaster.contasoc.util.Checkers;
+import es.exceptionmaster.contasoc.util.Parsers;
 
 public class Hortelano implements Comparable<Hortelano> {
 	private String huerto;

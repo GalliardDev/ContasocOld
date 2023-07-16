@@ -1,12 +1,12 @@
-package es.yoshibv.contasoc.pago;
+package es.exceptionmaster.contasoc.pago;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import es.yoshibv.contasoc.common.TipoRetribucion;
-import es.yoshibv.contasoc.util.Checkers;
-import es.yoshibv.contasoc.util.Parsers;
+import es.exceptionmaster.contasoc.common.TipoRetribucion;
+import es.exceptionmaster.contasoc.util.Checkers;
+import es.exceptionmaster.contasoc.util.Parsers;
 
 public class Pago implements Comparable<Pago> {
 	private LocalDate fecha;

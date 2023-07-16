@@ -1,11 +1,11 @@
-package es.yoshibv.contasoc.ingreso;
+package es.exceptionmaster.contasoc.ingreso;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-import es.yoshibv.contasoc.common.TipoRetribucion;
-import es.yoshibv.contasoc.util.Checkers;
-import es.yoshibv.contasoc.util.Parsers;
+import es.exceptionmaster.contasoc.common.TipoRetribucion;
+import es.exceptionmaster.contasoc.util.Checkers;
+import es.exceptionmaster.contasoc.util.Parsers;
 
 public class Ingreso implements Comparable<Ingreso> {
 	private Integer socio;

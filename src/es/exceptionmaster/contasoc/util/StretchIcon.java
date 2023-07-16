@@ -1,4 +1,4 @@
-package es.yoshibv.contasoc.util;
+package es.exceptionmaster.contasoc.util;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

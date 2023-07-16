@@ -1,4 +1,4 @@
-package es.yoshibv.contasoc.common;
+package es.exceptionmaster.contasoc.common;
 
 public enum TipoRetribucion {
 	BANCO, CAJA;
