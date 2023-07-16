@@ -1,12 +1,12 @@
-package es.exceptionmaster.contasoc.pago;
+package es.exmaster.contasoc.pago;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
-import es.exceptionmaster.contasoc.common.TipoRetribucion;
-import es.exceptionmaster.contasoc.util.Checkers;
-import es.exceptionmaster.contasoc.util.Parsers;
+import es.exmaster.contasoc.common.TipoRetribucion;
+import es.exmaster.contasoc.util.Checkers;
+import es.exmaster.contasoc.util.Parsers;
 
 public class Pago implements Comparable<Pago> {
 	private LocalDate fecha;

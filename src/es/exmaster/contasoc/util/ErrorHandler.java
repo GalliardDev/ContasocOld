@@ -1,10 +1,10 @@
-package es.exceptionmaster.contasoc.util;
+package es.exmaster.contasoc.util;
 
 import java.awt.HeadlessException;
 
 import javax.swing.JOptionPane;
 
-import es.exceptionmaster.contasoc.gui.NewMainWindow;
+import es.exmaster.contasoc.gui.NewMainWindow;
 
 public class ErrorHandler {
 	private static NewMainWindow main = new NewMainWindow();

@@ -1,11 +1,11 @@
-package es.exceptionmaster.contasoc.ingreso;
+package es.exmaster.contasoc.ingreso;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-import es.exceptionmaster.contasoc.common.TipoRetribucion;
-import es.exceptionmaster.contasoc.util.Checkers;
-import es.exceptionmaster.contasoc.util.Parsers;
+import es.exmaster.contasoc.common.TipoRetribucion;
+import es.exmaster.contasoc.util.Checkers;
+import es.exmaster.contasoc.util.Parsers;
 
 public class Ingreso implements Comparable<Ingreso> {
 	private Integer socio;

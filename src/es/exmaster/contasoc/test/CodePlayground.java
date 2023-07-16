@@ -1,11 +1,11 @@
-package es.exceptionmaster.contasoc.test;
+package es.exmaster.contasoc.test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import es.exceptionmaster.contasoc.ContasocDAO;
-import es.exceptionmaster.contasoc.util.BufferedFileWriter;
+import es.exmaster.contasoc.ContasocDAO;
+import es.exmaster.contasoc.util.BufferedFileWriter;
 
 import java.io.File;
 

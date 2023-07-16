@@ -1,9 +1,9 @@
-package es.exceptionmaster.contasoc.util;
+package es.exmaster.contasoc.util;
 
 import javax.mail.*;
 import javax.mail.internet.*;
 
-import es.exceptionmaster.contasoc.Main;
+import es.exmaster.contasoc.Main;
 
 import java.io.File;
 import java.io.IOException;

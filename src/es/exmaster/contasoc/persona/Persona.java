@@ -1,8 +1,8 @@
-package es.exceptionmaster.contasoc.persona;
+package es.exmaster.contasoc.persona;
 
 import java.util.Objects;
 
-import es.exceptionmaster.contasoc.util.Checkers;
+import es.exmaster.contasoc.util.Checkers;
 
 public class Persona {
 	private String nombre;

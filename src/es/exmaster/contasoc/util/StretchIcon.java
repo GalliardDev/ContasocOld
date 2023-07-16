@@ -1,4 +1,4 @@
-package es.exceptionmaster.contasoc.util;
+package es.exmaster.contasoc.util;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license

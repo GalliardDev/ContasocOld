@@ -1,4 +1,4 @@
-package es.exceptionmaster.contasoc.util;
+package es.exmaster.contasoc.util;
 
 import java.util.Map;
 import java.util.HashMap;
