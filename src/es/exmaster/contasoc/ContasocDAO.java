@@ -368,7 +368,7 @@ public class ContasocDAO {
         }
     }
     
-    public static void fillTableFromDatabaseIf(String tableName, JTable tabla) {
+    public static void fillListaEspera(JTable tabla) {
         // Conexión a la base de datos SQLite
     	((DefaultTableModel) tabla.getModel()).setRowCount(0);
     	final DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
@@ -380,7 +380,47 @@ public class ContasocDAO {
                 
                 // Nombre de la tabla y consulta SQL para seleccionar todos los datos
             	String equal = "LISTA_ESPERA";
-                String query = "SELECT numSocio, nombre, telefono, correo, fechaAlta FROM " + tableName + " WHERE tipo = '" + equal + "'";
+                String query = "SELECT numSocio, nombre, telefono, correo, fechaAlta FROM hortelanos WHERE tipo = '" + equal + "'";
+                
+                // Obtener metadatos de las columnas
+                try ( // Ejecutar la consulta
+                        ResultSet resultSet = statement.executeQuery(query)) {
+                    // Obtener metadatos de las columnas
+                    int columnCount = resultSet.getMetaData().getColumnCount();
+                    // Agregar filas a la JTable utilizando los datos del resultado de la consulta
+                    while (resultSet.next()) {
+                        Object[] row = new Object[columnCount];
+                        
+                        // Obtener los valores de cada columna
+                        for (int i = 1; i <= columnCount; i++) {
+                        	tabla.getColumnModel().getColumn(i-1).setCellRenderer(defaultTableCellRenderer);
+                            row[i - 1] = resultSet.getObject(i);
+                        }
+                        
+                        // Agregar la fila al modelo de tabla
+                        model.addRow(row);
+                    }
+                    // Cerrar la conexión y liberar recursos
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void fillIngresosPopup(JTable tabla, String numSocio) {
+        // Conexión a la base de datos SQLite
+    	((DefaultTableModel) tabla.getModel()).setRowCount(0);
+    	final DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
+        defaultTableCellRenderer.setHorizontalTextPosition(SwingConstants.LEFT);
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        try {
+            try (Connection connection = DriverManager.getConnection("jdbc:sqlite:"+Main.BDD);
+            		Statement statement = connection.createStatement()) {
+                
+                // Nombre de la tabla y consulta SQL para seleccionar todos los datos
+            
+                String query = "SELECT fecha, concepto, cantidad, tipo FROM ingresos WHERE numSocio = '" + numSocio + "'";
                 
                 // Obtener metadatos de las columnas
                 try ( // Ejecutar la consulta

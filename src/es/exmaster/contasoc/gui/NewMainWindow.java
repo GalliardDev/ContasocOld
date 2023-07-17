@@ -65,6 +65,7 @@ import javax.swing.JFileChooser;
 public class NewMainWindow extends javax.swing.JFrame {
 	public static String valor = null;
 	private boolean isResizable = false;
+	private IngresosFrame iF = new IngresosFrame();
 
 	public NewMainWindow() {
 		initComponents();
@@ -120,6 +121,9 @@ public class NewMainWindow extends javax.swing.JFrame {
 		showFirstPanel();
 		setSociosSorter();
 		setListaEsperaSorter();
+		if(appPanel.isVisible()) {
+			sociosNHuertoField.requestFocus();
+		}
 	}
 
 	private void setNoResIfInicio() {
@@ -564,7 +568,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 		}
 		ContasocDAO.fillTableFromDatabase("ingresos", (DefaultTableModel) ingresosTabla.getModel());
 		ContasocDAO.fillTableFromDatabase("gastos", (DefaultTableModel) gastosTabla.getModel());
-		ContasocDAO.fillTableFromDatabaseIf("hortelanos", listaEsperaTabla);
+		ContasocDAO.fillListaEspera(listaEsperaTabla);
 	}
 
 	private void sociosPrintView() {
@@ -1250,6 +1254,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 
 		sociosEstadoLabel.setForeground(new java.awt.Color(255, 255, 255));
 		sociosEstadoLabel.setText("Estado:");
+		sociosEstadoField.setEditable(false);
 
 		javax.swing.GroupLayout sociosFieldsLayout = new javax.swing.GroupLayout(sociosFields);
 		sociosFields.setLayout(sociosFieldsLayout);
@@ -1411,7 +1416,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 				return canEdit[columnIndex];
 			}
 		});
-		sociosTabla.setFocusable(true);
+		sociosTabla.setFocusable(false);
 		sociosTabla.setShowGrid(false);
 		sociosTabla.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2324,6 +2329,10 @@ public class NewMainWindow extends javax.swing.JFrame {
 		sociosNotasField.setText(notas);
 		sociosTipoComboBox.setSelectedItem(tipo);
 		sociosEstadoField.setText(estado);
+		
+		ContasocDAO.fillIngresosPopup(iF.getTabla(), socio);
+		iF.setTitle(nombre + " (" + socio +")");
+		iF.setVisible(true);
 	}
 
 	private void sociosTablaKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_sociosTablaKeyPressed

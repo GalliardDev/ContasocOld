@@ -2,3 +2,10 @@
 .classpath
 .project
 .settings/
+/nbproject/private/
+/build/
+/build.xml
+/manifest.mf
+/nbproject/
+/privateKey.key
+/publicKey.key
