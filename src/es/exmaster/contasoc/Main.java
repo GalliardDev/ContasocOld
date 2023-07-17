@@ -17,7 +17,7 @@ import es.exmaster.contasoc.gui.NewMainWindow;
 import es.exmaster.contasoc.util.ErrorHandler;
 
 public class Main {
-	public static final String VERSION_APP = "Contasoc v5.0.1";
+	public static final String VERSION_APP = "Contasoc v5.1.0";
 	public static final String ESCRITORIO = "C:/Users/" + System.getenv("USERNAME") + "/Desktop";
 	public static final String BDD = "C:/Contasoc/contasoc.db";
 	
