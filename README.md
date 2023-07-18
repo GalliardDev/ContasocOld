@@ -1,5 +1,6 @@
 # **Contasoc - Control de asociaciones**
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)
+⚠️ Los únicos sitios oficiales para descargarla son GitHub Releases (este mismo sitio) y mi ![página web](https://exmaster.es)
 
 ## **INFORMACIÓN**
 
