@@ -29,7 +29,7 @@ Los botones de la barra de la barra de herramientas (Toolbar) son, respectivamen
 Esta es la pantalla de inicio para entrar a la app, ya que he porteado a SQLite, próximamente se añadirá un sistema de login con usuario y contraseña para cada miembro de la directiva de la asociación.
 ![Inicio](https://i.imgur.com/1v3aKty.png)
 
-Este es el apartado de socios de la aplicación. Se pueden añadir (`ENTER`), buscar (`TABLA`), modificar (`ENTER`) o eliminar (`SUPR`/`DEL`) socios desde aquí.
+Este es el apartado de socios de la aplicación. Se pueden añadir (`ENTER`), buscar (en la tabla), modificar (`ENTER`) o eliminar (`SUPR`/`DEL`) socios desde aquí.
 ![Socios](https://i.imgur.com/ZxiLltU.png)
 
 Este es el apartado de ingresos de la aplicación. Ingresos se refiere a los ingresos que realizan los socios para obtener un huerto o entrar en lista de espera.Se pueden añadir, buscar, modificar o eliminar ingresos desde aquí.
