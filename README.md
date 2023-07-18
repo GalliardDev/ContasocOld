@@ -47,5 +47,5 @@ Una lista de socios filtrada por los que están en lista de espera y mostrados e
 En este apartado se puede mostar un listado completo de socios, pagos, ingresos y lista de espera para luego imprimirlo en un PDF, por si hiciera falta una copia física.
 ![Impresión](https://i.imgur.com/WbVHqiA.png)
 
-`En este nuevo apartado se podrán enviar emails a uno o varios destinatarios especificando un asunto y un cuerpo, y el email se formateará automáticamente usando HTML y CSS inline. También se podra guardar un borrador en HTML del cuerpo.`
-![Email](https://i.imgur.com/qW6PbQG.png)
+En este nuevo apartado se podrán enviar emails a uno o varios destinatarios especificando un asunto y un cuerpo, y el email se formateará automáticamente usando HTML y CSS inline. También se podra guardar un borrador en HTML del cuerpo.
+![Email](i.imgur.com/bIvbSyx.png)
