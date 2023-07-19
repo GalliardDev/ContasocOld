@@ -56,7 +56,7 @@ public class EmailSender {
 			+ "\r\n"
 			+ "<body>\r\n"
 			+ "    <div class=\"container\">\r\n"
-			+ "        <img src=\"https://png2.cleanpng.com/sh/d21d05f943124a9e8bd369f2a6fc7b46/L0KzQYm3UsE4N5DBj5H0aYP2gLBuTgNmdqR0ius2Z3H1dLb1TfNwdZ56htt9eT3qccPrhf5qdpgye95ycD3kgsW0hwJ2caUyf9N7ZHXxPbTzigBieqV4RadqOEjmSYPsUfUyPJU5RqQ6N0KzRYO4UcUyQGo2S6o8OEG1Q4O1kP5o/kisspng-sensory-garden-community-gardening-clip-art-fruit-garden-cliparts-5a88c92e1e14d4.2172052115189138381232.png\" class=\"logo\">\r\n"
+			+ "        <img src=\"https://i.imgur.com/tKVGcuP.png\" class=\"logo\">\r\n"
 			+ "        <h4 class=\"title\">Huertos la Salud Bellavista</h4>\r\n"
 			+ "        <p class=\"body\">Estimado/s socio/s,</p>\r\n"
 			+ "        <p class=\"body\">";

@@ -1,14 +1,16 @@
+package es.exmaster.contasoc.gui;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package es.exmaster.contasoc.gui;
 
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.math.RoundingMode;
@@ -56,6 +58,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import javax.swing.JFileChooser;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Dimension;
 
 /**
  *
@@ -123,6 +129,19 @@ public class NewMainWindow extends javax.swing.JFrame {
 		setListaEsperaSorter();
 		if(appPanel.isVisible()) {
 			sociosNHuertoField.requestFocus();
+		}
+		añadirEmailsAComboBox();
+	}
+	
+	private void añadirEmailsAComboBox() {
+		List<String> aux = ContasocDAO.leerTabla("hortelanos").stream()
+				.map(x->Parsers.hortelanoParser(x))
+				.filter(x->!(x.getPersona().getCorreo().equals("")))
+				.sorted(Comparator.comparing(Hortelano::getSocio))
+				.map(x->x.getPersona().getCorreo()+" ("+x.getSocio()+")")
+				.toList();
+		for(String s:aux) {
+			comboBox.addItem(s);
 		}
 	}
 
@@ -230,6 +249,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 	            ContasocDAO.agregarDatos("hortelanos", new String[] { huerto, socio, nombre, dni, telefono, correo,
 	                    alta, entrega, baja, notas, tipo, estado });
 	            ErrorHandler.socioAgregado(Integer.valueOf(socio));
+	            añadirEmailsAComboBox();
 	        }
 
 	        // Restablecer los campos de entrada
@@ -303,6 +323,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 		}
 		actualizarSociosTabla();
 		ErrorHandler.socioEliminado(Integer.valueOf(socio));
+		añadirEmailsAComboBox();
 		case(JOptionPane.NO_OPTION):
 			
 		}
@@ -990,15 +1011,17 @@ public class NewMainWindow extends javax.swing.JFrame {
 		emailPanel = new javax.swing.JPanel();
 		emailDataPanel = new javax.swing.JPanel();
 		emailListaPanel = new javax.swing.JScrollPane();
+		emailListaPanel.setPreferredSize(new Dimension(864, 2));
 		emailLista = new javax.swing.JEditorPane();
+		emailLista.setPreferredSize(new Dimension(864, 20));
 		emailDestinatarioLabel = new javax.swing.JLabel();
-		emailDestinatarioField = new javax.swing.JTextField();
 		emailAsuntoLabel = new javax.swing.JLabel();
 		emailAsuntoField = new javax.swing.JTextField();
 		emailEnviarBtn = new javax.swing.JButton();
 		emailBorradorBtn = new javax.swing.JButton();
 		sociosLimpiarBtn = new javax.swing.JButton();
 		importarExportarBtn = new javax.swing.JButton();
+		comboBox = new javax.swing.JComboBox<String>();
 		
 
 		javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -1416,7 +1439,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 				return canEdit[columnIndex];
 			}
 		});
-		sociosTabla.setFocusable(false);
+		sociosTabla.setFocusable(true);
 		sociosTabla.setShowGrid(false);
 		sociosTabla.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1573,7 +1596,7 @@ public class NewMainWindow extends javax.swing.JFrame {
         ingresosLimpiarBtn.setForeground(new java.awt.Color(255, 255, 255));
         ingresosLimpiarBtn.setActionCommand("LIMPIAR");
         ingresosLimpiarBtn.setFocusable(false);
-        ingresosLimpiarBtn.setLabel("LIMPIAR");
+        ingresosLimpiarBtn.setText("LIMPIAR");
         ingresosLimpiarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ingresosLimpiarBtnActionPerformed(evt);
@@ -1749,7 +1772,7 @@ public class NewMainWindow extends javax.swing.JFrame {
         gastosLimpiarBtn.setForeground(new java.awt.Color(255, 255, 255));
         gastosLimpiarBtn.setActionCommand("LIMPIAR");
         gastosLimpiarBtn.setFocusable(false);
-        gastosLimpiarBtn.setLabel("LIMPIAR");
+        gastosLimpiarBtn.setText("LIMPIAR");
         gastosLimpiarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 gastosLimpiarBtnActionPerformed(evt);
@@ -2184,9 +2207,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 		emailListaPanel.setViewportView(emailLista);
 
 		emailDestinatarioLabel.setForeground(new java.awt.Color(255, 255, 255));
-		emailDestinatarioLabel.setText("Destinatario/s:");
-
-		emailDestinatarioField.setToolTipText("Si hay más de un destinatario, sepárelos por comas \",\"");
+		emailDestinatarioLabel.setText("Destinatario:");
 
 		emailAsuntoLabel.setForeground(new java.awt.Color(255, 255, 255));
 		emailAsuntoLabel.setText("Asunto:");
@@ -2210,51 +2231,42 @@ public class NewMainWindow extends javax.swing.JFrame {
 		});
 
 		javax.swing.GroupLayout emailDataPanelLayout = new javax.swing.GroupLayout(emailDataPanel);
+		emailDataPanelLayout.setHorizontalGroup(
+			emailDataPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(emailDataPanelLayout.createSequentialGroup()
+					.addGap(18)
+					.addGroup(emailDataPanelLayout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(emailDataPanelLayout.createSequentialGroup()
+							.addComponent(emailDestinatarioLabel, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 324, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(emailAsuntoLabel, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(emailAsuntoField, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(emailEnviarBtn)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(emailBorradorBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(emailListaPanel, GroupLayout.PREFERRED_SIZE, 876, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		emailDataPanelLayout.setVerticalGroup(
+			emailDataPanelLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(emailDataPanelLayout.createSequentialGroup()
+					.addGap(10)
+					.addGroup(emailDataPanelLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(emailAsuntoLabel)
+						.addComponent(emailAsuntoField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(emailDestinatarioLabel)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(emailBorradorBtn)
+						.addComponent(emailEnviarBtn))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(emailListaPanel, GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
+					.addGap(18))
+		);
 		emailDataPanel.setLayout(emailDataPanelLayout);
-		emailDataPanelLayout.setHorizontalGroup(emailDataPanelLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(emailDataPanelLayout.createSequentialGroup().addGap(18, 18, 18)
-						.addGroup(emailDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(emailDataPanelLayout.createSequentialGroup()
-										.addComponent(emailDestinatarioLabel, javax.swing.GroupLayout.PREFERRED_SIZE,
-												78, javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(emailDestinatarioField, javax.swing.GroupLayout.PREFERRED_SIZE,
-												330, javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(emailAsuntoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 44,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(emailAsuntoField, javax.swing.GroupLayout.PREFERRED_SIZE, 220,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(emailEnviarBtn)
-										.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(emailBorradorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 102,
-												javax.swing.GroupLayout.PREFERRED_SIZE))
-								.addComponent(emailListaPanel))
-						.addGap(18, 18, 18)));
-		emailDataPanelLayout.setVerticalGroup(emailDataPanelLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, emailDataPanelLayout.createSequentialGroup()
-						.addGap(10, 10, 10)
-						.addGroup(emailDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-								.addGroup(emailDataPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(emailAsuntoLabel)
-										.addComponent(emailAsuntoField, javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addComponent(emailEnviarBtn).addComponent(emailBorradorBtn))
-								.addGroup(emailDataPanelLayout
-										.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-										.addComponent(emailDestinatarioLabel).addComponent(emailDestinatarioField,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												javax.swing.GroupLayout.DEFAULT_SIZE,
-												javax.swing.GroupLayout.PREFERRED_SIZE)))
-						.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-						.addComponent(emailListaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
-						.addGap(18, 18, 18)));
 
 		javax.swing.GroupLayout emailPanelLayout = new javax.swing.GroupLayout(emailPanel);
 		emailPanel.setLayout(emailPanelLayout);
@@ -2329,10 +2341,11 @@ public class NewMainWindow extends javax.swing.JFrame {
 		sociosNotasField.setText(notas);
 		sociosTipoComboBox.setSelectedItem(tipo);
 		sociosEstadoField.setText(estado);
-		
-		ContasocDAO.fillIngresosPopup(iF.getTabla(), socio);
-		iF.setTitle(nombre + " (" + socio +")");
-		iF.setVisible(true);
+		if(evt.getButton()==MouseEvent.BUTTON3) {
+			ContasocDAO.fillIngresosPopup(iF.getTabla(), socio);
+			iF.setTitle(nombre + " (" + socio +")");
+			iF.setVisible(true);
+		}
 	}
 
 	private void sociosTablaKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_sociosTablaKeyPressed
@@ -2380,15 +2393,15 @@ public class NewMainWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_imprimirListaEsperaBtnActionPerformed
 
 	private void emailEnviarBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailEnviarBtnActionPerformed
-		EmailSender.sendEmail(emailDestinatarioField.getText(), emailAsuntoField.getText(), EmailSender.MSG_BEFORE+emailLista.getText()+EmailSender.MSG_AFTER);
+		EmailSender.sendEmail(comboBox.getSelectedItem().toString().replaceAll("\\(\\d+\\)", "").trim(), emailAsuntoField.getText(), EmailSender.MSG_BEFORE+emailLista.getText()+EmailSender.MSG_AFTER);
 		ErrorHandler.mailEnviado();
 		emailAsuntoField.setText("");
-		emailDestinatarioField.setText("");
+		comboBox.setSelectedItem("");
 		emailLista.setText("");
 	}// GEN-LAST:event_emailEnviarBtnActionPerformed
 
 	private void emailBorradorBtnActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_emailBorradorBtnActionPerformed
-		EmailSender.crearBorrador(emailDestinatarioField.getText(), emailAsuntoField.getText(), emailLista.getText());
+		EmailSender.crearBorrador(comboBox.getSelectedItem().toString(), emailAsuntoField.getText(), emailLista.getText());
 		ErrorHandler.borradorGuardado();
 	}// GEN-LAST:event_emailBorradorBtnActionPerformed
 
@@ -2620,7 +2633,6 @@ public class NewMainWindow extends javax.swing.JFrame {
 	private javax.swing.JLabel emailAsuntoLabel;
 	private javax.swing.JButton emailBorradorBtn;
 	private javax.swing.JPanel emailDataPanel;
-	private javax.swing.JTextField emailDestinatarioField;
 	private javax.swing.JLabel emailDestinatarioLabel;
 	private javax.swing.JButton emailEnviarBtn;
 	private javax.swing.JEditorPane emailLista;
@@ -2708,5 +2720,5 @@ public class NewMainWindow extends javax.swing.JFrame {
 	private javax.swing.JButton ingresosLimpiarBtn;
 	private javax.swing.JButton gastosLimpiarBtn;
 	private javax.swing.JButton importarExportarBtn;
-	// End of variables declaration
+	private javax.swing.JComboBox<String> comboBox;
 }
