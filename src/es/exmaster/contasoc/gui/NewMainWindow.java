@@ -2235,7 +2235,8 @@ public class NewMainWindow extends javax.swing.JFrame {
 			emailDataPanelLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(emailDataPanelLayout.createSequentialGroup()
 					.addGap(18)
-					.addGroup(emailDataPanelLayout.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(emailDataPanelLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(emailListaPanel, GroupLayout.DEFAULT_SIZE, 876, Short.MAX_VALUE)
 						.addGroup(emailDataPanelLayout.createSequentialGroup()
 							.addComponent(emailDestinatarioLabel, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -2247,9 +2248,8 @@ public class NewMainWindow extends javax.swing.JFrame {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(emailEnviarBtn)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(emailBorradorBtn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(emailListaPanel, GroupLayout.PREFERRED_SIZE, 876, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+							.addComponent(emailBorradorBtn, GroupLayout.PREFERRED_SIZE, 105, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18))
 		);
 		emailDataPanelLayout.setVerticalGroup(
 			emailDataPanelLayout.createParallelGroup(Alignment.LEADING)
