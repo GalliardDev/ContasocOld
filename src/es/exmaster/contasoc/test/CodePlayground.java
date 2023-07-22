@@ -3,6 +3,7 @@ package es.exmaster.contasoc.test;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.io.ObjectInputStream;
 import java.security.Key;
 import java.security.KeyPair;
@@ -51,7 +52,7 @@ public class CodePlayground {
     }
 
     public static void main(String[] args) {
-        try {
+        /*try {
             // Generar un par de claves RSA
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
             keyPairGenerator.initialize(2048);
@@ -86,5 +87,12 @@ public class CodePlayground {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }*/
+    	URL url = ClassLoader.getSystemResource("imagenes/newlogo.png");
+    	if (url != null) {
+    	    System.out.println("URL de la imagen: " + url.toString());
+    	} else {
+    	    System.out.println("La URL de la imagen es null. Verifica la ruta del recurso.");
+    	}
     }
 }
