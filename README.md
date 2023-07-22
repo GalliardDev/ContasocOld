@@ -1,5 +1,6 @@
 # **Contasoc - Control de asociaciones**
-⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)
+⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)<br>
+⚠️ Los únicos sitios oficiales para descargarla son [GitHub Releases](https://github.com/ExceptionMaster/Contasoc/releases/latest) (este mismo sitio) y mi [página web](https://exmaster.es)
 
 ## **INFORMACIÓN**
 
@@ -28,7 +29,7 @@ Los botones de la barra de la barra de herramientas (Toolbar) son, respectivamen
 Esta es la pantalla de inicio para entrar a la app, ya que he porteado a SQLite, próximamente se añadirá un sistema de login con usuario y contraseña para cada miembro de la directiva de la asociación.
 ![Inicio](https://i.imgur.com/1v3aKty.png)
 
-Este es el apartado de socios de la aplicación. Se pueden añadir (`ENTER`), buscar (`TABLA`), modificar (`ENTER`) o eliminar (`SUPR`/`DEL`) socios desde aquí.
+Este es el apartado de socios de la aplicación. Se pueden añadir (`ENTER`), buscar (`TABLA`), modificar (`ENTER`) o eliminar (`SUPR`/`DEL`) socios desde aquí.<br>
 ![Socios](https://i.imgur.com/ZxiLltU.png)
 
 Este es el apartado de ingresos de la aplicación. Ingresos se refiere a los ingresos que realizan los socios para obtener un huerto o entrar en lista de espera.Se pueden añadir, buscar, modificar o eliminar ingresos desde aquí.
@@ -46,5 +47,5 @@ Una lista de socios filtrada por los que están en lista de espera y mostrados e
 En este apartado se puede mostar un listado completo de socios, pagos, ingresos y lista de espera para luego imprimirlo en un PDF, por si hiciera falta una copia física.
 ![Impresión](https://i.imgur.com/WbVHqiA.png)
 
-`En este nuevo apartado se podrán enviar emails a uno o varios destinatarios especificando un asunto y un cuerpo, y el email se formateará automáticamente usando HTML y CSS inline. También se podra guardar un borrador en HTML del cuerpo.`
-![Email](https://i.imgur.com/qW6PbQG.png)
+En este nuevo apartado se podrán enviar emails a uno o varios destinatarios especificando un asunto y un cuerpo, y el email se formateará automáticamente usando HTML y CSS inline. También se podra guardar un borrador en HTML del cuerpo.
+![Email](i.imgur.com/bIvbSyx.png)
