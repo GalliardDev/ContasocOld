@@ -50,6 +50,7 @@ import es.exmaster.contasoc.util.EmailSender;
 import es.exmaster.contasoc.util.ErrorHandler;
 import es.exmaster.contasoc.util.PDFPrinter;
 import es.exmaster.contasoc.util.Parsers;
+import es.exmaster.contasoc.util.ReciboPrinter;
 import es.exmaster.contasoc.util.StretchIcon;
 import es.exmaster.contasoc.util.UpperCaseFilter;
 import es.exmaster.contasoc.util.Utils;
@@ -62,6 +63,10 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.Dimension;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -2291,6 +2296,20 @@ public class NewMainWindow extends javax.swing.JFrame {
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
 								inicioPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 								Short.MAX_VALUE)));
+		
+		reciboPanel = new JPanel();
+		appPanel.addTab("Recibos", null, reciboPanel, null);
+		reciboPanel.setLayout(null);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReciboPrinter.generarRecibo(1,147,"Sevilla",12,"agosto",2023,"Francisco Javier Amador Bravo", 60.0,
+						"Este es un concepto muy muy muy muy muy largo, tan tan tan tan tan tan tan largo que hay que exagerar muchichichichichichichichichichísimo para que lo sea.");
+			}
+		});
+		btnNewButton.setBounds(345, 235, 97, 26);
+		reciboPanel.add(btnNewButton);
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
@@ -2721,4 +2740,5 @@ public class NewMainWindow extends javax.swing.JFrame {
 	private javax.swing.JButton gastosLimpiarBtn;
 	private javax.swing.JButton importarExportarBtn;
 	private javax.swing.JComboBox<String> comboBox;
+	private JPanel reciboPanel;
 }
