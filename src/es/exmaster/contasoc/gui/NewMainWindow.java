@@ -7,13 +7,19 @@ package es.exmaster.contasoc.gui;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.math.RoundingMode;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,8 +34,13 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
@@ -54,19 +65,6 @@ import es.exmaster.contasoc.util.ReciboPrinter;
 import es.exmaster.contasoc.util.StretchIcon;
 import es.exmaster.contasoc.util.UpperCaseFilter;
 import es.exmaster.contasoc.util.Utils;
-
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import javax.swing.JFileChooser;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.Dimension;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  *
@@ -2296,11 +2294,7 @@ public class NewMainWindow extends javax.swing.JFrame {
 						.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
 								inicioPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
 								Short.MAX_VALUE)));
-		
-		reciboPanel = new JPanel();
-		appPanel.addTab("Recibos", null, reciboPanel, null);
-		reciboPanel.setLayout(null);
-		
+				
 		JButton btnNewButton = new JButton("New button");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2309,7 +2303,6 @@ public class NewMainWindow extends javax.swing.JFrame {
 			}
 		});
 		btnNewButton.setBounds(345, 235, 97, 26);
-		reciboPanel.add(btnNewButton);
 
 		pack();
 	}// </editor-fold>//GEN-END:initComponents
@@ -2740,5 +2733,4 @@ public class NewMainWindow extends javax.swing.JFrame {
 	private javax.swing.JButton gastosLimpiarBtn;
 	private javax.swing.JButton importarExportarBtn;
 	private javax.swing.JComboBox<String> comboBox;
-	private JPanel reciboPanel;
 }
