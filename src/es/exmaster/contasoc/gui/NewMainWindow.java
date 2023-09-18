@@ -103,7 +103,6 @@ public class NewMainWindow extends javax.swing.JFrame {
 
 	private void showFirstPanel() {
 		Component[] components = this.getContentPane().getComponents();
-
 		components[1].setVisible(true);
 		components[0].setVisible(false);
 	}
