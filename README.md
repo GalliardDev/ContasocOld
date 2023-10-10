@@ -1,3 +1,5 @@
+# ⚠️ DEBIDO AL DESINTERÉS DE LA ASOCIACIÓN ESTE PROYECTO QUEDA ARCHIVADO DESDE AHORA CON POSIBILIDAD DE RETOMARLO SI ALGUIEN QUIERE PUESTO QUE EL CÓDIGO QUEDARÁ COMO REPOSITORIO PÚBLICO AQUÍ EN GITHUB
+
 # **Contasoc - Control de asociaciones**
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)<br>
 ⚠️ Los únicos sitios oficiales para descargarla son [GitHub Releases](https://github.com/ExceptionMaster/Contasoc/releases/latest) (este mismo sitio) y mi [página web](https://exmaster.es)
