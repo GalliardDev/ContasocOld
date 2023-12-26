@@ -1,3 +1,5 @@
+# ❌ VERSIÓN EN DESUSO. NUEVO PROYECTO [AQUÍ](https://github.com/GalliardDev/ContasocRemake) ❌
+
 # **Contasoc - Control de asociaciones**
 ⚠️ Esta versión está personalizada para la asociación **Huertos la Salud Bellavista** (Sevilla)<br>
 ⚠️ Los únicos sitios oficiales para descargarla son [GitHub Releases](https://github.com/ExceptionMaster/Contasoc/releases/latest) (este mismo sitio) y mi [página web](https://exmaster.es)
